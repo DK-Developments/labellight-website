@@ -2,7 +2,7 @@
 
 A clean, minimal website template with a navbar and home page. Perfect for quickly starting new web projects.
 
-## 📁 Project Structure
+## 📁 Project Structure 
 
 ```
 Website Template/
