@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subscription Management - DYMO Label Printing</title>
+  <meta name="description" content="Manage your DYMO Label Printing subscription, view billing history, and download the extension.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <div id="navbar-container"></div>
+
+  <!-- Subscription Management Page -->
+  <div class="subscription-page">
+    <div class="subscription-container">
+      
+      <!-- Page Header -->
+      <div class="subscription-section">
+        <div class="subscription-header">
+          <h1>Subscription Management</h1>
+          <span class="status-badge" id="status-badge">Active</span>
+        </div>
+        <p>Manage your subscription, billing, and download the browser extension.</p>
+      </div>
+
+      <!-- Current Subscription Details -->
+      <div class="subscription-section">
+        <h2>Current Subscription</h2>
+        <div class="subscription-details" id="subscription-details">
+          <div class="detail-item">
+            <div class="detail-label">Plan</div>
+            <div class="detail-value" id="plan-name">Annual Plan</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Amount</div>
+            <div class="detail-value" id="plan-amount">$99.00 / year</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Next Billing Date</div>
+            <div class="detail-value" id="next-billing">January 29, 2026</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Status</div>
+            <div class="detail-value" id="subscription-status">Active</div>
+          </div>
+        </div>
+        
+        <div class="subscription-actions">
+          <button class="btn btn-primary" id="manage-billing-btn">Manage Billing</button>
+          <button class="btn btn-secondary" id="cancel-subscription-btn">Cancel Subscription</button>
+        </div>
+        
+        <p style="margin-top: 20px; font-size: 14px; color: #666;">
+          <strong>Note:</strong> This is demo data. Real subscription details will be displayed when Stripe integration is complete.
+        </p>
+      </div>
+
+      <!-- Extension Download -->
+      <div class="subscription-section extension-download-section">
+        <h3>Download Browser Extension</h3>
+        <p>Your subscription is active. Download and install the extension to start printing labels from Lightspeed.</p>
+        <button class="btn btn-primary btn-large" id="download-extension-btn">Download Extension</button>
+        <p style="margin-top: 15px; font-size: 14px; opacity: 0.9;">
+          <a href="#installation-guide" style="color: white; text-decoration: underline;">View Installation Guide</a>
+        </p>
+      </div>
+
+      <!-- Billing History -->
+      <div class="subscription-section">
+        <h2>Billing History</h2>
+        <table class="billing-history-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Description</th>
+              <th>Amount</th>
+              <th>Status</th>
+              <th>Invoice</th>
+            </tr>
+          </thead>
+          <tbody id="billing-history-body">
+            <tr>
+              <td>Dec 29, 2024</td>
+              <td>Annual Subscription</td>
+              <td>$99.00</td>
+              <td><span style="color: #155724;">Paid</span></td>
+              <td><a href="#" class="download-link">Download</a></td>
+            </tr>
+            <tr>
+              <td>Dec 29, 2023</td>
+              <td>Annual Subscription</td>
+              <td>$99.00</td>
+              <td><span style="color: #155724;">Paid</span></td>
+              <td><a href="#" class="download-link">Download</a></td>
+            </tr>
+            <tr>
+              <td>Dec 29, 2022</td>
+              <td>Annual Subscription</td>
+              <td>$99.00</td>
+              <td><span style="color: #155724;">Paid</span></td>
+              <td><a href="#" class="download-link">Download</a></td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="margin-top: 15px; font-size: 14px; color: #666;">
+          <strong>Note:</strong> This is sample billing history. Real invoices will be available when Stripe integration is complete.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="subscription.html">Subscription</a>
+        <a href="#support">Support</a>
+        <a href="#privacy">Privacy Policy</a>
+        <a href="#terms">Terms of Service</a>
+      </div>
+      <div class="footer-contact">
+        <p>Questions? Email us at support@example.com</p>
+      </div>
+      <div class="footer-copyright">
+        <p>&copy; 2025 DYMO Label Printing for Lightspeed. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="utils.js"></script>
+  <script src="auth.js"></script>
+  <script src="navbar.js"></script>
+  <script src="subscription.js"></script>
+</body>
+</html>
+

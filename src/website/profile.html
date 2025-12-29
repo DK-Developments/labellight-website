@@ -14,13 +14,33 @@
   <div class="main-content">
     <div class="header">
       <h1>Welcome, <span id="user-name">...</span>!</h1>
-      <p>Start building your goals and tracking your progress</p>
+      <p>Manage your subscription and download the extension</p>
     </div>
     
-    <div class="content-section">
-      <h2>Getting Started</h2>
-      <p>You're all set up! Your goal tracking features will be coming soon.</p>
-      <p>For now, you can explore the navigation above and update your profile.</p>
+    <!-- Subscription Status Section -->
+    <div class="content-section" id="subscription-section">
+      <h2>Your Subscription</h2>
+      <div id="subscription-content">
+        <p style="text-align: center; padding: 20px;">Loading subscription status...</p>
+      </div>
+    </div>
+
+    <!-- Extension Download Section -->
+    <div class="content-section" id="extension-section" style="display: none;">
+      <h2>Download Extension</h2>
+      <p>Your subscription is active! Download the DYMO Label Printing extension to start printing labels from Lightspeed.</p>
+      <button class="btn btn-primary btn-large" id="download-extension-btn-profile" style="margin-top: 15px;">Download Extension</button>
+      <p style="margin-top: 15px; font-size: 14px; color: #666;">
+        After installation, the extension will automatically integrate with Lightspeed Retail.
+      </p>
+    </div>
+    
+    <!-- Getting Started Section (for non-subscribed users) -->
+    <div class="content-section" id="no-subscription-section" style="display: none;">
+      <h2>Get Started with DYMO Label Printing</h2>
+      <p>Subscribe now to start printing labels directly from Lightspeed Retail.</p>
+      <p>Save hours every week with automated label printing, bulk operations, and seamless integration.</p>
+      <a href="pricing.html" class="btn btn-primary btn-large" style="margin-top: 15px;">View Pricing & Subscribe</a>
     </div>
   </div>
 
