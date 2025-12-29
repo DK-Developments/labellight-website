@@ -76,6 +76,17 @@ a:focus {
   background-color: #c82333;
 }
 
+.login-btn {
+  background-color: #1a73e8;
+  padding: 6px 16px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.login-btn:hover {
+  background-color: #1557b0;
+}
+
 .navbar .nav-link {
   color: #333;
   text-decoration: none;

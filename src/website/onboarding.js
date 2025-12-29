@@ -11,7 +11,7 @@ async function checkExistingProfile() {
     const profile = await getProfile();
     if (profile) {
       // User already has a profile, redirect to home
-      window.location.href = 'home.html';
+      window.location.href = 'profile.html';
     }
   } catch (error) {
     console.error('Error checking profile:', error);
@@ -51,7 +51,7 @@ document.getElementById('onboardingForm').addEventListener('submit', async (e) =
     const profile = await createProfile(profileData);
     
     // Success - redirect to home
-    window.location.href = 'home.html';
+    window.location.href = 'profile.html';
     
   } catch (error) {
     // Show error message
