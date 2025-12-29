@@ -1,9 +1,9 @@
 terraform {
   backend "s3" {
-    bucket         = "goal-pyramid-terraform-state"
+    bucket         = "printerapp-terraform-state"
     key            = "terraform.tfstate"
     region         = "ap-southeast-2"
-    dynamodb_table = "goal-pyramid-terraform-locks"
+    dynamodb_table = "printerapp-terraform-locks"
     encrypt        = true
   }
 
@@ -30,7 +30,7 @@ resource "aws_s3_bucket" "website" {
 
 # CloudFront Origin Access Control - secure access to S3
 resource "aws_cloudfront_origin_access_control" "website" {
-  name                              = "goal-pyramid-oac"
+  name                              = "printerapp-oac"
   description                       = "Origin Access Control for website"
   origin_access_control_origin_type = "s3"
   signing_behavior                  = "always"

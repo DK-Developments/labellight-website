@@ -1,10 +1,10 @@
 #####################################################################
 # COGNITO SETUP
-# Creates a new Cognito user pool for goal-pyramid website
+# Creates a new Cognito user pool for printerapp website
 #####################################################################
 
 resource "aws_cognito_user_pool" "main" {
-  name = "goal-pyramid-user-pool"
+  name = "printerapp-user-pool"
 }
 
 resource "aws_cognito_user_pool_domain" "main" {
@@ -31,9 +31,9 @@ resource "aws_cognito_identity_provider" "google" {
   }
 }
 
-# Create app client for goal-pyramid website
+# Create app client for printerapp website
 resource "aws_cognito_user_pool_client" "main" {
-  name         = "goal-pyramid-web-client"
+  name         = "printerapp-web-client"
   user_pool_id = aws_cognito_user_pool.main.id
 
   allowed_oauth_flows_user_pool_client = true

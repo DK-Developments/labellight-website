@@ -24,7 +24,7 @@ output "cognito_user_pool_id" {
 }
 
 output "cognito_client_id" {
-  description = "Cognito User Pool Client ID for goal-pyramid"
+  description = "Cognito User Pool Client ID for printerapp"
   value       = aws_cognito_user_pool_client.main.id
 }
 

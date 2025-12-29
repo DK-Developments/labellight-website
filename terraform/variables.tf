@@ -1,7 +1,7 @@
 variable "bucket_name" {
   description = "Name of the S3 bucket for website hosting (must be globally unique)"
   type        = string
-  default     = "goal-pyramid-website"
+  default     = "printerapp-website"
 }
 
 variable "aws_region" {
@@ -13,7 +13,7 @@ variable "aws_region" {
 variable "cognito_domain_prefix" {
   description = "Prefix for Cognito hosted UI domain"
   type        = string
-  default     = "goal-pyramid-auth"
+  default     = "printerapp-auth"
 }
 
 variable "google_client_id" {

@@ -12,7 +12,7 @@
 #####################################################################
 
 resource "aws_dynamodb_table" "user_profiles" {
-  name         = "goal-pyramid-profiles"
+  name         = "printerapp-profiles"
   billing_mode = "PAY_PER_REQUEST"
   hash_key     = "user_id"
 
@@ -27,7 +27,7 @@ resource "aws_dynamodb_table" "user_profiles" {
 #####################################################################
 
 resource "aws_iam_role" "lambda_execution" {
-  name = "goal-pyramid-lambda-execution-role"
+  name = "printerapp-lambda-execution-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -95,7 +95,7 @@ data "archive_file" "update_profile_lambda" {
 
 resource "aws_lambda_function" "get_profile" {
   filename         = data.archive_file.get_profile_lambda.output_path
-  function_name    = "goal-pyramid-get-profile"
+  function_name    = "printerapp-get-profile"
   role            = aws_iam_role.lambda_execution.arn
   handler         = "profiles/get_profile.lambda_handler"
   source_code_hash = data.archive_file.get_profile_lambda.output_base64sha256
@@ -111,7 +111,7 @@ resource "aws_lambda_function" "get_profile" {
 
 resource "aws_lambda_function" "create_profile" {
   filename         = data.archive_file.create_profile_lambda.output_path
-  function_name    = "goal-pyramid-create-profile"
+  function_name    = "printerapp-create-profile"
   role            = aws_iam_role.lambda_execution.arn
   handler         = "profiles/create_profile.lambda_handler"
   source_code_hash = data.archive_file.create_profile_lambda.output_base64sha256
@@ -127,7 +127,7 @@ resource "aws_lambda_function" "create_profile" {
 
 resource "aws_lambda_function" "update_profile" {
   filename         = data.archive_file.update_profile_lambda.output_path
-  function_name    = "goal-pyramid-update-profile"
+  function_name    = "printerapp-update-profile"
   role            = aws_iam_role.lambda_execution.arn
   handler         = "profiles/update_profile.lambda_handler"
   source_code_hash = data.archive_file.update_profile_lambda.output_base64sha256
@@ -146,8 +146,8 @@ resource "aws_lambda_function" "update_profile" {
 #####################################################################
 
 resource "aws_api_gateway_rest_api" "main" {
-  name        = "goal-pyramid-api"
-  description = "Goal Pyramid API for user profiles"
+  name        = "printerapp-api"
+  description = "Printerapp API for user profiles"
 }
 
 resource "aws_api_gateway_authorizer" "cognito" {
