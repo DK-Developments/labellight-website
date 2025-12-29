@@ -14,7 +14,7 @@ async function updateNavbarAuth() {
   const loginBtn = document.querySelector('.login-btn');
   const logoutBtn = document.querySelector('.logout-btn');
   const userName = document.getElementById('user-display-name');
-  const subscriptionLink = document.getElementById('subscription-link');
+  const profileLink = document.getElementById('profile-link');
 
   if (isLoggedIn) {
     if (loginBtn) loginBtn.style.display = 'none';
@@ -23,12 +23,12 @@ async function updateNavbarAuth() {
       userName.style.display = 'block';
       await loadNavbarUserInfo();
     }
-    if (subscriptionLink) subscriptionLink.style.display = 'block';
+    if (profileLink) profileLink.style.display = 'block';
   } else {
     if (loginBtn) loginBtn.style.display = 'block';
     if (logoutBtn) logoutBtn.style.display = 'none';
     if (userName) userName.style.display = 'none';
-    if (subscriptionLink) subscriptionLink.style.display = 'none';
+    if (profileLink) profileLink.style.display = 'none';
   }
 }
 
