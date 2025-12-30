@@ -36,3 +36,9 @@ variable "environment" {
   default     = "sandbox"
 }
 
+variable "chrome_extension_id" {
+  description = "Chrome extension ID for OAuth callback URL. Get this from Chrome Web Store after first upload, or use chrome.runtime.id for unpacked extensions."
+  type        = string
+  default     = "khjabnmpieofgdbddbajibmobklgaccp"
+}
+

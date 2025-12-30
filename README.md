@@ -10,7 +10,7 @@ Simply open `src/website/index.html` in your browser, or use a local development
 ```bash
 # Python 3
 cd src/website
-python -m http.server 8000
+python3 -m http.server 8000
 ```
 
 Then visit `http://localhost:8000` in your browser.
