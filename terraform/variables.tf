@@ -39,8 +39,13 @@ variable "environment" {
 variable "chrome_extension_id" {
   description = "Chrome extension ID for OAuth callback URL. Get this from Chrome Web Store after first upload, or use chrome.runtime.id for unpacked extensions."
   type        = string
-  default     = [
-    "khjabnmpieofgdbddbajibmobklgaccp",
+  default     = "khjabnmpieofgdbddbajibmobklgaccp"
+}
+
+variable "chrome_extension_extra_ids" {
+  description = "Additional Chrome extension IDs allowed for OAuth callback/logout URLs (e.g., other developers' unpacked extension IDs)."
+  type        = list(string)
+  default = [
     "iokogplbeoehemeondbcjcbngkpgalio",
   ]
 }

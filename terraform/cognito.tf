@@ -72,11 +72,11 @@ resource "aws_cognito_user_pool_client" "extension" {
 
   # Chrome extension callback URLs
   callback_urls = [
-    for id in var.chrome_extension_ids : "https://${id}.chromiumapp.org/"
+    for id in concat([var.chrome_extension_id], var.chrome_extension_extra_ids) : "https://${id}.chromiumapp.org/"
   ]
 
   logout_urls = [
-    for id in var.chrome_extension_ids : "https://${id}.chromiumapp.org/"
+    for id in concat([var.chrome_extension_id], var.chrome_extension_extra_ids) : "https://${id}.chromiumapp.org/"
   ]
 
   supported_identity_providers = ["Google"]
