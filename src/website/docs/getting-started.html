@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Getting Started - Label Light Documentation</title>
+  <meta name="description" content="Get started with Label Light for Lightspeed Retail. Learn how to install the extension, set up your DYMO printer, and print your first label.">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <div id="navbar-container"></div>
+
+  <!-- Documentation Hero -->
+  <section class="docs-hero">
+    <div class="content-container">
+      <h1>Getting Started</h1>
+      <p class="docs-hero-subtitle">Install and configure Label Light in just a few minutes</p>
+    </div>
+  </section>
+
+  <!-- Article Content -->
+  <section class="docs-article-section">
+    <div class="docs-article-container">
+      
+      <!-- Breadcrumb -->
+      <nav class="docs-breadcrumb">
+        <a href="index.html">Documentation</a>
+        <span>›</span>
+        <span>Getting Started</span>
+      </nav>
+
+      <!-- Article Header -->
+      <header class="docs-article-header">
+        <h1>Getting Started with Label Light</h1>
+        <p>This guide will walk you through installing the Label Light extension, connecting your DYMO printer, and printing your first label from Lightspeed Retail.</p>
+      </header>
+
+      <!-- Table of Contents -->
+      <nav class="docs-toc">
+        <h2>On This Page</h2>
+        <ul>
+          <li><a href="#prerequisites">Prerequisites</a></li>
+          <li><a href="#installation">Installing the Extension</a></li>
+          <li><a href="#dymo-connect">Installing DYMO Connect</a></li>
+          <li><a href="#first-label">Printing Your First Label</a></li>
+          <li><a href="#next-steps">Next Steps</a></li>
+        </ul>
+      </nav>
+
+      <!-- Article Content -->
+      <div class="docs-content">
+        
+        <!-- Prerequisites -->
+        <h2 id="prerequisites">Prerequisites</h2>
+        <p>Before you begin, make sure you have the following:</p>
+        <ul>
+          <li><strong>Google Chrome browser</strong> - Label Light is a Chrome extension and requires Chrome version 88 or later.</li>
+          <li><strong>DYMO LabelWriter printer</strong> - Supported models include LabelWriter 450, 450 Turbo, 4XL, 550, and wireless models.</li>
+          <li><strong>Lightspeed Retail (X-Series) account</strong> - You need an active Lightspeed Retail account to use this extension.</li>
+          <li><strong>Active Label Light subscription</strong> - <a href="../pricing.html">Subscribe here</a> if you haven't already.</li>
+        </ul>
+
+        <div class="docs-note docs-note-info">
+          <span class="docs-note-icon">ℹ️</span>
+          <div class="docs-note-content">
+            <h4>Supported Browsers</h4>
+            <p>Label Light currently supports Google Chrome. Support for Microsoft Edge and other Chromium-based browsers is coming soon.</p>
+          </div>
+        </div>
+
+        <!-- Installation -->
+        <h2 id="installation">Installing the Extension</h2>
+        <p>Follow these steps to install Label Light from the Chrome Web Store:</p>
+
+        <div class="docs-steps">
+          <div class="docs-step">
+            <div class="docs-step-number">1</div>
+            <div class="docs-step-content">
+              <h3>Open Chrome Web Store</h3>
+              <p>Visit the Chrome Web Store and search for "Label Light" or use the direct link provided in your subscription confirmation email.</p>
+              
+              <!-- IMAGE PLACEHOLDER -->
+              <div class="docs-image-placeholder">
+                <span class="docs-image-placeholder-icon">🖼️</span>
+                <p class="docs-image-placeholder-text">Screenshot: Chrome Web Store - Label Light extension listing</p>
+                <p class="docs-image-placeholder-caption">Image filename: chrome-web-store-listing.png</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="docs-step">
+            <div class="docs-step-number">2</div>
+            <div class="docs-step-content">
+              <h3>Click "Add to Chrome"</h3>
+              <p>Click the blue "Add to Chrome" button on the extension page. A dialog will appear asking you to confirm the installation.</p>
+              
+              <!-- IMAGE PLACEHOLDER -->
+              <div class="docs-image-placeholder">
+                <span class="docs-image-placeholder-icon">🖼️</span>
+                <p class="docs-image-placeholder-text">Screenshot: Add to Chrome confirmation dialog</p>
+                <p class="docs-image-placeholder-caption">Image filename: add-to-chrome-dialog.png</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="docs-step">
+            <div class="docs-step-number">3</div>
+            <div class="docs-step-content">
+              <h3>Confirm Installation</h3>
+              <p>Click "Add extension" in the confirmation dialog. Chrome will download and install the extension automatically.</p>
+            </div>
+          </div>
+
+          <div class="docs-step">
+            <div class="docs-step-number">4</div>
+            <div class="docs-step-content">
+              <h3>Pin the Extension (Recommended)</h3>
+              <p>Click the puzzle piece icon in Chrome's toolbar, then click the pin icon next to Label Light. This keeps the extension easily accessible.</p>
+              
+              <!-- IMAGE PLACEHOLDER -->
+              <div class="docs-image-placeholder">
+                <span class="docs-image-placeholder-icon">🖼️</span>
+                <p class="docs-image-placeholder-text">Screenshot: Pinning the extension to Chrome toolbar</p>
+                <p class="docs-image-placeholder-caption">Image filename: pin-extension-toolbar.png</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DYMO Connect -->
+        <h2 id="dymo-connect">Installing DYMO Connect</h2>
+        <p>Label Light communicates with your DYMO printer through DYMO Connect software. This software must be installed and running on your computer.</p>
+
+        <div class="docs-steps">
+          <div class="docs-step">
+            <div class="docs-step-number">1</div>
+            <div class="docs-step-content">
+              <h3>Download DYMO Connect</h3>
+              <p>Visit the <a href="https://www.dymo.com/support" target="_blank" rel="noopener">DYMO Support website</a> and download DYMO Connect for your operating system (Windows or macOS).</p>
+              
+              <div class="docs-note docs-note-warning">
+                <span class="docs-note-icon">⚠️</span>
+                <div class="docs-note-content">
+                  <h4>Important</h4>
+                  <p>Download DYMO Connect (not DYMO Label Software). DYMO Connect includes the web service that Label Light requires to communicate with your printer.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="docs-step">
+            <div class="docs-step-number">2</div>
+            <div class="docs-step-content">
+              <h3>Install DYMO Connect</h3>
+              <p>Run the installer and follow the on-screen instructions. The default installation options work for most users.</p>
+              
+              <!-- IMAGE PLACEHOLDER -->
+              <div class="docs-image-placeholder">
+                <span class="docs-image-placeholder-icon">🖼️</span>
+                <p class="docs-image-placeholder-text">Screenshot: DYMO Connect installation wizard</p>
+                <p class="docs-image-placeholder-caption">Image filename: dymo-connect-installer.png</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="docs-step">
+            <div class="docs-step-number">3</div>
+            <div class="docs-step-content">
+              <h3>Connect Your Printer</h3>
+              <p>Connect your DYMO LabelWriter to your computer via USB. DYMO Connect should automatically detect your printer.</p>
+              
+              <!-- IMAGE PLACEHOLDER -->
+              <div class="docs-image-placeholder">
+                <span class="docs-image-placeholder-icon">🖼️</span>
+                <p class="docs-image-placeholder-text">Screenshot: DYMO Connect with printer connected</p>
+                <p class="docs-image-placeholder-caption">Image filename: dymo-connect-printer-detected.png</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="docs-step">
+            <div class="docs-step-number">4</div>
+            <div class="docs-step-content">
+              <h3>Verify Web Service is Running</h3>
+              <p>DYMO Connect runs a web service in the background that Label Light uses to print. Look for the DYMO icon in your system tray (Windows) or menu bar (macOS) to confirm it's running.</p>
+              
+              <div class="docs-note docs-note-tip">
+                <span class="docs-note-icon">💡</span>
+                <div class="docs-note-content">
+                  <h4>Tip</h4>
+                  <p>Enable "Start DYMO Connect at login" in the DYMO Connect preferences to ensure the web service is always available.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- First Label -->
+        <h2 id="first-label">Printing Your First Label</h2>
+        <p>Now that everything is installed, let's print your first label!</p>
+
+        <div class="docs-steps">
+          <div class="docs-step">
+            <div class="docs-step-number">1</div>
+            <div class="docs-step-content">
+              <h3>Sign In to Label Light</h3>
+              <p>Click the Label Light icon in your Chrome toolbar, then click "Sign in with Google" to authenticate with your subscription account.</p>
+              
+              <!-- IMAGE PLACEHOLDER -->
+              <div class="docs-image-placeholder">
+                <span class="docs-image-placeholder-icon">🖼️</span>
+                <p class="docs-image-placeholder-text">Screenshot: Label Light sign-in screen</p>
+                <p class="docs-image-placeholder-caption">Image filename: extension-sign-in.png</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="docs-step">
+            <div class="docs-step-number">2</div>
+            <div class="docs-step-content">
+              <h3>Open Lightspeed Retail</h3>
+              <p>Navigate to your Lightspeed Retail store at <span class="docs-inline-code">yourstore.retail.lightspeed.app</span> and log in.</p>
+            </div>
+          </div>
+
+          <div class="docs-step">
+            <div class="docs-step-number">3</div>
+            <div class="docs-step-content">
+              <h3>Navigate to a Product</h3>
+              <p>Go to Products and open any product page. You should see a new "Print Label" button added by Label Light.</p>
+              
+              <!-- IMAGE PLACEHOLDER -->
+              <div class="docs-image-placeholder">
+                <span class="docs-image-placeholder-icon">🖼️</span>
+                <p class="docs-image-placeholder-text">Screenshot: Product page with Print Label button highlighted</p>
+                <p class="docs-image-placeholder-caption">Image filename: product-page-print-button.png</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="docs-step">
+            <div class="docs-step-number">4</div>
+            <div class="docs-step-content">
+              <h3>Click Print Label</h3>
+              <p>Click the "Print Label" button. A modal will open showing a preview of your label and print options.</p>
+              
+              <!-- IMAGE PLACEHOLDER -->
+              <div class="docs-image-placeholder">
+                <span class="docs-image-placeholder-icon">🖼️</span>
+                <p class="docs-image-placeholder-text">Screenshot: Print label modal with preview</p>
+                <p class="docs-image-placeholder-caption">Image filename: print-modal-preview.png</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="docs-step">
+            <div class="docs-step-number">5</div>
+            <div class="docs-step-content">
+              <h3>Print!</h3>
+              <p>Select your printer (if you have multiple), choose the quantity, and click "Print". Your label will print immediately!</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="docs-note docs-note-tip">
+          <span class="docs-note-icon">🎉</span>
+          <div class="docs-note-content">
+            <h4>Congratulations!</h4>
+            <p>You've successfully printed your first label with Label Light. Continue to the Configuration guide to customize your label templates and field mappings.</p>
+          </div>
+        </div>
+
+        <!-- Next Steps -->
+        <h2 id="next-steps">Next Steps</h2>
+        <p>Now that you have Label Light up and running, here are some recommended next steps:</p>
+        <ul>
+          <li><a href="configuration.html#api-token">Configure your Lightspeed API token</a> for enhanced product data access</li>
+          <li><a href="configuration.html#label-templates">Upload custom label templates</a> designed for your business</li>
+          <li><a href="configuration.html#field-mappings">Set up field mappings</a> to control what data appears on your labels</li>
+          <li><a href="using-the-extension.html">Learn about all the printing features</a> available in Label Light</li>
+        </ul>
+
+      </div>
+
+      <!-- Navigation -->
+      <nav class="docs-nav">
+        <a href="index.html" class="docs-nav-btn">
+          <span>←</span>
+          <div>
+            <span class="docs-nav-btn-label">Previous</span>
+            <span class="docs-nav-btn-title">Documentation Home</span>
+          </div>
+        </a>
+        <a href="configuration.html" class="docs-nav-btn">
+          <div>
+            <span class="docs-nav-btn-label">Next</span>
+            <span class="docs-nav-btn-title">Configuration</span>
+          </div>
+          <span>→</span>
+        </a>
+      </nav>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-links">
+        <a href="../index.html">Home</a>
+        <a href="../pricing.html">Pricing</a>
+        <a href="index.html">Documentation</a>
+        <a href="#privacy">Privacy Policy</a>
+        <a href="#terms">Terms of Service</a>
+      </div>
+      <div class="footer-contact">
+        <p>Questions? Email us at support@labellight.app</p>
+      </div>
+      <div class="footer-copyright">
+        <p>&copy; 2025 Label Light - Lightspeed Label Printing. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../config.js"></script>
+  <script src="../utils.js"></script>
+  <script src="../auth.js"></script>
+  <script src="../navbar.js"></script>
+</body>
+</html>

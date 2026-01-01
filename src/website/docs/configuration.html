@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configuration Guide - Label Light Documentation</title>
+  <meta name="description" content="Configure Label Light for Lightspeed Retail. Set up printers, API tokens, label templates, field mappings, and customize your printing workflow.">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <div id="navbar-container"></div>
+
+  <!-- Documentation Hero -->
+  <section class="docs-hero">
+    <div class="content-container">
+      <h1>Configuration</h1>
+      <p class="docs-hero-subtitle">Customize Label Light to fit your business workflow</p>
+    </div>
+  </section>
+
+  <!-- Article Content -->
+  <section class="docs-article-section">
+    <div class="docs-article-container">
+      
+      <!-- Breadcrumb -->
+      <nav class="docs-breadcrumb">
+        <a href="index.html">Documentation</a>
+        <span>›</span>
+        <span>Configuration</span>
+      </nav>
+
+      <!-- Article Header -->
+      <header class="docs-article-header">
+        <h1>Configuring Label Light</h1>
+        <p>This guide covers all the configuration options available in Label Light, from basic printer setup to advanced field mappings and custom label templates.</p>
+      </header>
+
+      <!-- Table of Contents -->
+      <nav class="docs-toc">
+        <h2>On This Page</h2>
+        <ul>
+          <li><a href="#accessing-settings">Accessing Settings</a></li>
+          <li><a href="#printer-setup">Printer Setup</a></li>
+          <li><a href="#api-token">API Token Configuration</a></li>
+          <li><a href="#currency-settings">Currency & Formatting</a></li>
+          <li><a href="#label-templates">Label Templates</a></li>
+          <li><a href="#field-mappings">Field Mappings</a></li>
+          <li><a href="#branding">Branding & Logo</a></li>
+          <li><a href="#language">Language Settings</a></li>
+        </ul>
+      </nav>
+
+      <!-- Article Content -->
+      <div class="docs-content">
+        
+        <!-- Accessing Settings -->
+        <h2 id="accessing-settings">Accessing Settings</h2>
+        <p>To access the Label Light settings page:</p>
+        <ol>
+          <li>Click the Label Light icon in your Chrome toolbar</li>
+          <li>The settings page will open in a new tab</li>
+        </ol>
+
+        <!-- IMAGE PLACEHOLDER -->
+        <div class="docs-image-placeholder">
+          <span class="docs-image-placeholder-icon">🖼️</span>
+          <p class="docs-image-placeholder-text">Screenshot: Label Light settings page overview</p>
+          <p class="docs-image-placeholder-caption">Image filename: settings-overview.png</p>
+        </div>
+
+        <p>The settings page is organized into sections:</p>
+        <ul>
+          <li><strong>Authentication</strong> - Sign in/out and manage your account</li>
+          <li><strong>General Settings</strong> - Printer selection and currency formatting</li>
+          <li><strong>API Configuration</strong> - Lightspeed API token for enhanced data access</li>
+          <li><strong>Branding</strong> - Upload your company logo</li>
+          <li><strong>Label Templates</strong> - Manage your DYMO label templates</li>
+          <li><strong>Field Mappings</strong> - Map product data to label fields</li>
+        </ul>
+
+        <!-- Printer Setup -->
+        <h2 id="printer-setup">Printer Setup</h2>
+        <p>Configure your default DYMO printer and detection settings.</p>
+
+        <h3>Selecting Your Default Printer</h3>
+        <p>If you have multiple DYMO printers connected, you can choose which one to use by default:</p>
+        <ol>
+          <li>In the <strong>General Settings</strong> section, locate the <strong>Printer</strong> dropdown</li>
+          <li>Click the dropdown to see all detected DYMO printers</li>
+          <li>Select your preferred printer</li>
+          <li>Click <strong>Save Settings</strong></li>
+        </ol>
+
+        <!-- IMAGE PLACEHOLDER -->
+        <div class="docs-image-placeholder">
+          <span class="docs-image-placeholder-icon">🖼️</span>
+          <p class="docs-image-placeholder-text">Screenshot: Printer selection dropdown with multiple printers</p>
+          <p class="docs-image-placeholder-caption">Image filename: printer-selection.png</p>
+        </div>
+
+        <div class="docs-note docs-note-tip">
+          <span class="docs-note-icon">💡</span>
+          <div class="docs-note-content">
+            <h4>Tip</h4>
+            <p>Click the refresh button (🔄) next to the printer dropdown to re-scan for printers if you've just connected one.</p>
+          </div>
+        </div>
+
+        <h3>Bypass Printer Detection</h3>
+        <p>Some versions of DYMO Connect have a bug where printer detection always returns false, even when a printer is connected. If you're experiencing this issue:</p>
+        <ol>
+          <li>Enable the <strong>Bypass Printer Detection</strong> checkbox</li>
+          <li>Click <strong>Save Settings</strong></li>
+        </ol>
+
+        <div class="docs-note docs-note-warning">
+          <span class="docs-note-icon">⚠️</span>
+          <div class="docs-note-content">
+            <h4>When to Use This</h4>
+            <p>Only enable this option if Label Light reports "No printers found" but your printer is working correctly in DYMO Connect software. This bypasses the connection check and assumes your printer is available.</p>
+          </div>
+        </div>
+
+        <!-- API Token -->
+        <h2 id="api-token">API Token Configuration</h2>
+        <p>For advanced features like printing from consignment pages and accessing full product data, Label Light needs a Lightspeed API bearer token.</p>
+
+        <h3>Why Do I Need an API Token?</h3>
+        <p>Some Lightspeed pages don't display all product information on screen. The API token allows Label Light to fetch complete product details (including variants, suppliers, and custom fields) directly from Lightspeed's servers.</p>
+
+        <div class="docs-note docs-note-info">
+          <span class="docs-note-icon">ℹ️</span>
+          <div class="docs-note-content">
+            <h4>What Data is Accessed?</h4>
+            <p>Label Light only reads product and consignment data. It never modifies your Lightspeed data or accesses sensitive information like payment details.</p>
+          </div>
+        </div>
+
+        <h3>Getting Your API Token</h3>
+        <div class="docs-steps">
+          <div class="docs-step">
+            <div class="docs-step-number">1</div>
+            <div class="docs-step-content">
+              <h3>Open Lightspeed Developer Tools</h3>
+              <p>In Chrome, while on any Lightspeed Retail page, press <span class="docs-inline-code">F12</span> or right-click and select "Inspect" to open Developer Tools.</p>
+            </div>
+          </div>
+
+          <div class="docs-step">
+            <div class="docs-step-number">2</div>
+            <div class="docs-step-content">
+              <h3>Go to the Network Tab</h3>
+              <p>Click the "Network" tab in Developer Tools. If the list is empty, refresh the page.</p>
+              
+              <!-- IMAGE PLACEHOLDER -->
+              <div class="docs-image-placeholder">
+                <span class="docs-image-placeholder-icon">🖼️</span>
+                <p class="docs-image-placeholder-text">Screenshot: Chrome DevTools Network tab</p>
+                <p class="docs-image-placeholder-caption">Image filename: devtools-network-tab.png</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="docs-step">
+            <div class="docs-step-number">3</div>
+            <div class="docs-step-content">
+              <h3>Find an API Request</h3>
+              <p>Look for requests to <span class="docs-inline-code">api.lightspeedapp.com</span>. Click on any of these requests.</p>
+            </div>
+          </div>
+
+          <div class="docs-step">
+            <div class="docs-step-number">4</div>
+            <div class="docs-step-content">
+              <h3>Copy the Authorization Header</h3>
+              <p>In the request headers, find the "Authorization" header. It will look like: <span class="docs-inline-code">Bearer eyJ...</span></p>
+              <p>Copy the entire value (including "Bearer ").</p>
+              
+              <!-- IMAGE PLACEHOLDER -->
+              <div class="docs-image-placeholder">
+                <span class="docs-image-placeholder-icon">🖼️</span>
+                <p class="docs-image-placeholder-text">Screenshot: Authorization header in request details</p>
+                <p class="docs-image-placeholder-caption">Image filename: authorization-header.png</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="docs-step">
+            <div class="docs-step-number">5</div>
+            <div class="docs-step-content">
+              <h3>Save in Label Light</h3>
+              <p>Open Label Light settings, paste the token in the <strong>Bearer Token</strong> field under API Configuration, and click <strong>Save Token</strong>.</p>
+              
+              <!-- IMAGE PLACEHOLDER -->
+              <div class="docs-image-placeholder">
+                <span class="docs-image-placeholder-icon">🖼️</span>
+                <p class="docs-image-placeholder-text">Screenshot: API Configuration section with token field</p>
+                <p class="docs-image-placeholder-caption">Image filename: api-token-field.png</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="docs-note docs-note-warning">
+          <span class="docs-note-icon">⚠️</span>
+          <div class="docs-note-content">
+            <h4>Token Expiration</h4>
+            <p>Lightspeed API tokens expire periodically (usually after a few hours). If you start seeing API errors, you may need to get a fresh token by repeating the steps above.</p>
+          </div>
+        </div>
+
+        <!-- Currency Settings -->
+        <h2 id="currency-settings">Currency & Formatting</h2>
+        <p>Configure how prices and currency values appear on your labels.</p>
+
+        <h3>Currency Symbol</h3>
+        <p>Enter your local currency symbol (e.g., $, €, £, ¥). This symbol will be displayed on all price fields on your labels.</p>
+
+        <h3>Currency Position</h3>
+        <p>Choose where the currency symbol appears relative to the price:</p>
+        <ul>
+          <li><strong>Before price</strong> - $10.00 (default for USD)</li>
+          <li><strong>After price</strong> - 10.00€ (common in European countries)</li>
+          <li><strong>No currency symbol</strong> - 10.00 (just the number)</li>
+        </ul>
+
+        <h3>Decimal Rounding</h3>
+        <p>Set how many decimal places to display for price values:</p>
+        <ul>
+          <li><strong>No rounding</strong> - Shows exact values from API</li>
+          <li><strong>2 decimal places</strong> - Standard for most currencies (e.g., $10.99)</li>
+          <li><strong>3-4 decimal places</strong> - For currencies that use smaller denominations</li>
+        </ul>
+
+        <!-- IMAGE PLACEHOLDER -->
+        <div class="docs-image-placeholder">
+          <span class="docs-image-placeholder-icon">🖼️</span>
+          <p class="docs-image-placeholder-text">Screenshot: Currency settings section</p>
+          <p class="docs-image-placeholder-caption">Image filename: currency-settings.png</p>
+        </div>
+
+        <!-- Label Templates -->
+        <h2 id="label-templates">Label Templates</h2>
+        <p>Label Light supports custom DYMO label templates (.dymo or .label files) created with DYMO Label Software or DYMO Connect.</p>
+
+        <h3>Uploading Label Templates</h3>
+        <ol>
+          <li>In the <strong>Label Templates</strong> section, click the upload area or drag and drop your label file</li>
+          <li>Supported formats: <span class="docs-inline-code">.label</span> and <span class="docs-inline-code">.dymo</span></li>
+          <li>The template will appear in your template list</li>
+        </ol>
+
+        <!-- IMAGE PLACEHOLDER -->
+        <div class="docs-image-placeholder">
+          <span class="docs-image-placeholder-icon">🖼️</span>
+          <p class="docs-image-placeholder-text">Screenshot: Label templates upload area and list</p>
+          <p class="docs-image-placeholder-caption">Image filename: label-templates-section.png</p>
+        </div>
+
+        <h3>Setting a Default Template</h3>
+        <p>Click the star icon (⭐) next to a template to set it as your default. The default template is used when printing labels unless you select a different one.</p>
+
+        <h3>Designing Label Templates</h3>
+        <p>Create your label templates using DYMO Label Software or DYMO Connect:</p>
+        <ol>
+          <li>Open DYMO Label Software or DYMO Connect</li>
+          <li>Select your label size (e.g., 30252 Address, 30336 Small, etc.)</li>
+          <li>Add text objects for each field you want on your label</li>
+          <li>Name each text object clearly (e.g., "ProductName", "Price", "SKU", "Barcode")</li>
+          <li>Save the label file</li>
+        </ol>
+
+        <div class="docs-note docs-note-tip">
+          <span class="docs-note-icon">💡</span>
+          <div class="docs-note-content">
+            <h4>Naming Objects</h4>
+            <p>Give your label objects meaningful names like "ProductName", "Price", or "SKU". These names are used for field mapping and make it easier to match product data to your label.</p>
+          </div>
+        </div>
+
+        <!-- Field Mappings -->
+        <h2 id="field-mappings">Field Mappings</h2>
+        <p>Field mappings define which product data fields from Lightspeed appear in which text objects on your label.</p>
+
+        <h3>How Field Mappings Work</h3>
+        <p>When you upload a label template, Label Light detects all the text objects (fields) in your label. You can then map each label field to a Lightspeed product data field.</p>
+
+        <p>For example:</p>
+        <ul>
+          <li>Label field "ProductName" → Lightspeed field "name"</li>
+          <li>Label field "Price" → Lightspeed field "price_including_tax"</li>
+          <li>Label field "SKU" → Lightspeed field "sku"</li>
+          <li>Label field "Barcode" → Lightspeed field "supply_price"</li>
+        </ul>
+
+        <!-- IMAGE PLACEHOLDER -->
+        <div class="docs-image-placeholder">
+          <span class="docs-image-placeholder-icon">🖼️</span>
+          <p class="docs-image-placeholder-text">Screenshot: Field mappings configuration interface</p>
+          <p class="docs-image-placeholder-caption">Image filename: field-mappings.png</p>
+        </div>
+
+        <h3>Available Product Fields</h3>
+        <p>Label Light can map the following Lightspeed product data fields:</p>
+        
+        <table class="docs-table">
+          <thead>
+            <tr>
+              <th>Field Name</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>name</td><td>Product name</td></tr>
+            <tr><td>sku</td><td>Stock Keeping Unit</td></tr>
+            <tr><td>handle</td><td>Product handle/slug</td></tr>
+            <tr><td>description</td><td>Product description</td></tr>
+            <tr><td>supply_price</td><td>Cost price / supply price</td></tr>
+            <tr><td>price_including_tax</td><td>Retail price with tax</td></tr>
+            <tr><td>price_excluding_tax</td><td>Retail price without tax</td></tr>
+            <tr><td>brand_name</td><td>Brand/manufacturer name</td></tr>
+            <tr><td>supplier_name</td><td>Supplier name</td></tr>
+            <tr><td>supplier_code</td><td>Supplier product code</td></tr>
+            <tr><td>variant_name</td><td>Variant name (e.g., Size, Color)</td></tr>
+            <tr><td>tags</td><td>Product tags</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Configuring Mappings</h3>
+        <ol>
+          <li>Make sure you have a default label template set</li>
+          <li>Go to the <strong>Field Mappings</strong> section</li>
+          <li>For each label field, select the corresponding Lightspeed product field from the dropdown</li>
+          <li>Click <strong>Save Mappings</strong></li>
+        </ol>
+
+        <!-- Branding -->
+        <h2 id="branding">Branding & Logo</h2>
+        <p>Add your company logo to appear on printed labels (if your label template includes an image object).</p>
+
+        <h3>Uploading Your Logo</h3>
+        <ol>
+          <li>In the <strong>Branding</strong> section, click the upload area or drag and drop your logo file</li>
+          <li>Supported formats: PNG, JPG, SVG (max 2MB)</li>
+          <li>A preview of your logo will appear</li>
+        </ol>
+
+        <!-- IMAGE PLACEHOLDER -->
+        <div class="docs-image-placeholder">
+          <span class="docs-image-placeholder-icon">🖼️</span>
+          <p class="docs-image-placeholder-text">Screenshot: Logo upload section with preview</p>
+          <p class="docs-image-placeholder-caption">Image filename: branding-logo-upload.png</p>
+        </div>
+
+        <div class="docs-note docs-note-info">
+          <span class="docs-note-icon">ℹ️</span>
+          <div class="docs-note-content">
+            <h4>Logo on Labels</h4>
+            <p>Your logo will only appear on labels that have an image object named "Logo" or "CompanyLogo". Make sure your label template includes this object if you want to display your logo.</p>
+          </div>
+        </div>
+
+        <!-- Language -->
+        <h2 id="language">Language Settings</h2>
+        <p>Label Light supports multiple languages for its user interface.</p>
+
+        <h3>Changing the Language</h3>
+        <ol>
+          <li>Click the language dropdown in the top-right corner of the settings page</li>
+          <li>Select your preferred language</li>
+          <li>The interface will update immediately</li>
+        </ol>
+
+        <h3>Supported Languages</h3>
+        <ul>
+          <li>English (US)</li>
+          <li>English (UK)</li>
+          <li>Spanish (Español)</li>
+          <li>French (Français)</li>
+        </ul>
+
+        <!-- IMAGE PLACEHOLDER -->
+        <div class="docs-image-placeholder">
+          <span class="docs-image-placeholder-icon">🖼️</span>
+          <p class="docs-image-placeholder-text">Screenshot: Language selector dropdown</p>
+          <p class="docs-image-placeholder-caption">Image filename: language-selector.png</p>
+        </div>
+
+      </div>
+
+      <!-- Navigation -->
+      <nav class="docs-nav">
+        <a href="getting-started.html" class="docs-nav-btn">
+          <span>←</span>
+          <div>
+            <span class="docs-nav-btn-label">Previous</span>
+            <span class="docs-nav-btn-title">Getting Started</span>
+          </div>
+        </a>
+        <a href="using-the-extension.html" class="docs-nav-btn">
+          <div>
+            <span class="docs-nav-btn-label">Next</span>
+            <span class="docs-nav-btn-title">Using the Extension</span>
+          </div>
+          <span>→</span>
+        </a>
+      </nav>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-links">
+        <a href="../index.html">Home</a>
+        <a href="../pricing.html">Pricing</a>
+        <a href="index.html">Documentation</a>
+        <a href="#privacy">Privacy Policy</a>
+        <a href="#terms">Terms of Service</a>
+      </div>
+      <div class="footer-contact">
+        <p>Questions? Email us at support@labellight.app</p>
+      </div>
+      <div class="footer-copyright">
+        <p>&copy; 2025 Label Light - Lightspeed Label Printing. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../config.js"></script>
+  <script src="../utils.js"></script>
+  <script src="../auth.js"></script>
+  <script src="../navbar.js"></script>
+</body>
+</html>

@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Troubleshooting - Label Light Documentation</title>
+  <meta name="description" content="Troubleshooting guide for Label Light. Solutions for common issues with printer detection, DYMO Connect, API errors, and label printing problems.">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <div id="navbar-container"></div>
+
+  <!-- Documentation Hero -->
+  <section class="docs-hero">
+    <div class="content-container">
+      <h1>Troubleshooting</h1>
+      <p class="docs-hero-subtitle">Solutions for common issues and problems</p>
+    </div>
+  </section>
+
+  <!-- Article Content -->
+  <section class="docs-article-section">
+    <div class="docs-article-container">
+      
+      <!-- Breadcrumb -->
+      <nav class="docs-breadcrumb">
+        <a href="index.html">Documentation</a>
+        <span>›</span>
+        <span>Troubleshooting</span>
+      </nav>
+
+      <!-- Article Header -->
+      <header class="docs-article-header">
+        <h1>Troubleshooting Guide</h1>
+        <p>Having trouble with Label Light? This guide covers the most common issues and their solutions. If you can't find your answer here, contact our support team.</p>
+      </header>
+
+      <!-- Table of Contents -->
+      <nav class="docs-toc">
+        <h2>On This Page</h2>
+        <ul>
+          <li><a href="#printer-not-detected">Printer Not Detected</a></li>
+          <li><a href="#dymo-connect-issues">DYMO Connect Issues</a></li>
+          <li><a href="#api-errors">API Token Errors</a></li>
+          <li><a href="#label-not-printing">Labels Not Printing</a></li>
+          <li><a href="#label-formatting">Label Formatting Issues</a></li>
+          <li><a href="#extension-not-working">Extension Not Working</a></li>
+          <li><a href="#authentication-issues">Authentication Issues</a></li>
+          <li><a href="#contact-support">Contact Support</a></li>
+        </ul>
+      </nav>
+
+      <!-- Article Content -->
+      <div class="docs-content">
+        
+        <!-- Printer Not Detected -->
+        <h2 id="printer-not-detected">Printer Not Detected</h2>
+        <p>If Label Light shows "No printers found" even though your printer is connected, try these solutions:</p>
+
+        <h3>Solution 1: Check DYMO Connect is Running</h3>
+        <p>Label Light requires DYMO Connect to be running in the background.</p>
+        <ol>
+          <li>Look for the DYMO icon in your system tray (Windows) or menu bar (macOS)</li>
+          <li>If you don't see it, open DYMO Connect from your applications</li>
+          <li>In Label Light settings, click the refresh button next to the printer dropdown</li>
+        </ol>
+
+        <!-- IMAGE PLACEHOLDER -->
+        <div class="docs-image-placeholder">
+          <span class="docs-image-placeholder-icon">🖼️</span>
+          <p class="docs-image-placeholder-text">Screenshot: DYMO Connect icon in system tray</p>
+          <p class="docs-image-placeholder-caption">Image filename: dymo-system-tray.png</p>
+        </div>
+
+        <h3>Solution 2: Check USB Connection</h3>
+        <ol>
+          <li>Ensure your DYMO printer is connected via USB</li>
+          <li>Try a different USB port</li>
+          <li>Try a different USB cable</li>
+          <li>Check if the printer appears in DYMO Connect software</li>
+        </ol>
+
+        <h3>Solution 3: Restart DYMO Web Service</h3>
+        <p>Sometimes the DYMO web service stops responding. To restart it:</p>
+
+        <p><strong>On Windows:</strong></p>
+        <ol>
+          <li>Press <span class="docs-inline-code">Win + R</span> to open Run</li>
+          <li>Type <span class="docs-inline-code">services.msc</span> and press Enter</li>
+          <li>Find "DYMO Web Service" in the list</li>
+          <li>Right-click and select "Restart"</li>
+        </ol>
+
+        <p><strong>On macOS:</strong></p>
+        <ol>
+          <li>Open Terminal</li>
+          <li>Run: <span class="docs-inline-code">killall DYMO.WebApi.Win</span></li>
+          <li>Reopen DYMO Connect</li>
+        </ol>
+
+        <h3>Solution 4: Enable Bypass Printer Detection</h3>
+        <p>Some versions of DYMO Connect have a bug where printer detection always fails. As a workaround:</p>
+        <ol>
+          <li>Open Label Light settings</li>
+          <li>Enable <strong>Bypass Printer Detection</strong> in General Settings</li>
+          <li>Click Save Settings</li>
+        </ol>
+
+        <div class="docs-note docs-note-warning">
+          <span class="docs-note-icon">⚠️</span>
+          <div class="docs-note-content">
+            <h4>Only Use When Necessary</h4>
+            <p>Only enable this option if your printer works in DYMO Connect software but isn't detected by Label Light. This bypasses connection checks and may cause errors if the printer is actually disconnected.</p>
+          </div>
+        </div>
+
+        <!-- DYMO Connect Issues -->
+        <h2 id="dymo-connect-issues">DYMO Connect Issues</h2>
+        
+        <h3>DYMO Connect Won't Start</h3>
+        <p>If DYMO Connect fails to start or crashes:</p>
+        <ol>
+          <li>Uninstall DYMO Connect completely</li>
+          <li>Download the latest version from <a href="https://www.dymo.com/support" target="_blank">dymo.com/support</a></li>
+          <li>Install with administrator privileges</li>
+          <li>Restart your computer</li>
+        </ol>
+
+        <h3>Web Service Port Conflict</h3>
+        <p>DYMO Connect's web service runs on ports 41951-41954. If another application is using these ports, Label Light won't be able to connect.</p>
+        
+        <p>To check for port conflicts (Windows):</p>
+        <div class="docs-code">
+          <code>netstat -ano | findstr "41951"</code>
+        </div>
+
+        <p>If another process is using the port, you may need to stop that process or change its port configuration.</p>
+
+        <h3>HTTPS Certificate Errors</h3>
+        <p>DYMO Connect uses a self-signed certificate for HTTPS. If you see certificate errors:</p>
+        <ol>
+          <li>Ensure you're using the latest version of DYMO Connect</li>
+          <li>Try reinstalling DYMO Connect</li>
+          <li>Check your antivirus software isn't blocking the certificate</li>
+        </ol>
+
+        <!-- API Errors -->
+        <h2 id="api-errors">API Token Errors</h2>
+
+        <h3>"API Token Required" Error</h3>
+        <p>This error appears when trying to print from pages that require API access (like consignments) without a configured token.</p>
+
+        <p><strong>Solution:</strong> Configure your Lightspeed API token in Label Light settings. See the <a href="configuration.html#api-token">API Token Configuration</a> guide.</p>
+
+        <!-- IMAGE PLACEHOLDER -->
+        <div class="docs-image-placeholder">
+          <span class="docs-image-placeholder-icon">🖼️</span>
+          <p class="docs-image-placeholder-text">Screenshot: API token error message in print modal</p>
+          <p class="docs-image-placeholder-caption">Image filename: api-token-error.png</p>
+        </div>
+
+        <h3>"API Token Expired" Error</h3>
+        <p>Lightspeed API tokens expire periodically (typically after several hours).</p>
+
+        <p><strong>Solution:</strong></p>
+        <ol>
+          <li>Get a fresh token from the Chrome DevTools Network tab</li>
+          <li>Update the token in Label Light settings</li>
+          <li>Click Save Token</li>
+        </ol>
+
+        <h3>"API Request Failed" Error</h3>
+        <p>This can occur due to network issues or Lightspeed server problems.</p>
+
+        <p><strong>Solutions:</strong></p>
+        <ul>
+          <li>Check your internet connection</li>
+          <li>Refresh the Lightspeed page and try again</li>
+          <li>Get a fresh API token</li>
+          <li>Wait a few minutes and try again (server may be temporarily unavailable)</li>
+        </ul>
+
+        <!-- Labels Not Printing -->
+        <h2 id="label-not-printing">Labels Not Printing</h2>
+
+        <h3>Print Job Sent But No Output</h3>
+        <p>If Label Light shows "Print successful" but nothing prints:</p>
+        <ol>
+          <li>Check that labels are loaded in your printer</li>
+          <li>Check the printer's LED indicators for errors</li>
+          <li>Open DYMO Connect and try printing a test label</li>
+          <li>Check if there's a paper jam</li>
+          <li>Ensure the correct printer is selected in Label Light</li>
+        </ol>
+
+        <!-- IMAGE PLACEHOLDER -->
+        <div class="docs-image-placeholder">
+          <span class="docs-image-placeholder-icon">🖼️</span>
+          <p class="docs-image-placeholder-text">Screenshot: Checking printer status in DYMO Connect</p>
+          <p class="docs-image-placeholder-caption">Image filename: dymo-connect-status.png</p>
+        </div>
+
+        <h3>Print Queue Stuck</h3>
+        <p>If labels are stuck in the print queue:</p>
+        
+        <p><strong>On Windows:</strong></p>
+        <ol>
+          <li>Open Settings → Devices → Printers & Scanners</li>
+          <li>Click on your DYMO printer → Open queue</li>
+          <li>Cancel all pending jobs</li>
+          <li>Try printing again</li>
+        </ol>
+
+        <p><strong>On macOS:</strong></p>
+        <ol>
+          <li>Open System Preferences → Printers & Scanners</li>
+          <li>Select your DYMO printer</li>
+          <li>Click "Open Print Queue"</li>
+          <li>Cancel any stuck jobs</li>
+        </ol>
+
+        <h3>Slow Printing</h3>
+        <p>If printing is very slow:</p>
+        <ul>
+          <li>Close unnecessary browser tabs</li>
+          <li>Ensure DYMO Connect is the only label software running</li>
+          <li>Try restarting DYMO Connect</li>
+          <li>For large batches, print in smaller groups</li>
+        </ul>
+
+        <!-- Label Formatting -->
+        <h2 id="label-formatting">Label Formatting Issues</h2>
+
+        <h3>Text Cut Off or Too Small</h3>
+        <p>If text doesn't fit properly on your labels:</p>
+        <ol>
+          <li>Open your label template in DYMO Label Software</li>
+          <li>Adjust the text object's "Auto Size" settings</li>
+          <li>Set text to "Shrink to Fit" if content varies in length</li>
+          <li>Re-upload the template to Label Light</li>
+        </ol>
+
+        <h3>Wrong Label Size</h3>
+        <p>If labels are printing in the wrong position or size:</p>
+        <ol>
+          <li>Ensure your label template matches your physical label size</li>
+          <li>Check the label type in DYMO Connect matches what's loaded</li>
+          <li>Try recalibrating the printer (hold the feed button for 5 seconds)</li>
+        </ol>
+
+        <h3>Missing Data on Labels</h3>
+        <p>If some fields are blank on printed labels:</p>
+        <ol>
+          <li>Check your field mappings in Label Light settings</li>
+          <li>Ensure all label objects have correct mappings</li>
+          <li>Verify the product has data in those fields in Lightspeed</li>
+          <li>Check that object names in your template match what Label Light expects</li>
+        </ol>
+
+        <div class="docs-note docs-note-info">
+          <span class="docs-note-icon">ℹ️</span>
+          <div class="docs-note-content">
+            <h4>Object Names</h4>
+            <p>Label Light identifies template fields by their object names. If you rename objects in your template, you'll need to update your field mappings.</p>
+          </div>
+        </div>
+
+        <!-- Extension Not Working -->
+        <h2 id="extension-not-working">Extension Not Working</h2>
+
+        <h3>Print Button Not Appearing</h3>
+        <p>If the Label Light print button doesn't appear on Lightspeed pages:</p>
+        <ol>
+          <li>Check that the extension is enabled in Chrome (chrome://extensions)</li>
+          <li>Refresh the Lightspeed page</li>
+          <li>Make sure you're logged into Lightspeed</li>
+          <li>Clear your browser cache and refresh</li>
+          <li>Disable other extensions temporarily to check for conflicts</li>
+        </ol>
+
+        <h3>Extension Showing Errors</h3>
+        <p>If the extension icon shows an error badge:</p>
+        <ol>
+          <li>Click the extension icon to see the error message</li>
+          <li>Check that you're signed in</li>
+          <li>Verify your subscription is active</li>
+          <li>Try signing out and back in</li>
+        </ol>
+
+        <h3>Reinstalling the Extension</h3>
+        <p>If other solutions don't work, try reinstalling:</p>
+        <ol>
+          <li>Go to chrome://extensions</li>
+          <li>Find Label Light and click "Remove"</li>
+          <li>Restart Chrome</li>
+          <li>Reinstall from the Chrome Web Store</li>
+          <li>Sign in again</li>
+        </ol>
+
+        <div class="docs-note docs-note-warning">
+          <span class="docs-note-icon">⚠️</span>
+          <div class="docs-note-content">
+            <h4>Settings After Reinstall</h4>
+            <p>Reinstalling the extension will reset your settings. You'll need to reconfigure your API token, label templates, and field mappings.</p>
+          </div>
+        </div>
+
+        <!-- Authentication Issues -->
+        <h2 id="authentication-issues">Authentication Issues</h2>
+
+        <h3>Can't Sign In</h3>
+        <p>If you're having trouble signing in with Google:</p>
+        <ol>
+          <li>Ensure you're using the same Google account used for your subscription</li>
+          <li>Check that pop-ups aren't blocked for the extension</li>
+          <li>Try signing out of Google in your browser, then signing in fresh</li>
+          <li>Clear Chrome's cookies and cache</li>
+        </ol>
+
+        <h3>Session Expired</h3>
+        <p>If you keep getting signed out:</p>
+        <ul>
+          <li>Your authentication session may have expired - simply sign in again</li>
+          <li>Check that Chrome is set to save cookies</li>
+          <li>Ensure no browser extensions are clearing cookies automatically</li>
+        </ul>
+
+        <h3>Subscription Not Found</h3>
+        <p>If Label Light says your subscription is not active:</p>
+        <ol>
+          <li>Verify you're signed in with the correct email</li>
+          <li>Check your subscription status at <a href="../subscription.html">your account page</a></li>
+          <li>Contact support if your subscription should be active</li>
+        </ol>
+
+        <!-- Contact Support -->
+        <h2 id="contact-support">Contact Support</h2>
+        <p>If you've tried the solutions above and still need help:</p>
+
+        <h3>Before Contacting Support</h3>
+        <p>Please have the following information ready:</p>
+        <ul>
+          <li>Your Label Light account email</li>
+          <li>Chrome version (find at chrome://version)</li>
+          <li>DYMO Connect version</li>
+          <li>Your operating system (Windows/macOS and version)</li>
+          <li>DYMO printer model</li>
+          <li>Screenshots of any error messages</li>
+          <li>Steps to reproduce the issue</li>
+        </ul>
+
+        <h3>Getting Console Logs</h3>
+        <p>For technical issues, console logs help our team diagnose problems:</p>
+        <ol>
+          <li>Press <span class="docs-inline-code">F12</span> to open Chrome DevTools</li>
+          <li>Click the "Console" tab</li>
+          <li>Look for messages starting with <span class="docs-inline-code">[LL]</span></li>
+          <li>Right-click in the console and select "Save as..."</li>
+          <li>Attach the saved log file to your support request</li>
+        </ol>
+
+        <!-- IMAGE PLACEHOLDER -->
+        <div class="docs-image-placeholder">
+          <span class="docs-image-placeholder-icon">🖼️</span>
+          <p class="docs-image-placeholder-text">Screenshot: Chrome DevTools console with Label Light logs</p>
+          <p class="docs-image-placeholder-caption">Image filename: console-logs.png</p>
+        </div>
+
+        <h3>Contact Methods</h3>
+        <div class="help-card" style="margin-top: 20px;">
+          <h3>Email Support</h3>
+          <p>Send us an email at <a href="mailto:support@labellight.app">support@labellight.app</a></p>
+          <p>We typically respond within 24 hours on business days.</p>
+        </div>
+
+      </div>
+
+      <!-- FAQ Section -->
+      <h2 style="margin-top: 50px; margin-bottom: 20px;">Frequently Asked Questions</h2>
+      
+      <div class="docs-faq-list">
+        <div class="docs-faq-item">
+          <button class="docs-faq-question">
+            <span>Why do I need DYMO Connect? Can I use DYMO Label Software instead?</span>
+            <span class="docs-faq-icon">+</span>
+          </button>
+          <div class="docs-faq-answer">
+            <div class="docs-faq-answer-content">
+              <p>Label Light requires DYMO Connect because it includes a web service that allows browser extensions to communicate with your printer. DYMO Label Software (the older version) doesn't include this web service. You can have both installed, but DYMO Connect must be running for Label Light to work.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="docs-faq-item">
+          <button class="docs-faq-question">
+            <span>Does Label Light work with DYMO LabelWriter Wireless printers?</span>
+            <span class="docs-faq-icon">+</span>
+          </button>
+          <div class="docs-faq-answer">
+            <div class="docs-faq-answer-content">
+              <p>Yes! Label Light works with all DYMO LabelWriter models, including wireless versions. Make sure the wireless printer is set up in DYMO Connect on your computer first. The extension communicates through DYMO Connect, which handles the wireless connection.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="docs-faq-item">
+          <button class="docs-faq-question">
+            <span>Can I use Label Light on multiple computers?</span>
+            <span class="docs-faq-icon">+</span>
+          </button>
+          <div class="docs-faq-answer">
+            <div class="docs-faq-answer-content">
+              <p>Your subscription allows you to use Label Light on one device at a time. If you need to use it on a new computer, you'll need to deactivate it on the old one first. Contact support if you need multi-device access for your business.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="docs-faq-item">
+          <button class="docs-faq-question">
+            <span>Why does the API token keep expiring?</span>
+            <span class="docs-faq-icon">+</span>
+          </button>
+          <div class="docs-faq-answer">
+            <div class="docs-faq-answer-content">
+              <p>Lightspeed's API tokens are designed to expire for security reasons. This is controlled by Lightspeed, not Label Light. When your token expires, you'll need to get a new one from the browser's Network tab. We're working on automatic token refresh in a future update.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="docs-faq-item">
+          <button class="docs-faq-question">
+            <span>Can I create my own label templates?</span>
+            <span class="docs-faq-icon">+</span>
+          </button>
+          <div class="docs-faq-answer">
+            <div class="docs-faq-answer-content">
+              <p>Yes! You can create custom label templates using DYMO Label Software or DYMO Connect, then upload them to Label Light. Make sure to name your text objects clearly (like "ProductName" or "Price") so you can map them to Lightspeed data fields.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="docs-nav">
+        <a href="using-the-extension.html" class="docs-nav-btn">
+          <span>←</span>
+          <div>
+            <span class="docs-nav-btn-label">Previous</span>
+            <span class="docs-nav-btn-title">Using the Extension</span>
+          </div>
+        </a>
+        <a href="index.html" class="docs-nav-btn">
+          <div>
+            <span class="docs-nav-btn-label">Back to</span>
+            <span class="docs-nav-btn-title">Documentation Home</span>
+          </div>
+          <span>→</span>
+        </a>
+      </nav>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-links">
+        <a href="../index.html">Home</a>
+        <a href="../pricing.html">Pricing</a>
+        <a href="index.html">Documentation</a>
+        <a href="#privacy">Privacy Policy</a>
+        <a href="#terms">Terms of Service</a>
+      </div>
+      <div class="footer-contact">
+        <p>Questions? Email us at support@labellight.app</p>
+      </div>
+      <div class="footer-copyright">
+        <p>&copy; 2025 Label Light - Lightspeed Label Printing. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../config.js"></script>
+  <script src="../utils.js"></script>
+  <script src="../auth.js"></script>
+  <script src="../navbar.js"></script>
+  <script>
+    // FAQ Accordion functionality
+    document.querySelectorAll('.docs-faq-question').forEach(function(button) {
+      button.addEventListener('click', function() {
+        var item = this.parentElement;
+        item.classList.toggle('active');
+      });
+    });
+  </script>
+</body>
+</html>
