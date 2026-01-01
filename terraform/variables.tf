@@ -42,3 +42,11 @@ variable "chrome_extension_id" {
   default     = "khjabnmpieofgdbddbajibmobklgaccp"
 }
 
+variable "chrome_extension_extra_ids" {
+  description = "Additional Chrome extension IDs allowed for OAuth callback/logout URLs (e.g., other developers' unpacked extension IDs)."
+  type        = list(string)
+  default = [
+    "iokogplbeoehemeondbcjcbngkpgalio",
+  ]
+}
+

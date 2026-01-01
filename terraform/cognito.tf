@@ -71,15 +71,12 @@ resource "aws_cognito_user_pool_client" "extension" {
   allowed_oauth_scopes                 = ["email", "openid", "profile"]
 
   # Chrome extension callback URLs
-  # Format: https://<extension-id>.chromiumapp.org/
-  # The extension ID is assigned when first uploaded to Chrome Web Store
-  # For local development, use chrome.identity.getRedirectURL() to get the URL
   callback_urls = [
-    "https://${var.chrome_extension_id}.chromiumapp.org/"
+    for id in concat([var.chrome_extension_id], var.chrome_extension_extra_ids) : "https://${id}.chromiumapp.org/"
   ]
 
   logout_urls = [
-    "https://${var.chrome_extension_id}.chromiumapp.org/"
+    for id in concat([var.chrome_extension_id], var.chrome_extension_extra_ids) : "https://${id}.chromiumapp.org/"
   ]
 
   supported_identity_providers = ["Google"]
