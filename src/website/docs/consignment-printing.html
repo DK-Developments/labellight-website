@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consignment Printing - LabelLight Documentation</title>
+  <meta name="description" content="Learn how to print labels from Lightspeed consignment pages, including open, partially received, and fully received consignments.">
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/docs.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <div id="navbar-container"></div>
+
+  <div class="docs-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="docs-sidebar">
+      <div class="docs-sidebar-header">
+        <h3>Documentation</h3>
+      </div>
+      <nav class="docs-nav">
+        <div class="docs-nav-section">
+          <h4>Getting Started</h4>
+          <ul>
+            <li><a href="index.html">Overview</a></li>
+            <li><a href="installation.html">Installation</a></li>
+            <li><a href="quick-start.html">Quick Start Guide</a></li>
+          </ul>
+        </div>
+        <div class="docs-nav-section">
+          <h4>Configuration</h4>
+          <ul>
+            <li><a href="settings.html">Extension Settings</a></li>
+            <li><a href="label-templates.html">Label Templates</a></li>
+            <li><a href="field-mappings.html">Field Mappings</a></li>
+          </ul>
+        </div>
+        <div class="docs-nav-section">
+          <h4>Features</h4>
+          <ul>
+            <li><a href="consignment-printing.html" class="active">Consignment Printing</a></li>
+            <li><a href="product-printing.html">Product Printing</a></li>
+            <li><a href="product-list-printing.html">Product List Printing</a></li>
+          </ul>
+        </div>
+        <div class="docs-nav-section">
+          <h4>Troubleshooting</h4>
+          <ul>
+            <li><a href="error-messages.html">Error Messages</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+          </ul>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="docs-main">
+      <div class="docs-content">
+        <div class="docs-breadcrumb">
+          <a href="../index.html">Home</a> / <a href="index.html">Documentation</a> / <span>Consignment Printing</span>
+        </div>
+
+        <h1>Consignment Printing</h1>
+        
+        <p class="docs-lead">Print labels for products in your Lightspeed consignments (purchase orders). LabelLight works with open, partially received, and fully received consignments.</p>
+
+        <section class="docs-section">
+          <h2>Overview</h2>
+          
+          <p>When you open a consignment page in Lightspeed Retail, LabelLight enhances the existing "Print Label" button to use your custom DYMO templates instead of Lightspeed's default printing.</p>
+
+          <div class="docs-image-placeholder">
+            <!-- TODO: Add screenshot of consignment page with Print Label button highlighted -->
+            <p>📸 Screenshot: Consignment page showing the Print Label button</p>
+          </div>
+
+          <h3>How It Works</h3>
+          <ol class="docs-steps">
+            <li>
+              <strong>Open a Consignment</strong>
+              <p>Navigate to a consignment page in Lightspeed Retail (e.g., <code class="docs-inline-code">yourdomain.retail.lightspeed.app/consignment/...</code>)</p>
+            </li>
+            <li>
+              <strong>Click "Print Label"</strong>
+              <p>Click the "Print Label" button in the consignment toolbar. LabelLight intercepts this click.</p>
+            </li>
+            <li>
+              <strong>LabelLight Modal Opens</strong>
+              <p>The LabelLight printing modal appears with a list of all products in the consignment.</p>
+            </li>
+            <li>
+              <strong>Review and Print</strong>
+              <p>Set quantities for each product and click "Print Labels" to print.</p>
+            </li>
+          </ol>
+        </section>
+
+        <section class="docs-section">
+          <h2>Consignment States</h2>
+          
+          <p>LabelLight handles consignments differently based on their status:</p>
+
+          <div class="docs-setting-group">
+            <h3>📦 Open Consignments</h3>
+            <p>Consignments that have been created but no items have been received yet.</p>
+            
+            <div class="docs-setting-item">
+              <h4>What You'll See</h4>
+              <p>The product list shows all ordered items with their <strong>ordered quantity</strong>. The "Received" column shows 0 for all items.</p>
+            </div>
+            
+            <div class="docs-setting-item">
+              <h4>Typical Use Case</h4>
+              <p>Print labels in advance before your shipment arrives. When the order comes in, labels are ready to apply.</p>
+            </div>
+
+            <div class="docs-image-placeholder">
+              <!-- TODO: Add screenshot of open consignment in LabelLight modal -->
+              <p>📸 Screenshot: Open consignment - all items show 0 received</p>
+            </div>
+          </div>
+
+          <div class="docs-setting-group">
+            <h3>📬 Partially Received Consignments</h3>
+            <p>Consignments where some (but not all) items have been received and marked in Lightspeed.</p>
+            
+            <div class="docs-setting-item">
+              <h4>What You'll See</h4>
+              <p>The product list shows both ordered and received quantities. Some items may show received quantities while others show 0.</p>
+            </div>
+            
+            <div class="docs-setting-item">
+              <h4>Duplicate SKU Handling</h4>
+              <p>In partial consignments, the same SKU may appear multiple times:</p>
+              <ul class="docs-list">
+                <li>Once for items on the original order</li>
+                <li>Once for items received that weren't on the original order</li>
+              </ul>
+              <p>LabelLight preserves all line items so you can print labels for each separately.</p>
+            </div>
+
+            <div class="docs-callout docs-callout-info">
+              <div class="docs-callout-title">💡 CSV Export</div>
+              <p>LabelLight automatically downloads and parses the consignment CSV export to get accurate received quantities. This ensures the "Received" values match exactly what Lightspeed shows.</p>
+            </div>
+
+            <div class="docs-image-placeholder">
+              <!-- TODO: Add screenshot of partially received consignment -->
+              <p>📸 Screenshot: Partially received consignment with mixed quantities</p>
+            </div>
+          </div>
+
+          <div class="docs-setting-group">
+            <h3>✅ Fully Received Consignments</h3>
+            <p>Consignments where all ordered items have been received.</p>
+            
+            <div class="docs-setting-item">
+              <h4>What You'll See</h4>
+              <p>All items show their full received quantity. The ordered and received quantities should match (or received may exceed ordered if extra items were received).</p>
+            </div>
+            
+            <div class="docs-setting-item">
+              <h4>Typical Use Case</h4>
+              <p>Print labels after receiving your complete shipment. All items are ready for labeling and stocking.</p>
+            </div>
+
+            <div class="docs-image-placeholder">
+              <!-- TODO: Add screenshot of fully received consignment -->
+              <p>📸 Screenshot: Fully received consignment showing all items</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="docs-section">
+          <h2>Using the Print Modal</h2>
+          
+          <p>When you click "Print Label" on a consignment page, the LabelLight modal appears with the following features:</p>
+
+          <div class="docs-setting-group">
+            <h3>Product List</h3>
+            <p>The modal displays a list of all products in the consignment with:</p>
+            <ul class="docs-list">
+              <li><strong>Product Name</strong> - The name of the product from Lightspeed</li>
+              <li><strong>SKU</strong> - The product SKU/code</li>
+              <li><strong>Quantity Ordered</strong> - How many were ordered</li>
+              <li><strong>Quantity Received</strong> - How many have been received</li>
+              <li><strong>Price</strong> - The product price (with your configured currency formatting)</li>
+              <li><strong>Labels to Print</strong> - Input field to set how many labels to print for this item</li>
+            </ul>
+
+            <div class="docs-image-placeholder">
+              <!-- TODO: Add screenshot of product list in modal -->
+              <p>📸 Screenshot: Product list showing consignment items</p>
+            </div>
+          </div>
+
+          <div class="docs-setting-group">
+            <h3>Setting Label Quantities</h3>
+            <p>For each product, you can set how many labels to print:</p>
+            <ul class="docs-list">
+              <li>Enter a number in the quantity field for each product</li>
+              <li>Set to 0 to skip printing that item</li>
+              <li>The total label count updates as you change quantities</li>
+            </ul>
+
+            <div class="docs-callout docs-callout-info">
+              <div class="docs-callout-title">💡 Quick Tip</div>
+              <p>You can use the "Select All" option to quickly set quantities based on ordered or received amounts.</p>
+            </div>
+          </div>
+
+          <div class="docs-setting-group">
+            <h3>Label Preview</h3>
+            <p>Hover over any product row to see a preview of how the label will look with that product's data. This uses your configured default template and field mappings.</p>
+
+            <div class="docs-image-placeholder">
+              <!-- TODO: Add screenshot of label preview on hover -->
+              <p>📸 Screenshot: Label preview appearing on hover</p>
+            </div>
+          </div>
+
+          <div class="docs-setting-group">
+            <h3>Template Selection</h3>
+            <p>If you have multiple label templates uploaded, use the template dropdown in the footer to switch between them. The preview will update to reflect the selected template.</p>
+          </div>
+
+          <div class="docs-setting-group">
+            <h3>Exporting Data</h3>
+            <p>Click the "Export CSV" button in the header to download the consignment data as a CSV file. This is useful for record-keeping or processing in other applications.</p>
+          </div>
+        </section>
+
+        <section class="docs-section">
+          <h2>Printing Labels</h2>
+          
+          <ol class="docs-steps">
+            <li>
+              <strong>Set Quantities</strong>
+              <p>Enter the number of labels to print for each product.</p>
+            </li>
+            <li>
+              <strong>Select Template</strong>
+              <p>Choose your label template from the dropdown (if you have multiple).</p>
+            </li>
+            <li>
+              <strong>Click "Print Labels"</strong>
+              <p>Click the Print Labels button in the footer to start printing.</p>
+            </li>
+            <li>
+              <strong>Wait for Completion</strong>
+              <p>A progress indicator shows printing status. Labels are sent to your DYMO printer one at a time.</p>
+            </li>
+          </ol>
+
+          <div class="docs-callout docs-callout-success">
+            <div class="docs-callout-title">✅ Print Complete</div>
+            <p>When printing finishes, you'll see a success message. The modal remains open so you can print more labels or close it.</p>
+          </div>
+        </section>
+
+        <section class="docs-section">
+          <h2>Fallback to Lightspeed Printing</h2>
+          
+          <p>If LabelLight encounters an error or cannot connect to DYMO, you have the option to fall back to Lightspeed's built-in label printing:</p>
+
+          <div class="docs-callout docs-callout-warning">
+            <div class="docs-callout-title">⚠️ Lightspeed Fallback</div>
+            <p>When the fallback option is triggered, LabelLight will redirect you to Lightspeed's native barcode/label printing page at:</p>
+            <p><code class="docs-inline-code">/consignment/barcodes?consignment_id=...</code></p>
+          </div>
+
+          <p>This fallback ensures you can always print labels, even if there are issues with DYMO connectivity.</p>
+
+          <h3>When Fallback Occurs</h3>
+          <ul class="docs-list">
+            <li>DYMO Connect is not running</li>
+            <li>No printers are detected (and bypass is not enabled)</li>
+            <li>Critical errors during the printing process</li>
+            <li>User manually requests fallback via the modal</li>
+          </ul>
+        </section>
+
+        <section class="docs-section">
+          <h2>Troubleshooting Consignment Printing</h2>
+          
+          <h4>"Print Label" button doesn't respond</h4>
+          <p>Ensure LabelLight is enabled and you're signed in. Refresh the Lightspeed page and try again.</p>
+          
+          <h4>Products missing from the list</h4>
+          <p>LabelLight uses the consignment's CSV export for accurate data. If products are missing, they may not be in the consignment yet. Refresh Lightspeed and try again.</p>
+          
+          <h4>Received quantities are wrong</h4>
+          <p>Ensure you've properly received items in Lightspeed before printing. LabelLight reads the current state of the consignment.</p>
+          
+          <h4>Data extraction is slow</h4>
+          <p>Large consignments may take a few seconds to load. The modal shows a loading indicator while data is being extracted.</p>
+
+          <p>For more troubleshooting help, see <a href="error-messages.html">Error Messages</a>.</p>
+        </section>
+
+        <div class="docs-next-prev">
+          <div class="docs-prev">
+            <a href="field-mappings.html">← Previous: Field Mappings</a>
+          </div>
+          <div class="docs-next">
+            <a href="product-printing.html">Next: Product Printing →</a>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <div id="footer-container"></div>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/utils.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/navbar.js"></script>
+  <script src="../js/footer.js"></script>
+</body>
+</html>

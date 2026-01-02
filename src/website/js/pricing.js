@@ -1,7 +1,13 @@
 // Pricing Page - Handle subscription selection with placeholder Stripe integration
 
+// Track current billing period
+let isYearlyBilling = false;
+
 // Wait for DOM to be ready
 document.addEventListener('DOMContentLoaded', function() {
+  
+  // Initialize billing toggle
+  initBillingToggle();
   
   // Get all subscribe buttons
   const subscribeButtons = document.querySelectorAll('.subscribe-btn');
@@ -36,8 +42,84 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 /**
+ * Initialize the billing toggle switch
+ */
+function initBillingToggle() {
+  const toggle = document.getElementById('billing-toggle');
+  const monthlyLabel = document.getElementById('monthly-label');
+  const yearlyLabel = document.getElementById('yearly-label');
+  
+  if (!toggle) return;
+  
+  // Set initial state
+  monthlyLabel.classList.add('active');
+  updatePricing(false);
+  
+  toggle.addEventListener('change', function() {
+    isYearlyBilling = this.checked;
+    
+    // Update label styling
+    if (isYearlyBilling) {
+      monthlyLabel.classList.remove('active');
+      yearlyLabel.classList.add('active');
+    } else {
+      monthlyLabel.classList.add('active');
+      yearlyLabel.classList.remove('active');
+    }
+    
+    updatePricing(isYearlyBilling);
+  });
+}
+
+/**
+ * Update all pricing displays based on billing period
+ * @param {boolean} yearly - Whether yearly billing is selected
+ */
+function updatePricing(yearly) {
+  const planCards = document.querySelectorAll('.plan-card[data-plan-key]');
+  
+  planCards.forEach(card => {
+    const planKey = card.getAttribute('data-plan-key');
+    
+    // Skip enterprise card
+    if (planKey === 'enterprise') return;
+    
+    const priceAmount = card.querySelector('.price-amount');
+    const priceInterval = card.querySelector('.price-interval');
+    const planSavings = card.querySelector('.plan-savings');
+    const subscribeBtn = card.querySelector('.subscribe-btn[data-plan-monthly]');
+    
+    if (!priceAmount) return;
+    
+    const monthlyPrice = parseFloat(priceAmount.getAttribute('data-monthly'));
+    const yearlyPrice = parseFloat(priceAmount.getAttribute('data-yearly'));
+    const savings = parseFloat(planSavings?.getAttribute('data-savings') || 0);
+    
+    if (yearly) {
+      priceAmount.textContent = '$' + yearlyPrice.toFixed(2);
+      priceInterval.textContent = '/year';
+      if (planSavings) {
+        planSavings.textContent = 'Save $' + savings.toFixed(2) + ' per year';
+      }
+      if (subscribeBtn) {
+        subscribeBtn.setAttribute('data-plan', subscribeBtn.getAttribute('data-plan-yearly'));
+      }
+    } else {
+      priceAmount.textContent = '$' + monthlyPrice.toFixed(2);
+      priceInterval.textContent = '/month';
+      if (planSavings) {
+        planSavings.textContent = '';
+      }
+      if (subscribeBtn) {
+        subscribeBtn.setAttribute('data-plan', subscribeBtn.getAttribute('data-plan-monthly'));
+      }
+    }
+  });
+}
+
+/**
  * Handle subscription button click
- * @param {string} plan - 'monthly' or 'annual'
+ * @param {string} plan - Plan identifier (e.g., 'trial', 'single-monthly', 'team-yearly')
  */
 function handleSubscribe(plan) {
   console.log('Subscribe button clicked:', plan);
@@ -66,9 +148,7 @@ function handleSubscribe(plan) {
   const stripe = Stripe(CONFIG.STRIPE_PUBLISHABLE_KEY);
   
   // Get the appropriate price ID
-  const priceId = plan === 'monthly' 
-    ? CONFIG.STRIPE_PRICE_ID_MONTHLY 
-    : CONFIG.STRIPE_PRICE_ID_ANNUAL;
+  const priceId = CONFIG.STRIPE_PRICE_IDS[plan];
   
   // Create checkout session via backend API
   createCheckoutSession(priceId)
@@ -95,17 +175,30 @@ function handleSubscribe(plan) {
 
 /**
  * Show placeholder message (to be removed when Stripe is integrated)
- * @param {string} plan - Selected plan
+ * @param {string} plan - Selected plan identifier
  */
 function showPlaceholderMessage(plan) {
   const planDetails = CONFIG.PRICING[plan];
+  
+  if (!planDetails) {
+    alert('Unknown plan selected. Please try again.');
+    return;
+  }
+  
+  const name = planDetails.name;
   const amount = planDetails.amount;
   const interval = planDetails.interval;
+  const users = planDetails.users;
+  
+  const priceDisplay = amount === 0 
+    ? 'Free' 
+    : `$${amount}/${interval}`;
   
   alert(
     `Stripe Integration Coming Soon!\n\n` +
-    `You selected: ${plan.charAt(0).toUpperCase() + plan.slice(1)} Plan\n` +
-    `Price: $${amount}/${interval}\n\n` +
+    `You selected: ${name}\n` +
+    `Price: ${priceDisplay}\n` +
+    `Users: ${users === 'unlimited' ? 'Unlimited' : users}\n\n` +
     `This will redirect to Stripe Checkout when integration is complete.\n\n` +
     `Your selection has been logged for analytics.`
   );
@@ -113,8 +206,10 @@ function showPlaceholderMessage(plan) {
   // Log for analytics (placeholder)
   console.log('Analytics: Subscription selected', {
     plan: plan,
+    name: name,
     amount: amount,
     interval: interval,
+    users: users,
     timestamp: new Date().toISOString()
   });
 }

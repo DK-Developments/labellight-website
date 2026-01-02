@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Field Mappings - LabelLight Documentation</title>
+  <meta name="description" content="Learn how to map Lightspeed product data to your DYMO label template fields.">
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/docs.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <div id="navbar-container"></div>
+
+  <div class="docs-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="docs-sidebar">
+      <div class="docs-sidebar-header">
+        <h3>Documentation</h3>
+      </div>
+      <nav class="docs-nav">
+        <div class="docs-nav-section">
+          <h4>Getting Started</h4>
+          <ul>
+            <li><a href="index.html">Overview</a></li>
+            <li><a href="installation.html">Installation</a></li>
+            <li><a href="quick-start.html">Quick Start Guide</a></li>
+          </ul>
+        </div>
+        <div class="docs-nav-section">
+          <h4>Configuration</h4>
+          <ul>
+            <li><a href="settings.html">Extension Settings</a></li>
+            <li><a href="label-templates.html">Label Templates</a></li>
+            <li><a href="field-mappings.html" class="active">Field Mappings</a></li>
+          </ul>
+        </div>
+        <div class="docs-nav-section">
+          <h4>Features</h4>
+          <ul>
+            <li><a href="consignment-printing.html">Consignment Printing</a></li>
+            <li><a href="product-printing.html">Product Printing</a></li>
+            <li><a href="product-list-printing.html">Product List Printing</a></li>
+          </ul>
+        </div>
+        <div class="docs-nav-section">
+          <h4>Troubleshooting</h4>
+          <ul>
+            <li><a href="error-messages.html">Error Messages</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+          </ul>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="docs-main">
+      <div class="docs-content">
+        <div class="docs-breadcrumb">
+          <a href="../index.html">Home</a> / <a href="index.html">Documentation</a> / <span>Field Mappings</span>
+        </div>
+
+        <h1>Field Mappings</h1>
+        
+        <p class="docs-lead">Field mappings connect your Lightspeed product data to the fields in your DYMO label template. This determines what information appears on each label when you print.</p>
+
+        <section class="docs-section">
+          <h2>How Field Mappings Work</h2>
+          
+          <p>When you print a label, LabelLight:</p>
+          <ol>
+            <li>Reads your label template to find all text and barcode objects</li>
+            <li>Looks up your field mappings to see what data should go in each object</li>
+            <li>Fetches the corresponding data from Lightspeed's API</li>
+            <li>Replaces the template placeholders with actual product data</li>
+            <li>Sends the populated label to your printer</li>
+          </ol>
+
+          <div class="docs-image-placeholder">
+            <!-- TODO: Add diagram showing the field mapping flow -->
+            <p>📸 Diagram: Field mapping flow from template to printed label</p>
+          </div>
+        </section>
+
+        <section class="docs-section">
+          <h2>Configuring Field Mappings</h2>
+          
+          <ol class="docs-steps">
+            <li>
+              <strong>Set a Default Template</strong>
+              <p>Field mappings are configured for your default label template. Make sure you've uploaded a template and set it as default first.</p>
+            </li>
+            <li>
+              <strong>Open Field Mappings Section</strong>
+              <p>In extension settings, scroll to the "Field Mappings" section.</p>
+            </li>
+            <li>
+              <strong>Map Each Field</strong>
+              <p>For each object in your template (e.g., "ProductName"), select the corresponding Lightspeed data field from the dropdown.</p>
+            </li>
+            <li>
+              <strong>Save Mappings</strong>
+              <p>Click "Save Mappings" to store your configuration.</p>
+            </li>
+          </ol>
+
+          <div class="docs-image-placeholder">
+            <!-- TODO: Add screenshot of field mappings configuration interface -->
+            <p>📸 Screenshot: Field mappings configuration interface</p>
+          </div>
+        </section>
+
+        <section class="docs-section">
+          <h2>Available API Fields</h2>
+          
+          <p>LabelLight provides access to many Lightspeed product fields. Here are the most commonly used fields:</p>
+
+          <h3>Core Product Fields</h3>
+          <table class="docs-table">
+            <thead>
+              <tr>
+                <th>Field Name</th>
+                <th>Description</th>
+                <th>Example</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code class="docs-inline-code">name</code></td>
+                <td>Product name</td>
+                <td>"Blue T-Shirt"</td>
+              </tr>
+              <tr>
+                <td><code class="docs-inline-code">variant_name</code></td>
+                <td>Specific variant name</td>
+                <td>"Medium"</td>
+              </tr>
+              <tr>
+                <td><code class="docs-inline-code">description</code></td>
+                <td>Product description</td>
+                <td>"100% cotton t-shirt"</td>
+              </tr>
+              <tr>
+                <td><code class="docs-inline-code">sku</code></td>
+                <td>Stock Keeping Unit code</td>
+                <td>"BLU-TSH-M"</td>
+              </tr>
+              <tr>
+                <td><code class="docs-inline-code">supplier_code</code></td>
+                <td>Supplier's product code</td>
+                <td>"SUPP-12345"</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Pricing Fields</h3>
+          <table class="docs-table">
+            <thead>
+              <tr>
+                <th>Field Name</th>
+                <th>Description</th>
+                <th>Example</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code class="docs-inline-code">price_including_tax</code></td>
+                <td>Retail price with tax</td>
+                <td>"$29.99"</td>
+              </tr>
+              <tr>
+                <td><code class="docs-inline-code">price_excluding_tax</code></td>
+                <td>Retail price without tax</td>
+                <td>"$27.27"</td>
+              </tr>
+              <tr>
+                <td><code class="docs-inline-code">supply_price</code></td>
+                <td>Cost/wholesale price</td>
+                <td>"$15.00"</td>
+              </tr>
+              <tr>
+                <td><code class="docs-inline-code">cost</code></td>
+                <td>Product cost</td>
+                <td>"$14.50"</td>
+              </tr>
+              <tr>
+                <td><code class="docs-inline-code">loyalty_amount</code></td>
+                <td>Loyalty points value</td>
+                <td>"30"</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Inventory Fields</h3>
+          <table class="docs-table">
+            <thead>
+              <tr>
+                <th>Field Name</th>
+                <th>Description</th>
+                <th>Example</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code class="docs-inline-code">quantity</code></td>
+                <td>Quantity (for consignments: ordered quantity)</td>
+                <td>"10"</td>
+              </tr>
+              <tr>
+                <td><code class="docs-inline-code">received</code></td>
+                <td>Received quantity (consignments only)</td>
+                <td>"8"</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Brand & Supplier Fields</h3>
+          <table class="docs-table">
+            <thead>
+              <tr>
+                <th>Field Name</th>
+                <th>Description</th>
+                <th>Example</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code class="docs-inline-code">brand.name</code></td>
+                <td>Brand name</td>
+                <td>"Nike"</td>
+              </tr>
+              <tr>
+                <td><code class="docs-inline-code">supplier.name</code></td>
+                <td>Supplier name</td>
+                <td>"ABC Distributors"</td>
+              </tr>
+              <tr>
+                <td><code class="docs-inline-code">type.name</code></td>
+                <td>Product type</td>
+                <td>"Apparel"</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Variant Option Fields</h3>
+          <table class="docs-table">
+            <thead>
+              <tr>
+                <th>Field Name</th>
+                <th>Description</th>
+                <th>Example</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code class="docs-inline-code">variant_options[0].name</code></td>
+                <td>First variant option name</td>
+                <td>"Size"</td>
+              </tr>
+              <tr>
+                <td><code class="docs-inline-code">variant_options[0].value</code></td>
+                <td>First variant option value</td>
+                <td>"Medium"</td>
+              </tr>
+              <tr>
+                <td><code class="docs-inline-code">variant_options[1].name</code></td>
+                <td>Second variant option name</td>
+                <td>"Color"</td>
+              </tr>
+              <tr>
+                <td><code class="docs-inline-code">variant_options[1].value</code></td>
+                <td>Second variant option value</td>
+                <td>"Blue"</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="docs-callout docs-callout-info">
+            <div class="docs-callout-title">💡 API Token Required</div>
+            <p>Many extended fields (brand, supplier, variant options) require a configured Lightspeed API bearer token. See <a href="settings.html#api-configuration">API Configuration</a> for setup instructions.</p>
+          </div>
+        </section>
+
+        <section class="docs-section">
+          <h2>Additional API Fields</h2>
+          
+          <p>LabelLight also provides access to these additional fields for advanced use cases:</p>
+
+          <h3>Product Codes</h3>
+          <table class="docs-table">
+            <thead>
+              <tr>
+                <th>Field Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code class="docs-inline-code">product_codes[0].code</code></td>
+                <td>Primary product code (e.g., UPC)</td>
+              </tr>
+              <tr>
+                <td><code class="docs-inline-code">product_codes[0].type</code></td>
+                <td>Primary code type (e.g., "UPC-A")</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Supplier Details</h3>
+          <table class="docs-table">
+            <thead>
+              <tr>
+                <th>Field Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code class="docs-inline-code">product_suppliers[0].supplier_name</code></td>
+                <td>Primary supplier name</td>
+              </tr>
+              <tr>
+                <td><code class="docs-inline-code">product_suppliers[0].code</code></td>
+                <td>Primary supplier's product code</td>
+              </tr>
+              <tr>
+                <td><code class="docs-inline-code">product_suppliers[0].price</code></td>
+                <td>Primary supplier's price</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Categories</h3>
+          <table class="docs-table">
+            <thead>
+              <tr>
+                <th>Field Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code class="docs-inline-code">categories[0].name</code></td>
+                <td>Primary category name</td>
+              </tr>
+              <tr>
+                <td><code class="docs-inline-code">product_category.name</code></td>
+                <td>Product category name</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Metadata Fields</h3>
+          <table class="docs-table">
+            <thead>
+              <tr>
+                <th>Field Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code class="docs-inline-code">id</code></td>
+                <td>Product ID</td>
+              </tr>
+              <tr>
+                <td><code class="docs-inline-code">created_at</code></td>
+                <td>Product creation date</td>
+              </tr>
+              <tr>
+                <td><code class="docs-inline-code">updated_at</code></td>
+                <td>Last update date</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section class="docs-section">
+          <h2>Currency Formatting</h2>
+          
+          <p>Price fields are automatically formatted according to your currency settings in LabelLight:</p>
+
+          <ul class="docs-list">
+            <li><strong>Currency Symbol</strong> - Added before or after the price (e.g., $, €, £)</li>
+            <li><strong>Symbol Position</strong> - Before ($10.00) or after (10.00€) the price</li>
+            <li><strong>Decimal Places</strong> - Number of decimal places to display</li>
+          </ul>
+
+          <p>Configure these options in the <a href="settings.html">General Settings</a> section.</p>
+        </section>
+
+        <section class="docs-section">
+          <h2>Mapping Tips</h2>
+          
+          <div class="docs-callout docs-callout-success">
+            <div class="docs-callout-title">✅ Best Practices</div>
+            <ul class="docs-list">
+              <li><strong>Use consistent names</strong> - Name template objects to match the data they'll display (e.g., "ProductName" for the name field)</li>
+              <li><strong>Test your mappings</strong> - Print a test label to verify all fields display correctly</li>
+              <li><strong>Consider empty values</strong> - Some products may not have all fields populated (e.g., no brand)</li>
+              <li><strong>Map barcodes to SKU</strong> - SKU is typically the most reliable field for barcode generation</li>
+              <li><strong>Save frequently</strong> - Click "Save Mappings" after making changes</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="docs-section">
+          <h2>Troubleshooting</h2>
+          
+          <h4>Field shows blank on label</h4>
+          <p>The mapped Lightspeed field may be empty for that product. Check the product in Lightspeed to verify the data exists.</p>
+          
+          <h4>Field not appearing in dropdown</h4>
+          <p>Ensure you have set a default template. Only fields from the default template appear in the mapping interface.</p>
+          
+          <h4>Price showing wrong format</h4>
+          <p>Check your currency settings in General Settings. The format is applied when labels are generated.</p>
+        </section>
+
+        <div class="docs-next-prev">
+          <div class="docs-prev">
+            <a href="label-templates.html">← Previous: Label Templates</a>
+          </div>
+          <div class="docs-next">
+            <a href="consignment-printing.html">Next: Consignment Printing →</a>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <div id="footer-container"></div>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/utils.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/navbar.js"></script>
+  <script src="../js/footer.js"></script>
+</body>
+</html>

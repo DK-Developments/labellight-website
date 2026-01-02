@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Printing - LabelLight Documentation</title>
+  <meta name="description" content="Learn how to print labels from Lightspeed product edit pages, including products with multiple variants.">
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/docs.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <div id="navbar-container"></div>
+
+  <div class="docs-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="docs-sidebar">
+      <div class="docs-sidebar-header">
+        <h3>Documentation</h3>
+      </div>
+      <nav class="docs-nav">
+        <div class="docs-nav-section">
+          <h4>Getting Started</h4>
+          <ul>
+            <li><a href="index.html">Overview</a></li>
+            <li><a href="installation.html">Installation</a></li>
+            <li><a href="quick-start.html">Quick Start Guide</a></li>
+          </ul>
+        </div>
+        <div class="docs-nav-section">
+          <h4>Configuration</h4>
+          <ul>
+            <li><a href="settings.html">Extension Settings</a></li>
+            <li><a href="label-templates.html">Label Templates</a></li>
+            <li><a href="field-mappings.html">Field Mappings</a></li>
+          </ul>
+        </div>
+        <div class="docs-nav-section">
+          <h4>Features</h4>
+          <ul>
+            <li><a href="consignment-printing.html">Consignment Printing</a></li>
+            <li><a href="product-printing.html" class="active">Product Printing</a></li>
+            <li><a href="product-list-printing.html">Product List Printing</a></li>
+          </ul>
+        </div>
+        <div class="docs-nav-section">
+          <h4>Troubleshooting</h4>
+          <ul>
+            <li><a href="error-messages.html">Error Messages</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+          </ul>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="docs-main">
+      <div class="docs-content">
+        <div class="docs-breadcrumb">
+          <a href="../index.html">Home</a> / <a href="index.html">Documentation</a> / <span>Product Printing</span>
+        </div>
+
+        <h1>Product Printing (Edit Page)</h1>
+        
+        <p class="docs-lead">Print labels directly from the Lightspeed product edit page. LabelLight adds a "Print Labels" button to the product action bar for quick access to label printing.</p>
+
+        <section class="docs-section">
+          <h2>Overview</h2>
+          
+          <p>When you're editing a product in Lightspeed Retail, LabelLight automatically injects a "Print Labels" button into the page's action bar. This allows you to quickly print labels for the product you're viewing without navigating to another page.</p>
+
+          <div class="docs-image-placeholder">
+            <!-- TODO: Add screenshot of product edit page with Print Labels button highlighted -->
+            <p>📸 Screenshot: Product Edit page showing the injected "Print Labels" button in the action bar</p>
+          </div>
+
+          <h3>Key Features</h3>
+          <ul class="docs-list">
+            <li><strong>Auto-injected Button</strong> - The "Print Labels" button appears automatically on product edit pages</li>
+            <li><strong>Variant Support</strong> - All product variants are automatically detected and included</li>
+            <li><strong>API Data Fetching</strong> - Full product data is fetched from Lightspeed API using the product's SKU</li>
+            <li><strong>Instant Access</strong> - No need to navigate away from the product you're editing</li>
+          </ul>
+        </section>
+
+        <section class="docs-section">
+          <h2>How It Works</h2>
+          
+          <ol class="docs-steps">
+            <li>
+              <strong>Navigate to Product Edit Page</strong>
+              <p>Open any product in Lightspeed Retail and click "Edit" to access the product edit page. The URL will look like: <code class="docs-inline-code">yourdomain.retail.lightspeed.app/product/[product-id]/update</code></p>
+            </li>
+            <li>
+              <strong>Look for "Print Labels" Button</strong>
+              <p>In the action bar (where "Cancel" and "Save" buttons are), you'll see a new "Print Labels" button added by LabelLight.</p>
+            </li>
+            <li>
+              <strong>Click "Print Labels"</strong>
+              <p>Click the button to open the LabelLight printing modal.</p>
+            </li>
+            <li>
+              <strong>SKU Extraction</strong>
+              <p>LabelLight automatically reads all SKUs from the product's variant table on the page.</p>
+            </li>
+            <li>
+              <strong>API Data Fetch</strong>
+              <p>Using the extracted SKUs, LabelLight fetches complete product data from the Lightspeed API.</p>
+            </li>
+            <li>
+              <strong>Review and Print</strong>
+              <p>Set quantities for each variant and print your labels.</p>
+            </li>
+          </ol>
+        </section>
+
+        <section class="docs-section">
+          <h2>Products with Variants</h2>
+          
+          <p>If your product has multiple variants (e.g., different sizes, colors), LabelLight automatically detects all variants from the product edit page.</p>
+
+          <div class="docs-setting-group">
+            <h3>How Variants Are Detected</h3>
+            <p>LabelLight reads SKU values from the variant input fields on the product edit page. Each variant with a SKU will appear as a separate item in the print modal.</p>
+
+            <div class="docs-image-placeholder">
+              <!-- TODO: Add screenshot of product with variants in Lightspeed -->
+              <p>📸 Screenshot: Product edit page showing variant table with multiple SKUs</p>
+            </div>
+          </div>
+
+          <div class="docs-setting-group">
+            <h3>What You'll See in the Modal</h3>
+            <p>Each variant appears as a separate row with:</p>
+            <ul class="docs-list">
+              <li>Product Name (may include variant name if available)</li>
+              <li>SKU for that specific variant</li>
+              <li>Price for the variant</li>
+              <li>Individual quantity input for each variant</li>
+            </ul>
+          </div>
+
+          <div class="docs-callout docs-callout-info">
+            <div class="docs-callout-title">💡 Variant Options</div>
+            <p>When printing variant labels, you can map variant-specific fields like variant option names (Size, Color, etc.) and values to your label template. See <a href="field-mappings.html">Field Mappings</a> for details.</p>
+          </div>
+        </section>
+
+        <section class="docs-section">
+          <h2>The Print Modal</h2>
+          
+          <p>After clicking "Print Labels", the LabelLight modal opens with your product(s):</p>
+
+          <div class="docs-image-placeholder">
+            <!-- TODO: Add screenshot of print modal for product edit page -->
+            <p>📸 Screenshot: Print modal showing product variants from edit page</p>
+          </div>
+
+          <h3>Modal Features</h3>
+          <ul class="docs-list">
+            <li><strong>Product List</strong> - All variants detected from the product page</li>
+            <li><strong>Label Preview</strong> - Hover over any row to preview the label</li>
+            <li><strong>Quantity Controls</strong> - Set how many labels to print per variant</li>
+            <li><strong>Template Selector</strong> - Choose which label template to use</li>
+            <li><strong>Export CSV</strong> - Export product data for external use</li>
+          </ul>
+        </section>
+
+        <section class="docs-section">
+          <h2>API Data for Product Labels</h2>
+          
+          <p>LabelLight fetches additional product data from the Lightspeed API to provide more fields for your labels than what's visible on the edit page.</p>
+
+          <h3>Available API Fields</h3>
+          <p>Common fields available for product labels include:</p>
+          <table class="docs-table">
+            <thead>
+              <tr>
+                <th>Field</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>name</td>
+                <td>Product name</td>
+              </tr>
+              <tr>
+                <td>variant_name</td>
+                <td>Specific variant name</td>
+              </tr>
+              <tr>
+                <td>sku</td>
+                <td>Product/variant SKU</td>
+              </tr>
+              <tr>
+                <td>supplier_code</td>
+                <td>Supplier's product code</td>
+              </tr>
+              <tr>
+                <td>price_including_tax</td>
+                <td>Retail price with tax</td>
+              </tr>
+              <tr>
+                <td>price_excluding_tax</td>
+                <td>Retail price without tax</td>
+              </tr>
+              <tr>
+                <td>supply_price</td>
+                <td>Cost/wholesale price</td>
+              </tr>
+              <tr>
+                <td>brand.name</td>
+                <td>Brand name</td>
+              </tr>
+              <tr>
+                <td>supplier.name</td>
+                <td>Supplier name</td>
+              </tr>
+              <tr>
+                <td>variant_options[0].name</td>
+                <td>First variant option name (e.g., "Size")</td>
+              </tr>
+              <tr>
+                <td>variant_options[0].value</td>
+                <td>First variant option value (e.g., "Medium")</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p>See <a href="field-mappings.html">Field Mappings</a> for a complete list of available fields.</p>
+
+          <div class="docs-callout docs-callout-warning">
+            <div class="docs-callout-title">⚠️ API Token Required</div>
+            <p>To access extended product data from the API, you must configure your bearer token in the extension settings. Without a token, only basic data from the page will be available.</p>
+          </div>
+        </section>
+
+        <section class="docs-section">
+          <h2>Printing Labels</h2>
+          
+          <ol class="docs-steps">
+            <li>
+              <strong>Review Products</strong>
+              <p>Verify the correct variants are listed in the modal.</p>
+            </li>
+            <li>
+              <strong>Set Quantities</strong>
+              <p>Enter how many labels to print for each variant. Set to 0 to skip a variant.</p>
+            </li>
+            <li>
+              <strong>Select Template</strong>
+              <p>Choose your label template from the dropdown.</p>
+            </li>
+            <li>
+              <strong>Preview Labels</strong>
+              <p>Hover over rows to preview how labels will look.</p>
+            </li>
+            <li>
+              <strong>Print</strong>
+              <p>Click "Print Labels" to send labels to your DYMO printer.</p>
+            </li>
+          </ol>
+        </section>
+
+        <section class="docs-section">
+          <h2>Troubleshooting</h2>
+          
+          <h4>"Print Labels" button doesn't appear</h4>
+          <p>The button only appears on product <strong>edit</strong> pages (URLs ending in <code class="docs-inline-code">/update</code>). Make sure you've clicked "Edit" on the product, not just viewing it.</p>
+          
+          <h4>No variants appear in the modal</h4>
+          <p>Ensure your product variants have SKUs assigned. LabelLight uses SKU fields to identify variants. Products without SKUs may not appear.</p>
+          
+          <h4>API data not loading</h4>
+          <p>Check that your bearer token is configured in settings. Without a token, only basic data visible on the page will be used.</p>
+          
+          <h4>Button appears but nothing happens when clicked</h4>
+          <p>Try refreshing the page. If the issue persists, check that DYMO Connect is running and the extension is signed in.</p>
+
+          <p>For more help, see <a href="error-messages.html">Error Messages</a>.</p>
+        </section>
+
+        <div class="docs-next-prev">
+          <div class="docs-prev">
+            <a href="consignment-printing.html">← Previous: Consignment Printing</a>
+          </div>
+          <div class="docs-next">
+            <a href="product-list-printing.html">Next: Product List Printing →</a>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <div id="footer-container"></div>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/utils.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/navbar.js"></script>
+  <script src="../js/footer.js"></script>
+</body>
+</html>

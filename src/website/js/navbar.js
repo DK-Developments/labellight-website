@@ -1,15 +1,52 @@
+// Determine the base path based on current page location
+const navbarBasePath = window.location.pathname.includes('/docs/') ? '../' : '';
+const isInDocs = window.location.pathname.includes('/docs/');
+
 // Load navbar and update based on auth state
-fetch('navbar.html')
+fetch(navbarBasePath + 'navbar.html')
   .then(response => response.text())
   .then(html => {
     document.getElementById('navbar-container').innerHTML = html;
+    fixNavbarLinks();
     updateNavbarAuth();
   })
   .catch(error => console.error('Error loading navbar:', error));
 
+// Fix navbar links based on current page location
+function fixNavbarLinks() {
+  if (isInDocs) {
+    // When in docs folder, adjust relative links
+    const navLinks = document.querySelectorAll('.navbar a.nav-link');
+    navLinks.forEach(link => {
+      const href = link.getAttribute('href');
+      if (href === 'docs/index.html') {
+        // Already in docs, just go to index.html
+        link.setAttribute('href', 'index.html');
+      } else if (href && !href.startsWith('../') && !href.startsWith('http')) {
+        // Add ../ prefix for links to root-level pages
+        link.setAttribute('href', '../' + href);
+      }
+    });
+    // Fix profile link too
+    const profileLink = document.getElementById('profile-link');
+    if (profileLink) {
+      const href = profileLink.getAttribute('href');
+      if (href && !href.startsWith('../') && !href.startsWith('http')) {
+        profileLink.setAttribute('href', '../' + href);
+      }
+    }
+  }
+}
+
 // Show/hide navbar elements based on auth state
 async function updateNavbarAuth() {
-  const isLoggedIn = auth.isAuthenticated();
+  let isLoggedIn = false;
+  
+  try {
+    isLoggedIn = auth.isAuthenticated();
+  } catch (error) {
+    console.error('Error checking auth state:', error);
+  }
   
   const loginBtn = document.querySelector('.login-btn');
   const logoutBtn = document.querySelector('.logout-btn');
