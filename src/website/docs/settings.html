@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Extension Settings - LabelLight Documentation</title>
-  <meta name="description" content="Complete guide to configuring LabelLight extension settings including printer selection, API configuration, branding, and label templates.">
+  <title>Extension Settings - LabelLight Docs</title>
+  <meta name="description" content="Complete guide to configuring LabelLight extension settings including printer selection, Personal Token, branding, and label templates.">
+  <link rel="icon" type="image/png" href="../images/favicon.png">
   <link rel="stylesheet" href="../css/styles.css">
-  <link rel="stylesheet" href="../css/docs.css">
 </head>
 <body>
   <!-- Navigation -->
@@ -203,20 +203,25 @@
           </div>
         </section>
 
-        <!-- API Configuration Section -->
+        <!-- Personal Token Section -->
         <section class="docs-section">
-          <h2>4. API Configuration</h2>
+          <h2>4. Personal Token</h2>
           
-          <p>API configuration allows LabelLight to fetch extended product data from Lightspeed's API. This enables you to include fields on your labels that aren't available through the standard Lightspeed interface.</p>
+          <p>Personal Token is <strong>required</strong> for LabelLight to function. The extension uses Lightspeed's API to fetch product data for printing labels.</p>
 
           <div class="docs-setting-group">
             <div class="docs-setting-item">
-              <h4>🔑 Bearer Token <span class="docs-setting-badge docs-setting-badge-required">Required for API Data</span></h4>
-              <p>Enter your Lightspeed API bearer token. This token authorizes LabelLight to access your Lightspeed product data.</p>
+              <h4>🔑 Personal Token <span class="docs-setting-badge docs-setting-badge-required">Required</span></h4>
+              <p>Enter your Lightspeed personal token. This token authorizes LabelLight to access your Lightspeed product data. <strong>The extension will not work without a valid personal token.</strong></p>
             </div>
           </div>
 
-          <h3>How to Get Your Bearer Token</h3>
+          <div class="docs-callout docs-callout-warning">
+            <div class="docs-callout-title">⚠️ Required Configuration</div>
+            <p>The Personal Token is <strong>mandatory</strong>. LabelLight requires API access to fetch product information from Lightspeed. Without a valid token, you will not be able to print labels.</p>
+          </div>
+
+          <h3>How to Get Your Personal Token</h3>
           
           <ol class="docs-steps">
             <li>
@@ -224,49 +229,43 @@
               <p>Open your Lightspeed Retail backoffice in Chrome.</p>
             </li>
             <li>
-              <strong>Open Developer Tools</strong>
-              <p>Press <code class="docs-inline-code">F12</code> or right-click and select "Inspect" to open Chrome DevTools.</p>
+              <strong>Navigate to Personal Tokens Page</strong>
+              <p>Go to <code class="docs-inline-code">https://{YOUR_DOMAIN}.retail.lightspeed.app/setup/personal-tokens</code></p>
+              <p>Replace <code class="docs-inline-code">{YOUR_DOMAIN}</code> with your actual Lightspeed domain (e.g., <code class="docs-inline-code">mystore.retail.lightspeed.app</code>).</p>
             </li>
             <li>
-              <strong>Go to Network Tab</strong>
-              <p>Click on the "Network" tab in DevTools.</p>
+              <strong>Create a New Token</strong>
+              <p>Click the button to create a new personal token. Give it a descriptive name like "LabelLight Extension".</p>
             </li>
             <li>
-              <strong>Navigate in Lightspeed</strong>
-              <p>Perform any action in Lightspeed (like opening a product) to generate network requests.</p>
+              <strong>Copy the Token</strong>
+              <p>Once created, copy the token value immediately. <strong>Important:</strong> You won't be able to see this token again after leaving the page.</p>
             </li>
             <li>
-              <strong>Find an API Request</strong>
-              <p>Look for requests to the Lightspeed API. Click on one to view details.</p>
-            </li>
-            <li>
-              <strong>Copy the Authorization Header</strong>
-              <p>In the "Headers" section, find the "Authorization" header. Copy the token value (after "Bearer ").</p>
+              <strong>Paste into LabelLight Settings</strong>
+              <p>Paste the token into the "Personal Token" field in LabelLight settings and save.</p>
             </li>
           </ol>
 
+          <div class="docs-callout docs-callout-info">
+            <div class="docs-callout-title">📚 Learn More</div>
+            <p>For more information about personal tokens in Lightspeed Retail, see the <a href="https://x-series-support.lightspeedhq.com/hc/en-us/articles/25534105904027-Understanding-personal-tokens-in-Retail-POS-X-Series" target="_blank" rel="noopener noreferrer">Lightspeed support article on personal tokens</a>.</p>
+          </div>
+
           <div class="docs-callout docs-callout-warning">
             <div class="docs-callout-title">⚠️ Token Security</div>
-            <p>Your bearer token provides access to your Lightspeed data. Keep it secure and never share it publicly. The token is stored securely in your browser's local storage.</p>
+            <p>Your personal token provides access to your Lightspeed data. Keep it secure and never share it publicly. The token is stored securely in your browser's local storage. If you suspect your token has been compromised, revoke it immediately from the Personal Tokens page and create a new one.</p>
           </div>
 
           <div class="docs-callout docs-callout-info">
-            <div class="docs-callout-title">💡 Token Expiration</div>
-            <p>Bearer tokens may expire periodically. If you see authentication errors, you may need to obtain a fresh token using the steps above.</p>
+            <div class="docs-callout-title">💡 Token Management</div>
+            <p>Personal tokens don't expire automatically, but you can revoke them at any time from the Personal Tokens page. If you revoke a token that's being used by LabelLight, you'll need to create a new one and update it in the extension settings.</p>
           </div>
 
           <div class="docs-image-placeholder">
-            <!-- TODO: Add screenshot of API configuration section and DevTools showing how to get token -->
-            <p>📸 Screenshot: API Configuration Section</p>
+            <!-- TODO: Add screenshot of Personal Token section and DevTools showing how to get token -->
+            <p>📸 Screenshot: Personal Token Section</p>
           </div>
-
-          <h3>What Happens Without a Token?</h3>
-          <p>If you don't configure a bearer token, LabelLight will still work but with limited functionality:</p>
-          <ul class="docs-list">
-            <li>Basic product data from the Lightspeed page will be used</li>
-            <li>Extended API fields (brand, supplier, custom fields, etc.) won't be available</li>
-            <li>Some field mappings may show blank values</li>
-          </ul>
         </section>
 
         <!-- Branding Section -->
@@ -367,6 +366,11 @@
             <p>Before configuring field mappings, you must: (1) Upload at least one label template, and (2) Set one template as the default.</p>
           </div>
 
+          <div class="docs-callout docs-callout-info">
+            <div class="docs-callout-title">💡 Field Mappings Persistence</div>
+            <p>Your field mappings are preserved when you switch between different default label templates. They are only cleared when you delete a label template from your collection. This allows you to maintain multiple templates with different layouts while keeping your field configurations intact.</p>
+          </div>
+
           <div class="docs-setting-group">
             <h3>How Field Mapping Works</h3>
             <p>Each text or barcode object in your DYMO template can be mapped to a Lightspeed product field. When you print, the mapped data replaces the placeholder content in your template.</p>
@@ -406,6 +410,13 @@
           </div>
 
           <p>For a complete guide to field mappings including all available fields, see <a href="field-mappings.html">Field Mappings</a>.</p>
+
+          <h3>Troubleshooting Field Mappings</h3>
+          
+          <div class="docs-callout docs-callout-warning">
+            <div class="docs-callout-title">⚠️ Problem: I can only see my product name, without any variant options</div>
+            <p><strong>Solution:</strong> Change from the "Product Name" API field to the "Variant Name" API field in your field mappings. The Product Name field only shows the base product name, while the Variant Name field includes the complete name with variant options (e.g., "T-Shirt - Blue - Large" instead of just "T-Shirt").</p>
+          </div>
         </section>
 
         <!-- Saving Settings -->
@@ -416,13 +427,18 @@
           
           <ul class="docs-list">
             <li><strong>General Settings</strong> - Click "Save Settings" after changing printer or currency options</li>
-            <li><strong>API Configuration</strong> - Click "Save Token" after entering your bearer token</li>
+            <li><strong>Personal Token</strong> - Click "Save Token" after entering your Personal Token (required for the extension to work)</li>
             <li><strong>Field Mappings</strong> - Click "Save Mappings" after configuring your field mappings</li>
           </ul>
 
           <div class="docs-callout docs-callout-success">
             <div class="docs-callout-title">✅ Success Messages</div>
             <p>After saving, you'll see a success notification confirming your settings were saved. If there's an error, an error message will appear explaining the issue.</p>
+          </div>
+
+          <div class="docs-callout docs-callout-warning">
+            <div class="docs-callout-title">⚠️ Minimum Required Settings</div>
+            <p>To use LabelLight, you must configure at a minimum: (1) A default printer, (2) A valid Personal Token, and (3) At least one label template with field mappings.</p>
           </div>
         </section>
 
@@ -446,5 +462,6 @@
   <script src="../js/auth.js"></script>
   <script src="../js/navbar.js"></script>
   <script src="../js/footer.js"></script>
+  <script src="../js/anchor-links.js"></script>
 </body>
 </html>

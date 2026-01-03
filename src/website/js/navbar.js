@@ -35,6 +35,22 @@ function fixNavbarLinks() {
         profileLink.setAttribute('href', '../' + href);
       }
     }
+    // Fix logo image path
+    const logoImage = document.querySelector('.logo-image');
+    if (logoImage) {
+      const src = logoImage.getAttribute('src');
+      if (src && !src.startsWith('../')) {
+        logoImage.setAttribute('src', '../' + src);
+      }
+    }
+    // Fix logo link
+    const logoLink = document.querySelector('.navbar-logo');
+    if (logoLink) {
+      const href = logoLink.getAttribute('href');
+      if (href && !href.startsWith('../') && !href.startsWith('http')) {
+        logoLink.setAttribute('href', '../' + href);
+      }
+    }
   }
 }
 

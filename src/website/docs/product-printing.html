@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Product Printing - LabelLight Documentation</title>
+  <title>Product Printing - LabelLight Docs</title>
   <meta name="description" content="Learn how to print labels from Lightspeed product edit pages, including products with multiple variants.">
+  <link rel="icon" type="image/png" href="../images/favicon.png">
   <link rel="stylesheet" href="../css/styles.css">
-  <link rel="stylesheet" href="../css/docs.css">
 </head>
 <body>
   <!-- Navigation -->
@@ -231,8 +231,8 @@
           <p>See <a href="field-mappings.html">Field Mappings</a> for a complete list of available fields.</p>
 
           <div class="docs-callout docs-callout-warning">
-            <div class="docs-callout-title">⚠️ API Token Required</div>
-            <p>To access extended product data from the API, you must configure your bearer token in the extension settings. Without a token, only basic data from the page will be available.</p>
+            <div class="docs-callout-title">⚠️ Personal Token Required</div>
+            <p>To access extended product data from the API, you must configure your Personal Token in the extension settings. Without a token, only basic data from the page will be available.</p>
           </div>
         </section>
 
@@ -273,7 +273,7 @@
           <p>Ensure your product variants have SKUs assigned. LabelLight uses SKU fields to identify variants. Products without SKUs may not appear.</p>
           
           <h4>API data not loading</h4>
-          <p>Check that your bearer token is configured in settings. Without a token, only basic data visible on the page will be used.</p>
+          <p>Check that your Personal Token is configured in settings. Without a token, only basic data visible on the page will be used.</p>
           
           <h4>Button appears but nothing happens when clicked</h4>
           <p>Try refreshing the page. If the issue persists, check that DYMO Connect is running and the extension is signed in.</p>
@@ -301,5 +301,6 @@
   <script src="../js/auth.js"></script>
   <script src="../js/navbar.js"></script>
   <script src="../js/footer.js"></script>
+  <script src="../js/anchor-links.js"></script>
 </body>
 </html>

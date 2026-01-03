@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Field Mappings - LabelLight Documentation</title>
+  <title>Field Mappings - LabelLight Docs</title>
   <meta name="description" content="Learn how to map Lightspeed product data to your DYMO label template fields.">
+  <link rel="icon" type="image/png" href="../images/favicon.png">
   <link rel="stylesheet" href="../css/styles.css">
-  <link rel="stylesheet" href="../css/docs.css">
 </head>
 <body>
   <!-- Navigation -->
@@ -276,8 +276,8 @@
           </table>
 
           <div class="docs-callout docs-callout-info">
-            <div class="docs-callout-title">💡 API Token Required</div>
-            <p>Many extended fields (brand, supplier, variant options) require a configured Lightspeed API bearer token. See <a href="settings.html#api-configuration">API Configuration</a> for setup instructions.</p>
+            <div class="docs-callout-title">💡 Personal Token Required</div>
+            <p>Many extended fields (brand, supplier, variant options) require a configured Lightspeed API Personal Token. See <a href="settings.html#api-configuration">Personal Token</a> for setup instructions.</p>
           </div>
         </section>
 
@@ -406,7 +406,7 @@
 
         <section class="docs-section">
           <h2>Troubleshooting</h2>
-          
+
           <h4>Field shows blank on label</h4>
           <p>The mapped Lightspeed field may be empty for that product. Check the product in Lightspeed to verify the data exists.</p>
           
@@ -415,6 +415,9 @@
           
           <h4>Price showing wrong format</h4>
           <p>Check your currency settings in General Settings. The format is applied when labels are generated.</p>
+          
+          <h4>I can only see my product name, without any variant options</h4>
+          <p>Change from the "Product Name" API field to the "Variant Name" API field in your field mappings. The Product Name field only shows the base product name, while the Variant Name field includes the complete name with variant options (e.g., "T-Shirt - Blue - Large" instead of just "T-Shirt").</p>
         </section>
 
         <div class="docs-next-prev">
@@ -437,5 +440,6 @@
   <script src="../js/auth.js"></script>
   <script src="../js/navbar.js"></script>
   <script src="../js/footer.js"></script>
+  <script src="../js/anchor-links.js"></script>
 </body>
 </html>

@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Error Messages - LabelLight Documentation</title>
+  <title>Error Messages & Troubleshooting - LabelLight Docs</title>
   <meta name="description" content="Understand and resolve common error messages in LabelLight, including authentication, subscription, DYMO connection, and API errors.">
+  <link rel="icon" type="image/png" href="../images/favicon.png">
   <link rel="stylesheet" href="../css/styles.css">
-  <link rel="stylesheet" href="../css/docs.css">
 </head>
 <body>
   <!-- Navigation -->
@@ -400,17 +400,17 @@
 
           <div class="docs-error-item">
             <div class="docs-error-header">
-              <h4>🔑 Bearer Token Not Configured</h4>
+              <h4>🔑 Personal Token Not Configured</h4>
             </div>
             <div class="docs-error-body">
-              <p><strong>Message:</strong> "API token not configured. Please configure in settings."</p>
-              <p><strong>Cause:</strong> You haven't entered your Lightspeed API bearer token in settings.</p>
+              <p><strong>Message:</strong> "Personal Token not configured. Please configure in settings."</p>
+              <p><strong>Cause:</strong> You haven't entered your Lightspeed API Personal Token in settings.</p>
               <div class="docs-error-solution">
                 <strong>Solution:</strong>
                 <ol>
-                  <li>Obtain your bearer token from Lightspeed (see <a href="settings.html#api-configuration">API Configuration</a>)</li>
+                  <li>Obtain your Personal Token from Lightspeed (see <a href="settings.html#api-configuration">Personal Token</a>)</li>
                   <li>Open LabelLight settings</li>
-                  <li>Paste the token in the "Bearer Token" field</li>
+                  <li>Paste the token in the "Personal Token" field</li>
                   <li>Click "Save Token"</li>
                 </ol>
               </div>
@@ -419,16 +419,16 @@
 
           <div class="docs-error-item">
             <div class="docs-error-header">
-              <h4>🚫 Invalid Bearer Token</h4>
+              <h4>🚫 Invalid Personal Token</h4>
             </div>
             <div class="docs-error-body">
-              <p><strong>Message:</strong> "The provided bearer token is invalid or has expired."</p>
-              <p><strong>Cause:</strong> Your bearer token is incorrect or has expired.</p>
+              <p><strong>Message:</strong> "The provided Personal Token is invalid or has expired."</p>
+              <p><strong>Cause:</strong> Your Personal Token is incorrect or has expired.</p>
               <div class="docs-error-solution">
                 <strong>Solution:</strong>
                 <ol>
-                  <li>Obtain a fresh bearer token from Lightspeed</li>
-                  <li>Bearer tokens can expire - you may need to get a new one periodically</li>
+                  <li>Obtain a fresh Personal Token from Lightspeed</li>
+                  <li>Personal Tokens can expire - you may need to get a new one periodically</li>
                   <li>Update the token in extension settings</li>
                 </ol>
               </div>
@@ -458,13 +458,13 @@
               <h4>📡 API Request Failed</h4>
             </div>
             <div class="docs-error-body">
-              <p><strong>Message:</strong> "Failed to fetch data from Lightspeed API. Please check your bearer token and try again."</p>
+              <p><strong>Message:</strong> "Failed to fetch data from Lightspeed API. Please check your Personal Token and try again."</p>
               <p><strong>Cause:</strong> The API request to Lightspeed failed due to network issues, server errors, or authentication problems.</p>
               <div class="docs-error-solution">
                 <strong>Solution:</strong>
                 <ol>
                   <li>Check your internet connection</li>
-                  <li>Verify your bearer token is correct and not expired</li>
+                  <li>Verify your Personal Token is correct and not expired</li>
                   <li>Try refreshing the page and attempting again</li>
                   <li>Check Lightspeed status for any service outages</li>
                 </ol>
@@ -484,7 +484,7 @@
                 <ol>
                   <li>Ensure you're on a page with products (consignment, product edit, or products list)</li>
                   <li>Check that products have SKUs assigned</li>
-                  <li>Verify your API token has permission to access product data</li>
+                  <li>Verify your Personal Token has permission to access product data</li>
                 </ol>
               </div>
             </div>
@@ -558,7 +558,7 @@
             </li>
             <li>
               <strong>Check Settings</strong>
-              <p>Verify your printer, template, and API token are all configured correctly.</p>
+              <p>Verify your printer, template, and Personal Token are all configured correctly.</p>
             </li>
             <li>
               <strong>Restart Browser</strong>
@@ -566,7 +566,7 @@
             </li>
             <li>
               <strong>Contact Support</strong>
-              <p>If problems persist, contact <a href="mailto:support@labellight.app">support@labellight.app</a> with details about the error.</p>
+              <p>If problems persist, contact <a href="mailto:support@labellight.com">support@labellight.com</a> with details about the error.</p>
             </li>
           </ol>
         </section>
@@ -591,5 +591,6 @@
   <script src="../js/auth.js"></script>
   <script src="../js/navbar.js"></script>
   <script src="../js/footer.js"></script>
+  <script src="../js/anchor-links.js"></script>
 </body>
 </html>
