@@ -38,8 +38,8 @@ jobs:
       - name: Terraform Init
         run: |
           terraform init -reconfigure \
-            -backend-config="bucket=printerapp-terraform-state-${{ vars.ENVIRONMENT_NAME}}" \
-            -backend-config="dynamodb_table=printerapp-terraform-locks-${{ vars.ENVIRONMENT_NAME}}"
+            -backend-config="bucket=printerapp-terraform-state-${{ inputs.environment }}" \
+            -backend-config="dynamodb_table=printerapp-terraform-locks-${{ inputs.environment }}"
         working-directory: ./terraform
 
       - name: Terraform Plan
@@ -48,7 +48,7 @@ jobs:
         env:
           TF_VAR_google_client_id: ${{ secrets.TF_VAR_GOOGLE_CLIENT_ID }}
           TF_VAR_google_client_secret: ${{ secrets.TF_VAR_GOOGLE_CLIENT_SECRET }}
-          TF_VAR_environment: ${{ vars.ENVIRONMENT_NAME }}
+          TF_VAR_environment: ${{ inputs.environment }}
 
       - name: Terraform Apply
         run: terraform apply -auto-approve tfplan

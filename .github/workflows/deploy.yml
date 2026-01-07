@@ -26,7 +26,7 @@ jobs:
     secrets: inherit
     concurrency:
       group: deploy-test-${{ github.head_ref }}
-      cancel-in-progress: true
+      cancel-in-progress: false
 
   # Production environment deployment for merges to main
   deploy-prod:
@@ -39,7 +39,7 @@ jobs:
     secrets: inherit
     concurrency:
       group: deploy-prod
-      cancel-in-progress: true
+      cancel-in-progress: false
 
   # Development environment deployment for manual triggers
   deploy-dev:
@@ -52,4 +52,4 @@ jobs:
     secrets: inherit
     concurrency:
       group: deploy-dev
-      cancel-in-progress: true
+      cancel-in-progress: false
