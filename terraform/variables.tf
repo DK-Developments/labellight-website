@@ -1,5 +1,5 @@
 variable "bucket_name" {
-  description = "Name of the S3 bucket for website hosting (must be globally unique)"
+  description = "Base name of the S3 bucket for website hosting (environment suffix will be appended)"
   type        = string
   default     = "printerapp-website"
 }

@@ -4,11 +4,11 @@
 #####################################################################
 
 resource "aws_cognito_user_pool" "main" {
-  name = "printerapp-user-pool"
+  name = "printerapp-user-pool-${var.environment}"
 }
 
 resource "aws_cognito_user_pool_domain" "main" {
-  domain       = var.cognito_domain_prefix
+  domain       = "${var.cognito_domain_prefix}-${var.environment}"
   user_pool_id = aws_cognito_user_pool.main.id
 }
 
@@ -33,7 +33,7 @@ resource "aws_cognito_identity_provider" "google" {
 
 # Create app client for printerapp website
 resource "aws_cognito_user_pool_client" "main" {
-  name         = "printerapp-web-client"
+  name         = "printerapp-web-client-${var.environment}"
   user_pool_id = aws_cognito_user_pool.main.id
 
   allowed_oauth_flows_user_pool_client = true
@@ -63,7 +63,7 @@ resource "aws_cognito_user_pool_client" "main" {
 #####################################################################
 
 resource "aws_cognito_user_pool_client" "extension" {
-  name         = "printerapp-extension-client"
+  name         = "printerapp-extension-client-${var.environment}"
   user_pool_id = aws_cognito_user_pool.main.id
 
   allowed_oauth_flows_user_pool_client = true
