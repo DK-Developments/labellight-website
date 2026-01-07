@@ -1,11 +1,22 @@
 name: Bootstrap Terraform State Backend
 
 on:
-  workflow_dispatch:  # Manual trigger only
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to bootstrap (dev, test, or prod)'
+        required: true
+        type: choice
+        options:
+          - dev
+          - test
+          - prod
 
 jobs:
   bootstrap:
+    name: Bootstrap ${{ inputs.environment }}
     runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
     
     steps:
       - name: Checkout code
@@ -16,7 +27,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-southeast-2  # Change to your preferred region
+          aws-region: ap-southeast-2
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
@@ -31,6 +42,8 @@ jobs:
       - name: Terraform Plan (Bootstrap)
         run: terraform plan -out=tfplan
         working-directory: ./terraform/bootstrap
+        env:
+          TF_VAR_environment: ${{ inputs.environment }}
 
       - name: Terraform Apply (Bootstrap)
         run: terraform apply -auto-approve tfplan
@@ -38,7 +51,7 @@ jobs:
 
       - name: Display Bootstrap Outputs
         run: |
-          echo "✅ Bootstrap complete!"
+          echo "✅ Bootstrap complete for ${{ inputs.environment }} environment!"
           echo "📦 State Bucket: $(terraform output -raw state_bucket_name)"
           echo "🔒 DynamoDB Lock Table: $(terraform output -raw dynamodb_table_name)"
         working-directory: ./terraform/bootstrap

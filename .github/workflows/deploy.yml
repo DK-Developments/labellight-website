@@ -48,7 +48,10 @@ jobs:
           terraform_wrapper: false
 
       - name: Terraform Init
-        run: terraform init -reconfigure
+        run: |
+          terraform init -reconfigure \
+            -backend-config="bucket=printerapp-terraform-state-${{ vars.ENVIRONMENT_NAME}}" \
+            -backend-config="dynamodb_table=printerapp-terraform-locks-${{ vars.ENVIRONMENT_NAME}}"
         working-directory: ./terraform
 
       - name: Terraform Plan

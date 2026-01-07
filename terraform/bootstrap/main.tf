@@ -11,8 +11,13 @@ provider "aws" {
   region = "ap-southeast-2"
 }
 
+variable "environment" {
+  description = "Environment name (dev, test, prod)"
+  type        = string
+}
+
 resource "aws_s3_bucket" "terraform_state" {
-  bucket = "printerapp-terraform-state"
+  bucket = "printerapp-terraform-state-${var.environment}"
 }
 
 resource "aws_s3_bucket_versioning" "terraform_state" {
@@ -43,7 +48,7 @@ resource "aws_s3_bucket_public_access_block" "terraform_state" {
 }
 
 resource "aws_dynamodb_table" "terraform_locks" {
-  name         = "printerapp-terraform-locks"
+  name         = "printerapp-terraform-locks-${var.environment}"
   billing_mode = "PAY_PER_REQUEST"
   hash_key     = "LockID"
 
