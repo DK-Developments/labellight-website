@@ -1,5 +1,5 @@
 variable "bucket_name" {
-  description = "Name of the S3 bucket for website hosting (must be globally unique)"
+  description = "Base name of the S3 bucket for website hosting (environment suffix will be appended)"
   type        = string
   default     = "printerapp-website"
 }
@@ -7,7 +7,7 @@ variable "bucket_name" {
 variable "aws_region" {
   description = "AWS region for resources"
   type        = string
-  default     = "ap-southeast-2"  # Change to your preferred region
+  default     = "ap-southeast-2"
 }
 
 variable "cognito_domain_prefix" {
@@ -33,7 +33,7 @@ variable "google_client_secret" {
 variable "environment" {
   description = "Environment name for API Gateway stage"
   type        = string
-  default     = "sandbox"
+  default     = "dev"
 }
 
 variable "chrome_extension_id" {
