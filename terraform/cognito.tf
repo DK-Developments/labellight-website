@@ -4,11 +4,11 @@
 #####################################################################
 
 resource "aws_cognito_user_pool" "main" {
-  name = "printerapp-user-pool"
+  name = "printerapp-user-pool-${var.environment}"
 }
 
 resource "aws_cognito_user_pool_domain" "main" {
-  domain       = var.cognito_domain_prefix
+  domain       = "${var.cognito_domain_prefix}-${var.environment}"
   user_pool_id = aws_cognito_user_pool.main.id
 }
 
@@ -33,7 +33,7 @@ resource "aws_cognito_identity_provider" "google" {
 
 # Create app client for printerapp website
 resource "aws_cognito_user_pool_client" "main" {
-  name         = "printerapp-web-client"
+  name         = "printerapp-web-client-${var.environment}"
   user_pool_id = aws_cognito_user_pool.main.id
 
   allowed_oauth_flows_user_pool_client = true
@@ -52,6 +52,47 @@ resource "aws_cognito_user_pool_client" "main" {
   supported_identity_providers = ["Google"]
 
   generate_secret = false
+
+  depends_on = [aws_cognito_identity_provider.google]
+}
+
+#####################################################################
+# CHROME EXTENSION CLIENT
+# Uses authorization code flow (more secure for extensions)
+# Extension ID will be known after first Chrome Web Store upload
+#####################################################################
+
+resource "aws_cognito_user_pool_client" "extension" {
+  name         = "printerapp-extension-client-${var.environment}"
+  user_pool_id = aws_cognito_user_pool.main.id
+
+  allowed_oauth_flows_user_pool_client = true
+  allowed_oauth_flows                  = ["code"]
+  allowed_oauth_scopes                 = ["email", "openid", "profile"]
+
+  # Chrome extension callback URLs
+  callback_urls = [
+    for id in concat([var.chrome_extension_id], var.chrome_extension_extra_ids) : "https://${id}.chromiumapp.org/"
+  ]
+
+  logout_urls = [
+    for id in concat([var.chrome_extension_id], var.chrome_extension_extra_ids) : "https://${id}.chromiumapp.org/"
+  ]
+
+  supported_identity_providers = ["Google"]
+
+  generate_secret = false
+
+  # Token validity settings
+  id_token_validity      = 24   # hours
+  access_token_validity  = 24   # hours
+  refresh_token_validity = 30   # days
+
+  token_validity_units {
+    id_token      = "hours"
+    access_token  = "hours"
+    refresh_token = "days"
+  }
 
   depends_on = [aws_cognito_identity_provider.google]
 }

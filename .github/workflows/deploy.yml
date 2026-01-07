@@ -1,75 +1,55 @@
-name: Deploy to AWS
+name: Multi-Account Deployment
 
 on:
-  push:
-    branches:
-      - main
+  # Manual trigger deploys to Development
+  workflow_dispatch:
+  
+  # Pull requests deploy to Test
   pull_request:
     branches:
       - main
-  workflow_dispatch:
+      
+  # Merges to main deploy to Production
+  push:
+    branches:
+      - main
 
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+  # Test environment deployment for pull requests
+  deploy-test:
+    name: Deploy to Test
+    if: github.event_name == 'pull_request'
+    uses: ./.github/workflows/deploy-environment.yml
+    with:
+      environment: test
+      environment_display_name: Test
+    secrets: inherit
+    concurrency:
+      group: deploy-test-${{ github.head_ref }}
+      cancel-in-progress: false
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-southeast-2  # Change to your preferred region
+  # Production environment deployment for merges to main
+  deploy-prod:
+    name: Deploy to Production
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    uses: ./.github/workflows/deploy-environment.yml
+    with:
+      environment: prod
+      environment_display_name: Production
+    secrets: inherit
+    concurrency:
+      group: deploy-prod
+      cancel-in-progress: false
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_version: 1.6.0
-          terraform_wrapper: false
-
-      - name: Terraform Init
-        run: terraform init -reconfigure
-        working-directory: ./terraform
-
-      - name: Terraform Plan
-        run: terraform plan -out=tfplan
-        working-directory: ./terraform
-        env:
-          TF_VAR_google_client_id: ${{ secrets.TF_VAR_GOOGLE_CLIENT_ID }}
-          TF_VAR_google_client_secret: ${{ secrets.TF_VAR_GOOGLE_CLIENT_SECRET }}
-
-      - name: Terraform Apply
-        run: terraform apply -auto-approve tfplan
-        working-directory: ./terraform
-        env:
-          TF_VAR_google_client_id: ${{ secrets.TF_VAR_GOOGLE_CLIENT_ID }}
-          TF_VAR_google_client_secret: ${{ secrets.TF_VAR_GOOGLE_CLIENT_SECRET }}
-
-      - name: Get Terraform Outputs
-        id: tf_outputs
-        run: |
-          echo "bucket_name=$(terraform output -raw website_bucket_name)" >> $GITHUB_OUTPUT
-          echo "cloudfront_id=$(terraform output -raw cloudfront_distribution_id)" >> $GITHUB_OUTPUT
-          echo "website_url=$(terraform output -raw website_url)" >> $GITHUB_OUTPUT
-        working-directory: ./terraform
-
-      - name: Sync website files to S3
-        run: |
-          aws s3 sync ./src/website/ s3://${{ steps.tf_outputs.outputs.bucket_name }}/ \
-            --delete \
-            --exclude ".git/*" \
-            --exclude ".github/*"
-
-      - name: Invalidate CloudFront cache
-        run: |
-          aws cloudfront create-invalidation \
-            --distribution-id ${{ steps.tf_outputs.outputs.cloudfront_id }} \
-            --paths "/*"
-
-      - name: Display website URL
-        run: |
-          echo "✅ Deployment successful!"
-          echo "🌐 Your website is live at: ${{ steps.tf_outputs.outputs.website_url }}"
+  # Development environment deployment for manual triggers
+  deploy-dev:
+    name: Deploy to Development
+    if: github.event_name == 'workflow_dispatch'
+    uses: ./.github/workflows/deploy-environment.yml
+    with:
+      environment: dev
+      environment_display_name: Development
+    secrets: inherit
+    concurrency:
+      group: deploy-dev
+      cancel-in-progress: false

@@ -25,12 +25,12 @@ provider "aws" {
 
 # S3 bucket for website hosting
 resource "aws_s3_bucket" "website" {
-  bucket = var.bucket_name
+  bucket = "${var.bucket_name}-${var.environment}"
 }
 
 # CloudFront Origin Access Control - secure access to S3
 resource "aws_cloudfront_origin_access_control" "website" {
-  name                              = "printerapp-oac"
+  name                              = "printerapp-oac-${var.environment}"
   description                       = "Origin Access Control for website"
   origin_access_control_origin_type = "s3"
   signing_behavior                  = "always"
@@ -83,14 +83,14 @@ resource "aws_cloudfront_distribution" "website" {
 
   origin {
     domain_name              = aws_s3_bucket.website.bucket_regional_domain_name
-    origin_id                = "S3-${var.bucket_name}"
+    origin_id                = "S3-${var.bucket_name}-${var.environment}"
     origin_access_control_id = aws_cloudfront_origin_access_control.website.id
   }
 
   default_cache_behavior {
     allowed_methods        = ["GET", "HEAD", "OPTIONS"]
     cached_methods         = ["GET", "HEAD"]
-    target_origin_id       = "S3-${var.bucket_name}"
+    target_origin_id       = "S3-${var.bucket_name}-${var.environment}"
     viewer_protocol_policy = "allow-all"
 
     # No caching configuration
@@ -109,7 +109,7 @@ resource "aws_cloudfront_distribution" "website" {
   restrictions {
     geo_restriction {
         restriction_type = "whitelist"
-        locations        = ["NZ", "AU"]
+        locations        = ["NZ", "AU", "US"]
     }
   }
 
