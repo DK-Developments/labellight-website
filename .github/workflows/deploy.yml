@@ -14,84 +14,42 @@ on:
     branches:
       - main
 
-# Prevent concurrent deployments to the same environment
-concurrency:
-  group: ${{ github.workflow }}-${{ github.event_name == 'workflow_dispatch' && 'dev' || github.event_name == 'pull_request' && 'test' || 'prod' }}
-  cancel-in-progress: true
-
 jobs:
-  deploy:
-    name: Deploy to ${{ github.event_name == 'workflow_dispatch' && 'Dev' || github.event_name == 'pull_request' && 'Test' || 'Prod' }}
-    runs-on: ubuntu-latest
-    
-    # Map trigger to the correct GitHub Environment
-    environment: >-
-      ${{ github.event_name == 'workflow_dispatch' && 'dev' || 
-          github.event_name == 'pull_request' && 'test' || 
-          'prod' }}
-    
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+  # Test environment deployment for pull requests
+  deploy-test:
+    name: Deploy to Test
+    if: github.event_name == 'pull_request'
+    uses: ./.github/workflows/deploy-environment.yml
+    with:
+      environment: test
+      environment_display_name: Test
+    secrets: inherit
+    concurrency:
+      group: deploy-test-${{ github.head_ref }}
+      cancel-in-progress: true
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-southeast-2
+  # Production environment deployment for merges to main
+  deploy-prod:
+    name: Deploy to Production
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    uses: ./.github/workflows/deploy-environment.yml
+    with:
+      environment: prod
+      environment_display_name: Production
+    secrets: inherit
+    concurrency:
+      group: deploy-prod
+      cancel-in-progress: true
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_version: 1.6.0
-          terraform_wrapper: false
-
-      - name: Terraform Init
-        run: |
-          terraform init -reconfigure \
-            -backend-config="bucket=printerapp-terraform-state-${{ vars.ENVIRONMENT_NAME}}" \
-            -backend-config="dynamodb_table=printerapp-terraform-locks-${{ vars.ENVIRONMENT_NAME}}"
-        working-directory: ./terraform
-
-      - name: Terraform Plan
-        run: terraform plan -out=tfplan
-        working-directory: ./terraform
-        env:
-          TF_VAR_google_client_id: ${{ secrets.TF_VAR_GOOGLE_CLIENT_ID }}
-          TF_VAR_google_client_secret: ${{ secrets.TF_VAR_GOOGLE_CLIENT_SECRET }}
-          TF_VAR_environment: ${{ vars.ENVIRONMENT_NAME }}
-
-      - name: Terraform Apply
-        run: terraform apply -auto-approve tfplan
-        working-directory: ./terraform
-        env:
-          TF_VAR_google_client_id: ${{ secrets.TF_VAR_GOOGLE_CLIENT_ID }}
-          TF_VAR_google_client_secret: ${{ secrets.TF_VAR_GOOGLE_CLIENT_SECRET }}
-
-      - name: Get Terraform Outputs
-        id: tf_outputs
-        run: |
-          echo "bucket_name=$(terraform output -raw website_bucket_name)" >> $GITHUB_OUTPUT
-          echo "cloudfront_id=$(terraform output -raw cloudfront_distribution_id)" >> $GITHUB_OUTPUT
-          echo "website_url=$(terraform output -raw website_url)" >> $GITHUB_OUTPUT
-        working-directory: ./terraform
-
-      - name: Sync website files to S3
-        run: |
-          aws s3 sync ./src/website/ s3://${{ steps.tf_outputs.outputs.bucket_name }}/ \
-            --delete \
-            --exclude ".git/*" \
-            --exclude ".github/*"
-
-      - name: Invalidate CloudFront cache
-        run: |
-          aws cloudfront create-invalidation \
-            --distribution-id ${{ steps.tf_outputs.outputs.cloudfront_id }} \
-            --paths "/*"
-
-      - name: Display deployment info
-        run: |
-          ENV_NAME="${{ github.event_name == 'workflow_dispatch' && 'Dev' || github.event_name == 'pull_request' && 'Test' || 'Prod' }}"
-          echo "✅ Successfully deployed to $ENV_NAME"
-          echo "🌐 Website URL: ${{ steps.tf_outputs.outputs.website_url }}"
+  # Development environment deployment for manual triggers
+  deploy-dev:
+    name: Deploy to Development
+    if: github.event_name == 'workflow_dispatch'
+    uses: ./.github/workflows/deploy-environment.yml
+    with:
+      environment: dev
+      environment_display_name: Development
+    secrets: inherit
+    concurrency:
+      group: deploy-dev
+      cancel-in-progress: true

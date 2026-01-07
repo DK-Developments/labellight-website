@@ -1,0 +1,98 @@
+name: Deploy to Environment
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        description: 'Environment to deploy to (dev, test, or prod)'
+        required: true
+        type: string
+      environment_display_name:
+        description: 'Display name for the environment'
+        required: true
+        type: string
+
+jobs:
+  deploy:
+    name: Deploy to ${{ inputs.environment_display_name }}
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-southeast-2
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.6.0
+          terraform_wrapper: false
+
+      - name: Terraform Init
+        run: |
+          terraform init -reconfigure \
+            -backend-config="bucket=printerapp-terraform-state-${{ vars.ENVIRONMENT_NAME}}" \
+            -backend-config="dynamodb_table=printerapp-terraform-locks-${{ vars.ENVIRONMENT_NAME}}"
+        working-directory: ./terraform
+
+      - name: Terraform Plan
+        run: terraform plan -out=tfplan
+        working-directory: ./terraform
+        env:
+          TF_VAR_google_client_id: ${{ secrets.TF_VAR_GOOGLE_CLIENT_ID }}
+          TF_VAR_google_client_secret: ${{ secrets.TF_VAR_GOOGLE_CLIENT_SECRET }}
+          TF_VAR_environment: ${{ vars.ENVIRONMENT_NAME }}
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve tfplan
+        working-directory: ./terraform
+        env:
+          TF_VAR_google_client_id: ${{ secrets.TF_VAR_GOOGLE_CLIENT_ID }}
+          TF_VAR_google_client_secret: ${{ secrets.TF_VAR_GOOGLE_CLIENT_SECRET }}
+
+      - name: Get Terraform Outputs
+        id: tf_outputs
+        run: |
+          echo "bucket_name=$(terraform output -raw website_bucket_name)" >> $GITHUB_OUTPUT
+          echo "cloudfront_id=$(terraform output -raw cloudfront_distribution_id)" >> $GITHUB_OUTPUT
+          echo "website_url=$(terraform output -raw website_url)" >> $GITHUB_OUTPUT
+        working-directory: ./terraform
+
+      - name: Sync website files to S3
+        run: |
+          aws s3 sync ./src/website/ s3://${{ steps.tf_outputs.outputs.bucket_name }}/ \
+            --delete \
+            --exclude ".git/*" \
+            --exclude ".github/*"
+
+      - name: Invalidate CloudFront cache
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ steps.tf_outputs.outputs.cloudfront_id }} \
+            --paths "/*"
+
+      - name: Verify Deployment
+        if: inputs.environment == 'test'
+        run: |
+          echo "🧪 Verifying deployment..."
+          sleep 10
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" ${{ steps.tf_outputs.outputs.website_url }})
+          if [ $STATUS -eq 200 ]; then
+            echo "✅ Website is accessible"
+          else
+            echo "❌ Website returned status: $STATUS"
+            exit 1
+          fi
+
+      - name: Display deployment info
+        run: |
+          echo "✅ Successfully deployed to ${{ inputs.environment_display_name }}"
+          echo "🌐 Website URL: ${{ steps.tf_outputs.outputs.website_url }}"
+
