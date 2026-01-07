@@ -30,7 +30,7 @@ output "cognito_client_id" {
 
 output "cognito_domain" {
   description = "Cognito domain for authentication"
-  value       = "${var.cognito_domain_prefix}.auth.${var.aws_region}.amazoncognito.com"
+  value       = "${var.cognito_domain_prefix}-${var.environment}.auth.${var.aws_region}.amazoncognito.com"
 }
 
 output "api_url" {
