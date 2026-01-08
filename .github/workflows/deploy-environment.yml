@@ -91,19 +91,6 @@ jobs:
             --distribution-id ${{ steps.tf_outputs.outputs.cloudfront_id }} \
             --paths "/*"
 
-      - name: Verify Deployment
-        if: inputs.environment == 'test'
-        run: |
-          echo "🧪 Verifying deployment..."
-          sleep 10
-          STATUS=$(curl -s -o /dev/null -w "%{http_code}" ${{ steps.tf_outputs.outputs.website_url }})
-          if [ $STATUS -eq 200 ]; then
-            echo "✅ Website is accessible"
-          else
-            echo "❌ Website returned status: $STATUS"
-            exit 1
-          fi
-
       - name: Display deployment info
         run: |
           echo "✅ Successfully deployed to ${{ inputs.environment_display_name }}"

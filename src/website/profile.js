@@ -81,9 +81,8 @@ async function loadSubscriptionStatus() {
  */
 function displayActiveSubscription(subscription, container) {
   const planName = subscription.plan === 'monthly' ? 'Monthly' : 'Annual';
-  const amount = subscription.plan === 'monthly' 
-    ? CONFIG.PRICING.monthly.amount 
-    : CONFIG.PRICING.annual.amount;
+  // Hardcoded pricing (matches pricing.html values)
+  const amount = subscription.plan === 'monthly' ? 9.99 : 99;
   const nextBilling = new Date(subscription.current_period_end).toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
