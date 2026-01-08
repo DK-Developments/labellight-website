@@ -3,9 +3,12 @@
 *.tfplan
 *.tfvars
 
-# Keep terraform.tfstate in repo as per user preference
+# Keep terraform.tfstate in repo
 # terraform.tfstate
 # terraform.tfstate.backup
+
+# Lambda deployment packagesz
+*.zip
 
 # OS files
 .DS_Store
