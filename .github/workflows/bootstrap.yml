@@ -4,12 +4,11 @@ on:
   workflow_dispatch:
     inputs:
       environment:
-        description: 'Environment to bootstrap (dev, test, or prod)'
+        description: 'Environment to bootstrap (dev or prod)'
         required: true
         type: choice
         options:
           - dev
-          - test
           - prod
 
 jobs:

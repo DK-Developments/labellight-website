@@ -4,7 +4,7 @@ on:
   workflow_call:
     inputs:
       environment:
-        description: 'Environment to deploy to (dev, test, or prod)'
+        description: 'Environment to deploy to (dev or prod)'
         required: true
         type: string
       environment_display_name:
@@ -77,19 +77,6 @@ jobs:
           aws cloudfront create-invalidation \
             --distribution-id ${{ steps.tf_outputs.outputs.cloudfront_id }} \
             --paths "/*"
-
-      - name: Verify Deployment
-        if: inputs.environment == 'test'
-        run: |
-          echo "🧪 Verifying deployment..."
-          sleep 10
-          STATUS=$(curl -s -o /dev/null -w "%{http_code}" ${{ steps.tf_outputs.outputs.website_url }})
-          if [ $STATUS -eq 200 ]; then
-            echo "✅ Website is accessible"
-          else
-            echo "❌ Website returned status: $STATUS"
-            exit 1
-          fi
 
       - name: Display deployment info
         run: |
