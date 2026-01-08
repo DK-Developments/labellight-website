@@ -63,7 +63,20 @@ jobs:
           echo "bucket_name=$(terraform output -raw website_bucket_name)" >> $GITHUB_OUTPUT
           echo "cloudfront_id=$(terraform output -raw cloudfront_distribution_id)" >> $GITHUB_OUTPUT
           echo "website_url=$(terraform output -raw website_url)" >> $GITHUB_OUTPUT
+          echo "cognito_domain=$(terraform output -raw cognito_domain)" >> $GITHUB_OUTPUT
+          echo "cognito_client_id=$(terraform output -raw cognito_client_id)" >> $GITHUB_OUTPUT
+          echo "api_url=$(terraform output -raw api_url)" >> $GITHUB_OUTPUT
         working-directory: ./terraform
+
+      - name: Generate config.js
+        run: |
+          cat > ./src/website/config.js << 'EOF'
+          const CONFIG = {
+            COGNITO_DOMAIN: '${{ steps.tf_outputs.outputs.cognito_domain }}',
+            CLIENT_ID: '${{ steps.tf_outputs.outputs.cognito_client_id }}',
+            API_URL: '${{ steps.tf_outputs.outputs.api_url }}'
+          };
+          EOF
 
       - name: Sync website files to S3
         run: |
