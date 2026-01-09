@@ -81,6 +81,9 @@ resource "aws_cloudfront_distribution" "website" {
   default_root_object = "index.html"
   price_class         = "PriceClass_All"  # Includes Australia/NZ for better local performance. Can change to save money.
 
+  # Custom domain aliases
+  aliases = var.environment == "prod" ? [var.domain_name, "www.${var.domain_name}"] : ["${var.environment}.${var.domain_name}"]
+
   origin {
     domain_name              = aws_s3_bucket.website.bucket_regional_domain_name
     origin_id                = "S3-${var.bucket_name}-${var.environment}"
@@ -91,7 +94,7 @@ resource "aws_cloudfront_distribution" "website" {
     allowed_methods        = ["GET", "HEAD", "OPTIONS"]
     cached_methods         = ["GET", "HEAD"]
     target_origin_id       = "S3-${var.bucket_name}-${var.environment}"
-    viewer_protocol_policy = "allow-all"
+    viewer_protocol_policy = "redirect-to-https"
 
     # No caching configuration
     min_ttl     = 0
@@ -114,6 +117,8 @@ resource "aws_cloudfront_distribution" "website" {
   }
 
   viewer_certificate {
-    cloudfront_default_certificate = true
+    acm_certificate_arn      = aws_acm_certificate_validation.website.certificate_arn
+    ssl_support_method       = "sni-only"
+    minimum_protocol_version = "TLSv1.2_2021"
   }
 }

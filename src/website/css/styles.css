@@ -2226,17 +2226,25 @@ section h2 {
 
 /* Numbered steps list (for instructional content) */
 .docs-steps {
-  list-style: none;
-  padding: 0;
+  list-style: none !important;
+  padding: 0 !important;
+  padding-left: 0 !important;
   margin: 24px 0;
   counter-reset: step-counter;
 }
 
 .docs-steps li {
   position: relative;
-  padding-left: 48px;
+  padding-left: 44px;
   margin-bottom: 24px;
   counter-increment: step-counter;
+  min-height: 32px;
+  list-style: none !important;
+}
+
+.docs-steps li > strong:first-child {
+  display: block;
+  padding-top: 4px;
 }
 
 .docs-steps li::before {
@@ -2249,11 +2257,21 @@ section h2 {
   background: #1a73e8;
   color: white;
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   font-weight: 700;
   font-size: 14px;
+  line-height: 32px;
+  text-align: center;
+}
+
+/* Override .docs-section ol styles for .docs-steps */
+.docs-section ol.docs-steps {
+  padding-left: 0 !important;
+  list-style: none !important;
+}
+
+.docs-section ol.docs-steps li {
+  padding-left: 44px;
+  list-style: none !important;
 }
 
 /* ========================================
@@ -2394,11 +2412,19 @@ section h2 {
   margin: 0;
 }
 
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
 .docs-image {
   max-width: 100%;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   margin: 24px 0;
+  display: block;
 }
 
 .docs-image-caption {

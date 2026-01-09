@@ -36,6 +36,12 @@ variable "environment" {
   default     = "dev"
 }
 
+variable "domain_name" {
+  description = "Root domain name for the website (e.g., labellight.com)"
+  type        = string
+  default     = "labellight.com"
+}
+
 variable "chrome_extension_id" {
   description = "Chrome extension ID for OAuth callback URL. Get this from Chrome Web Store after first upload, or use chrome.runtime.id for unpacked extensions."
   type        = string
