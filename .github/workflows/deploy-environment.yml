@@ -1,4 +1,4 @@
-name: Deploy to Environment
+name: Deployment variables
 
 on:
   workflow_call:

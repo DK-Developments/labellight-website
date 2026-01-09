@@ -1,4 +1,4 @@
-name: Multi-Account Deployment
+name: Deployment
 
 on:
   # Manual trigger deploys to Development
