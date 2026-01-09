@@ -1,10 +1,7 @@
 name: Multi-Account Deployment
 
 on:
-  # Manual trigger deploys to Development
-  workflow_dispatch:
-  
-  # Pull requests deploy to Test
+  # Pull requests deploy to Development
   pull_request:
     branches:
       - main
@@ -15,17 +12,17 @@ on:
       - main
 
 jobs:
-  # Test environment deployment for pull requests
-  deploy-test:
-    name: Deploy to Test
+  # Dev environment deployment for pull requests
+  deploy-dev:
+    name: Deploy to Dev
     if: github.event_name == 'pull_request'
     uses: ./.github/workflows/deploy-environment.yml
     with:
-      environment: test
-      environment_display_name: Test
+      environment: dev
+      environment_display_name: Development
     secrets: inherit
     concurrency:
-      group: deploy-test-${{ github.head_ref }}
+      group: deploy-dev-${{ github.head_ref }}
       cancel-in-progress: false
 
   # Production environment deployment for merges to main
@@ -39,17 +36,4 @@ jobs:
     secrets: inherit
     concurrency:
       group: deploy-prod
-      cancel-in-progress: false
-
-  # Development environment deployment for manual triggers
-  deploy-dev:
-    name: Deploy to Development
-    if: github.event_name == 'workflow_dispatch'
-    uses: ./.github/workflows/deploy-environment.yml
-    with:
-      environment: dev
-      environment_display_name: Development
-    secrets: inherit
-    concurrency:
-      group: deploy-dev
       cancel-in-progress: false
