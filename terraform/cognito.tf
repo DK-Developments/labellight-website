@@ -40,14 +40,25 @@ resource "aws_cognito_user_pool_client" "main" {
   allowed_oauth_flows                  = ["implicit"]
   allowed_oauth_scopes                 = ["email", "openid", "profile"]
 
-  callback_urls = [
-    "https://${aws_cloudfront_distribution.website.domain_name}/index.html",
-    "https://${aws_cloudfront_distribution.website.domain_name}/"
-  ]
+  callback_urls = concat(
+    [
+      "https://${aws_cloudfront_distribution.website.domain_name}/index.html",
+      "https://${aws_cloudfront_distribution.website.domain_name}/"
+    ],
+    var.environment == "dev" ? [
+      "http://localhost:8000/index.html",
+      "http://localhost:8000/"
+    ] : []
+  )
 
-  logout_urls = [
-    "https://${aws_cloudfront_distribution.website.domain_name}/index.html"
-  ]
+  logout_urls = concat(
+    [
+      "https://${aws_cloudfront_distribution.website.domain_name}/index.html"
+    ],
+    var.environment == "dev" ? [
+      "http://localhost:8000/index.html"
+    ] : []
+  )
 
   supported_identity_providers = ["Google"]
 
