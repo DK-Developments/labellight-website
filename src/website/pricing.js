@@ -98,7 +98,13 @@ function handleSubscribe(plan) {
  * @param {string} plan - Selected plan
  */
 function showPlaceholderMessage(plan) {
-  const planDetails = CONFIG.PRICING[plan];
+  // Hardcoded pricing (matches pricing.html values)
+  const pricing = {
+    monthly: { amount: 9.99, interval: 'month' },
+    annual: { amount: 99, interval: 'year' }
+  };
+  
+  const planDetails = pricing[plan];
   const amount = planDetails.amount;
   const interval = planDetails.interval;
   
