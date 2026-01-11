@@ -14,12 +14,16 @@ provider "aws" {
 # ROUTE 53 HOSTED ZONE
 #####################################################################
 
-# Use existing hosted zone for labellight.com
-# Note: The hosted zone should be created manually or imported
-# to avoid accidental deletion of DNS records
-data "aws_route53_zone" "main" {
-  name         = var.domain_name
-  private_zone = false
+# Create hosted zone for labellight.com
+# IMPORTANT: After creation, update your domain registrar's nameservers
+# to point to the NS records output by this resource
+resource "aws_route53_zone" "main" {
+  name = var.domain_name
+
+  tags = {
+    Name        = "labellight-zone"
+    Environment = var.environment
+  }
 }
 
 #####################################################################
@@ -58,7 +62,7 @@ resource "aws_route53_record" "cert_validation" {
   records         = [each.value.record]
   ttl             = 60
   type            = each.value.type
-  zone_id         = data.aws_route53_zone.main.zone_id
+  zone_id         = aws_route53_zone.main.zone_id
 }
 
 # Certificate validation
@@ -74,7 +78,7 @@ resource "aws_acm_certificate_validation" "website" {
 
 # A record for the main domain (apex or subdomain depending on environment)
 resource "aws_route53_record" "website_a" {
-  zone_id = data.aws_route53_zone.main.zone_id
+  zone_id = aws_route53_zone.main.zone_id
   name    = var.environment == "prod" ? var.domain_name : "${var.environment}.${var.domain_name}"
   type    = "A"
 
@@ -87,7 +91,7 @@ resource "aws_route53_record" "website_a" {
 
 # AAAA record for IPv6 support
 resource "aws_route53_record" "website_aaaa" {
-  zone_id = data.aws_route53_zone.main.zone_id
+  zone_id = aws_route53_zone.main.zone_id
   name    = var.environment == "prod" ? var.domain_name : "${var.environment}.${var.domain_name}"
   type    = "AAAA"
 
@@ -101,7 +105,7 @@ resource "aws_route53_record" "website_aaaa" {
 # www subdomain for prod environment only
 resource "aws_route53_record" "website_www_a" {
   count   = var.environment == "prod" ? 1 : 0
-  zone_id = data.aws_route53_zone.main.zone_id
+  zone_id = aws_route53_zone.main.zone_id
   name    = "www.${var.domain_name}"
   type    = "A"
 
@@ -114,7 +118,7 @@ resource "aws_route53_record" "website_www_a" {
 
 resource "aws_route53_record" "website_www_aaaa" {
   count   = var.environment == "prod" ? 1 : 0
-  zone_id = data.aws_route53_zone.main.zone_id
+  zone_id = aws_route53_zone.main.zone_id
   name    = "www.${var.domain_name}"
   type    = "AAAA"
 

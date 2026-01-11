@@ -25,7 +25,12 @@ output "custom_domain_url" {
 
 output "route53_zone_id" {
   description = "Route 53 hosted zone ID"
-  value       = data.aws_route53_zone.main.zone_id
+  value       = aws_route53_zone.main.zone_id
+}
+
+output "route53_nameservers" {
+  description = "Nameservers for the Route 53 hosted zone - update your domain registrar with these"
+  value       = aws_route53_zone.main.name_servers
 }
 
 output "acm_certificate_arn" {
