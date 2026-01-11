@@ -42,6 +42,23 @@ jobs:
             -backend-config="dynamodb_table=printerapp-terraform-locks-${{ inputs.environment }}"
         working-directory: ./terraform
 
+      - name: Cleanup orphaned DNS/ACM resources from state
+        run: |
+          # Remove orphaned resources that were managed by dns.tf
+          terraform state rm aws_acm_certificate.website || true
+          terraform state rm aws_acm_certificate_validation.website || true
+          terraform state rm aws_route53_zone.main || true
+          terraform state rm 'aws_route53_record.cert_validation["dev.labellight.com"]' || true
+          terraform state rm 'aws_route53_record.cert_validation["labellight.com"]' || true
+          terraform state rm 'aws_route53_record.cert_validation["www.labellight.com"]' || true
+          terraform state rm aws_route53_record.website_a || true
+          terraform state rm aws_route53_record.website_aaaa || true
+          terraform state rm 'aws_route53_record.website_www_a[0]' || true
+          terraform state rm 'aws_route53_record.website_www_aaaa[0]' || true
+          terraform state rm 'data.aws_route53_zone.main' || true
+        working-directory: ./terraform
+        continue-on-error: true
+
       - name: Terraform Plan
         run: terraform plan -out=tfplan
         working-directory: ./terraform

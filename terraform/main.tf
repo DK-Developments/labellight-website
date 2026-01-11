@@ -19,6 +19,12 @@ provider "aws" {
   region = var.aws_region
 }
 
+# Provider for us-east-1 (kept for state cleanup of orphaned ACM resources)
+provider "aws" {
+  alias  = "us_east_1"
+  region = "us-east-1"
+}
+
 #####################################################################
 # WEBSITE HOSTING
 #####################################################################
