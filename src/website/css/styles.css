@@ -212,6 +212,10 @@ a:focus {
   flex-shrink: 0;
 }
 
+.profile-avatar-small.error {
+  background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+}
+
 .profile-name {
   max-width: 120px;
   overflow: hidden;

@@ -91,24 +91,22 @@ async function updateNavbarAuth() {
 
 // Load user profile info for navbar dropdown
 async function loadNavbarUserInfo() {
+  const navbarAvatar = document.getElementById('navbar-avatar');
+  const navbarUserName = document.getElementById('navbar-user-name');
+  const dropdownDisplayName = document.getElementById('dropdown-display-name');
+  const dropdownEmail = document.getElementById('dropdown-email');
+  
   try {
     const userInfo = auth.getUserInfo();
     
-    // Update navbar avatar and name
-    const navbarAvatar = document.getElementById('navbar-avatar');
-    const navbarUserName = document.getElementById('navbar-user-name');
-    const dropdownDisplayName = document.getElementById('dropdown-display-name');
-    const dropdownEmail = document.getElementById('dropdown-email');
-    
-    // Try to get profile from API if available, otherwise use auth info
-    let displayName = 'Account';
-    let email = '';
-    
-    if (userInfo) {
-      email = userInfo.email || '';
-      // Use name from auth token as fallback
-      displayName = userInfo.name || userInfo.email?.split('@')[0] || 'Account';
+    if (!userInfo) {
+      showNavbarError('Unable to load user info');
+      return;
     }
+    
+    // Use auth token info as base
+    let displayName = userInfo.name || userInfo.email?.split('@')[0] || 'Account';
+    let email = userInfo.email || '';
     
     // Try to load full profile if getProfile function exists
     if (typeof getProfile === 'function') {
@@ -118,7 +116,6 @@ async function loadNavbarUserInfo() {
           displayName = profile.display_name;
         }
       } catch (profileError) {
-        // Profile API not available, use auth info
         console.debug('Profile API not available, using auth info');
       }
     }
@@ -132,7 +129,24 @@ async function loadNavbarUserInfo() {
     
   } catch (error) {
     console.error('Error loading navbar user info:', error);
+    showNavbarError('Error loading account');
   }
+}
+
+// Show error state in navbar dropdown
+function showNavbarError(message) {
+  const navbarAvatar = document.getElementById('navbar-avatar');
+  const navbarUserName = document.getElementById('navbar-user-name');
+  const dropdownDisplayName = document.getElementById('dropdown-display-name');
+  const dropdownEmail = document.getElementById('dropdown-email');
+  
+  if (navbarAvatar) {
+    navbarAvatar.textContent = '!';
+    navbarAvatar.classList.add('error');
+  }
+  if (navbarUserName) navbarUserName.textContent = 'Error';
+  if (dropdownDisplayName) dropdownDisplayName.textContent = message;
+  if (dropdownEmail) dropdownEmail.textContent = 'Please try refreshing the page';
 }
 
 // Get initials from display name

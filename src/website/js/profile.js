@@ -256,21 +256,7 @@ async function handleProfileUpdate(e) {
 
 async function loadOrganisation() {
   try {
-    let org = await getOrganisation();
-    
-    // TODO: Remove mock data when backend is ready
-    // For demo purposes, simulate no organisation initially
-    // Uncomment the line below to test with mock organisation data
-    /*
-    org = {
-      id: 'org-123',
-      name: 'Acme Corporation',
-      created_at: '2024-06-15T10:30:00Z',
-      member_count: 5,
-      subscription_status: 'Active',
-      user_role: 'admin' // 'owner', 'admin', or 'member'
-    };
-    */
+    const org = await getOrganisation();
     
     currentOrganisation = org;
     
@@ -283,8 +269,26 @@ async function loadOrganisation() {
     
   } catch (error) {
     console.error('Error loading organisation:', error);
-    showNoOrganisationState();
+    showOrganisationError('Failed to load organisation data. Please try again later.');
   }
+}
+
+function showOrganisationError(message) {
+  const noOrgSection = document.getElementById('no-org-section');
+  const orgContent = document.getElementById('org-content');
+  
+  if (noOrgSection) {
+    noOrgSection.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-state-icon">⚠️</div>
+        <h3>Error Loading Organisation</h3>
+        <p>${escapeHtml(message)}</p>
+        <button class="btn btn-secondary" onclick="loadOrganisation()">Try Again</button>
+      </div>
+    `;
+    noOrgSection.style.display = 'block';
+  }
+  if (orgContent) orgContent.style.display = 'none';
 }
 
 function showNoOrganisationState() {
@@ -330,20 +334,7 @@ async function loadOrganisationMembers() {
   const membersList = document.getElementById('members-list');
   
   try {
-    let members = await getOrganisationMembers();
-    
-    // TODO: Remove mock data when backend is ready
-    // For demo purposes, use mock members if API returns null
-    if (!members && currentOrganisation) {
-      members = [
-        {
-          user_id: currentUser?.sub || 'user-1',
-          display_name: currentProfile?.display_name || 'You',
-          email: currentUser?.email || 'you@example.com',
-          role: currentOrganisation.user_role || 'owner'
-        }
-      ];
-    }
+    const members = await getOrganisationMembers();
     
     if (!members || members.length === 0) {
       membersList.innerHTML = '<div class="empty-state"><p>No members found</p></div>';
@@ -359,7 +350,12 @@ async function loadOrganisationMembers() {
     
   } catch (error) {
     console.error('Error loading members:', error);
-    membersList.innerHTML = '<div class="empty-state"><p>Failed to load members</p></div>';
+    membersList.innerHTML = `
+      <div class="empty-state">
+        <p>Failed to load members</p>
+        <button class="btn btn-secondary" onclick="loadOrganisationMembers()">Try Again</button>
+      </div>
+    `;
   }
 }
 
@@ -602,33 +598,11 @@ async function loadDevices() {
   const limitInfo = document.getElementById('device-limit-info');
   
   try {
-    let response = await getDevices();
+    const response = await getDevices();
     
-    // TODO: Remove mock data when backend is ready
-    // For demo purposes, use mock devices if API returns null
     if (!response) {
-      const currentFingerprint = generateDeviceFingerprint();
-      response = {
-        devices: [
-          {
-            device_id: 'device-1',
-            name: 'Chrome on ' + getDeviceType(navigator.userAgent),
-            browser: getBrowserName(navigator.userAgent),
-            user_agent: navigator.userAgent,
-            fingerprint: currentFingerprint,
-            last_active: new Date().toISOString()
-          },
-          {
-            device_id: 'device-2',
-            name: 'Chrome on Windows',
-            browser: 'Google Chrome',
-            user_agent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-            fingerprint: 'other-fingerprint',
-            last_active: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString()
-          }
-        ],
-        limits: { current: 2, max: 3 }
-      };
+      displayDevicesError(devicesList, 'Unable to load devices. Please try again later.');
+      return;
     }
     
     const devices = response.devices || [];
@@ -655,8 +629,18 @@ async function loadDevices() {
     
   } catch (error) {
     console.error('Error loading devices:', error);
-    devicesList.innerHTML = '<div class="empty-state"><p>Failed to load devices</p></div>';
+    displayDevicesError(devicesList, 'Failed to load devices: ' + (error.message || 'Unknown error'));
   }
+}
+
+function displayDevicesError(container, message) {
+  container.innerHTML = `
+    <div class="empty-state" style="padding: 32px;">
+      <div class="empty-state-icon">⚠️</div>
+      <p style="margin: 0 0 16px;">${escapeHtml(message)}</p>
+      <button class="btn btn-secondary" onclick="loadDevices()">Try Again</button>
+    </div>
+  `;
 }
 
 function displayEmptyDevices(container) {
@@ -738,16 +722,7 @@ async function loadSubscriptionStatus() {
   
   try {
     // TODO: Replace with real API call when backend is ready
-    // const subscription = await fetchSubscription();
-    
-    // For now, use mock data to demonstrate the UI
-    const subscription = {
-      status: 'active',
-      plan: 'annual',
-      amount: 99,
-      current_period_end: '2026-01-29',
-      shared: currentOrganisation !== null
-    };
+    const subscription = await fetchSubscription();
     
     if (subscription && subscription.status === 'active') {
       // User has active subscription
@@ -775,10 +750,29 @@ async function loadSubscriptionStatus() {
       statusBadge.textContent = 'Error';
       statusBadge.className = 'status-badge past-due';
     }
-    displayNoSubscription(subscriptionContent);
+    displaySubscriptionError(subscriptionContent, error.message || 'Failed to load subscription status');
     if (extensionSection) extensionSection.style.display = 'none';
-    if (noSubscriptionSection) noSubscriptionSection.style.display = 'block';
+    if (noSubscriptionSection) noSubscriptionSection.style.display = 'none';
   }
+}
+
+// Placeholder for subscription API - to be implemented
+async function fetchSubscription() {
+  // TODO: Implement real API call
+  // For now, return null to indicate no subscription data available
+  return null;
+}
+
+function displaySubscriptionError(container, message) {
+  container.innerHTML = `
+    <div class="empty-state" style="padding: 20px; text-align: center;">
+      <div class="empty-state-icon">⚠️</div>
+      <p style="font-size: 16px; color: #666; margin-bottom: 15px;">
+        ${escapeHtml(message)}
+      </p>
+      <button class="btn btn-secondary" onclick="loadSubscriptionStatus()">Try Again</button>
+    </div>
+  `;
 }
 
 function displayActiveSubscription(subscription, container) {
@@ -817,9 +811,6 @@ function displayActiveSubscription(subscription, container) {
       <a href="subscription.html" class="btn btn-primary">Manage Subscription</a>
       <a href="subscription.html" class="btn btn-secondary">View Billing History</a>
     </div>
-    <p style="margin-top: 20px; font-size: 13px; color: #666;">
-      <strong>Note:</strong> This is demo data. Real subscription details will be displayed when Stripe integration is complete.
-    </p>
   `;
 }
 
@@ -1006,5 +997,68 @@ function formatRelativeTime(dateStr) {
   } catch {
     return 'Unknown';
   }
+}
+
+// ========================================
+// Device Helper Functions
+// ========================================
+
+function generateDeviceFingerprint() {
+  // Generate a simple fingerprint based on browser characteristics
+  const components = [
+    navigator.userAgent,
+    navigator.language,
+    screen.width + 'x' + screen.height,
+    new Date().getTimezoneOffset()
+  ];
+  
+  // Simple hash function
+  let hash = 0;
+  const str = components.join('|');
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash;
+  }
+  return 'fp-' + Math.abs(hash).toString(16);
+}
+
+function getDeviceType(userAgent) {
+  if (!userAgent) return 'Unknown';
+  
+  if (/iPad|iPhone|iPod/.test(userAgent)) return 'iOS';
+  if (/Android/.test(userAgent)) return 'Android';
+  if (/Windows/.test(userAgent)) return 'Windows';
+  if (/Mac OS/.test(userAgent)) return 'macOS';
+  if (/Linux/.test(userAgent)) return 'Linux';
+  if (/CrOS/.test(userAgent)) return 'Chrome OS';
+  
+  return 'Unknown';
+}
+
+function getBrowserName(userAgent) {
+  if (!userAgent) return 'Unknown Browser';
+  
+  if (/Edg\//.test(userAgent)) return 'Microsoft Edge';
+  if (/Chrome\//.test(userAgent)) return 'Google Chrome';
+  if (/Firefox\//.test(userAgent)) return 'Mozilla Firefox';
+  if (/Safari\//.test(userAgent) && !/Chrome\//.test(userAgent)) return 'Safari';
+  if (/Opera|OPR\//.test(userAgent)) return 'Opera';
+  
+  return 'Unknown Browser';
+}
+
+function getDeviceIcon(userAgent) {
+  if (!userAgent) return '💻';
+  
+  if (/iPad/.test(userAgent)) return '📱';
+  if (/iPhone|iPod/.test(userAgent)) return '📱';
+  if (/Android/.test(userAgent) && /Mobile/.test(userAgent)) return '📱';
+  if (/Android/.test(userAgent)) return '📱';
+  if (/Windows/.test(userAgent)) return '💻';
+  if (/Mac OS/.test(userAgent)) return '💻';
+  if (/Linux/.test(userAgent)) return '🖥️';
+  
+  return '💻';
 }
 
