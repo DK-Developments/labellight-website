@@ -23,21 +23,6 @@ output "custom_domain_url" {
   value       = var.environment == "prod" ? "https://www.${var.domain_name}" : "https://${var.environment}.${var.domain_name}"
 }
 
-output "route53_zone_id" {
-  description = "Route 53 hosted zone ID"
-  value       = local.route53_zone_id
-}
-
-output "route53_nameservers" {
-  description = "Nameservers for the Route 53 hosted zone (only for prod)"
-  value       = var.environment == "prod" ? aws_route53_zone.main[0].name_servers : []
-}
-
-output "acm_certificate_arn" {
-  description = "ARN of the ACM certificate"
-  value       = aws_acm_certificate.website.arn
-}
-
 output "cognito_user_pool_id" {
   description = "Cognito User Pool ID"
   value       = aws_cognito_user_pool.main.id
