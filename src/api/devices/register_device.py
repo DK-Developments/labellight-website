@@ -1,3 +1,4 @@
+import os
 import uuid
 from utils.response_builder import (
     success_response,
@@ -13,21 +14,107 @@ from utils.helpers import (
 
 devices_table = get_table('DEVICES_TABLE_NAME')
 
-# Device limits per subscription plan
-DEVICE_LIMITS = {
-    'free': 1,
-    'starter': 2,
-    'professional': 3,
-    'business': 5,
-    'enterprise': 10
-}
+# These tables are optional - only used if environment vars are set
+subscriptions_table_name = os.environ.get('SUBSCRIPTIONS_TABLE_NAME')
+org_members_table_name = os.environ.get('ORG_MEMBERS_TABLE_NAME')
 
-DEFAULT_DEVICE_LIMIT = 3
+# Default device limit for users without subscription
+DEFAULT_DEVICE_LIMIT = 0
 
 
-def get_user_subscription_plan(user_id):
-    """Get user's subscription plan. TODO: Implement actual lookup."""
-    return 'professional'
+def get_subscription_table():
+    """Get subscriptions table if configured."""
+    if subscriptions_table_name:
+        return get_table('SUBSCRIPTIONS_TABLE_NAME')
+    return None
+
+
+def get_org_members_table():
+    """Get org members table if configured."""
+    if org_members_table_name:
+        return get_table('ORG_MEMBERS_TABLE_NAME')
+    return None
+
+
+def get_user_organisation_id(user_id):
+    """Get the organisation ID the user belongs to, if any."""
+    org_members_table = get_org_members_table()
+    if not org_members_table:
+        return None
+    
+    response = org_members_table.query(
+        IndexName='user_id-index',
+        KeyConditionExpression='user_id = :uid',
+        ExpressionAttributeValues={':uid': user_id}
+    )
+    
+    items = response.get('Items', [])
+    if items:
+        return items[0].get('organisation_id')
+    return None
+
+
+def get_subscription_for_user(user_id):
+    """
+    Get the effective subscription for a user.
+    Checks organisation subscription first, then personal.
+    
+    Returns: (subscription, is_org_subscription, org_id)
+    """
+    subs_table = get_subscription_table()
+    if not subs_table:
+        return None, False, None
+    
+    # Check if user belongs to an organisation
+    org_id = get_user_organisation_id(user_id)
+    
+    # Check org subscription first
+    if org_id:
+        response = subs_table.query(
+            IndexName='owner_id-index',
+            KeyConditionExpression='owner_id = :oid',
+            ExpressionAttributeValues={':oid': org_id}
+        )
+        subs = [s for s in response.get('Items', []) if s.get('status') in ['active', 'trialing']]
+        if subs:
+            return subs[0], True, org_id
+    
+    # Check personal subscription
+    response = subs_table.query(
+        IndexName='owner_id-index',
+        KeyConditionExpression='owner_id = :oid',
+        ExpressionAttributeValues={':oid': user_id}
+    )
+    subs = [s for s in response.get('Items', []) if s.get('status') in ['active', 'trialing']]
+    if subs:
+        return subs[0], False, None
+    
+    return None, False, None
+
+
+def count_org_devices(org_id):
+    """Count total devices across all organisation members."""
+    org_members_table = get_org_members_table()
+    if not org_members_table:
+        return 0
+    
+    # Get all org members
+    members_response = org_members_table.query(
+        KeyConditionExpression='organisation_id = :oid',
+        ExpressionAttributeValues={':oid': org_id}
+    )
+    
+    total = 0
+    for member in members_response.get('Items', []):
+        member_user_id = member.get('user_id')
+        device_response = devices_table.query(
+            KeyConditionExpression='user_id = :uid',
+            ExpressionAttributeValues={':uid': member_user_id},
+            Select='COUNT'
+        )
+        total += device_response.get('Count', 0)
+    
+    return total
 
 
 def validate_device_data(name, fingerprint):
@@ -89,24 +176,45 @@ def lambda_handler(event, context):
         )
         return success_response(existing)
     
-    # Get current device count
-    all_devices = devices_table.query(
-        KeyConditionExpression='user_id = :uid',
-        ExpressionAttributeValues={':uid': user_id},
-        Select='COUNT'
-    )
+    # Get subscription and device limit
+    subscription, is_org_sub, org_id = get_subscription_for_user(user_id)
     
-    current_count = all_devices.get('Count', 0)
-    
-    # Check device limit
-    plan = get_user_subscription_plan(user_id)
-    max_devices = DEVICE_LIMITS.get(plan, DEFAULT_DEVICE_LIMIT)
-    
-    if current_count >= max_devices:
+    if not subscription:
         return error_response(
-            f'Device limit reached ({max_devices} devices). Remove an existing device or upgrade your plan.',
+            'No active subscription. Please subscribe to register devices.',
             403
         )
+    
+    max_devices = subscription.get('device_limit', DEFAULT_DEVICE_LIMIT)
+    
+    # Calculate current device count
+    if is_org_sub and org_id:
+        # For org subscriptions, count all devices across the org
+        current_count = count_org_devices(org_id)
+    else:
+        # For personal subscriptions, count user's devices
+        all_devices = devices_table.query(
+            KeyConditionExpression='user_id = :uid',
+            ExpressionAttributeValues={':uid': user_id},
+            Select='COUNT'
+        )
+        current_count = all_devices.get('Count', 0)
+    
+    # Check device limit
+    if current_count >= max_devices:
+        plan_name = subscription.get('plan', 'current')
+        if is_org_sub:
+            return error_response(
+                f'Organisation device limit reached ({current_count}/{max_devices} devices). '
+                f'Remove an existing device or upgrade your organisation\'s plan.',
+                403
+            )
+        else:
+            return error_response(
+                f'Device limit reached ({current_count}/{max_devices} devices). '
+                f'Remove an existing device or upgrade your plan.',
+                403
+            )
     
     # Create new device
     timestamp = get_current_timestamp()

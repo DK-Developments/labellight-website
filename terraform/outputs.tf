@@ -81,3 +81,16 @@ output "devices_table_name" {
   value       = aws_dynamodb_table.devices.name
 }
 
+#####################################################################
+# SUBSCRIPTION TABLE
+#####################################################################
+
+output "subscriptions_table_name" {
+  description = "DynamoDB table name for subscriptions"
+  value       = aws_dynamodb_table.subscriptions.name
+}
+
+output "stripe_webhook_url" {
+  description = "Stripe webhook endpoint URL"
+  value       = "${aws_api_gateway_stage.main.invoke_url}/subscription/webhook"
+}

@@ -75,3 +75,16 @@ variable "chrome_extension_extra_ids" {
   ]
 }
 
+variable "stripe_secret_key" {
+  description = "Stripe Secret API Key for server-side operations"
+  type        = string
+  default     = ""
+  sensitive   = true
+}
+
+variable "stripe_webhook_secret" {
+  description = "Stripe Webhook Signing Secret for validating webhook events"
+  type        = string
+  default     = ""
+  sensitive   = true
+}

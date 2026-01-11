@@ -56,7 +56,11 @@ resource "aws_iam_role_policy" "lambda_device_dynamodb_policy" {
           "dynamodb:Scan"
         ]
         Resource = [
-          aws_dynamodb_table.devices.arn
+          aws_dynamodb_table.devices.arn,
+          aws_dynamodb_table.subscriptions.arn,
+          "${aws_dynamodb_table.subscriptions.arn}/index/*",
+          aws_dynamodb_table.org_members.arn,
+          "${aws_dynamodb_table.org_members.arn}/index/*"
         ]
       }
     ]
@@ -85,7 +89,9 @@ resource "aws_lambda_function" "get_devices" {
 
   environment {
     variables = {
-      DEVICES_TABLE_NAME = aws_dynamodb_table.devices.name
+      DEVICES_TABLE_NAME       = aws_dynamodb_table.devices.name
+      SUBSCRIPTIONS_TABLE_NAME = aws_dynamodb_table.subscriptions.name
+      ORG_MEMBERS_TABLE_NAME   = aws_dynamodb_table.org_members.name
     }
   }
 }
@@ -102,7 +108,9 @@ resource "aws_lambda_function" "register_device" {
 
   environment {
     variables = {
-      DEVICES_TABLE_NAME = aws_dynamodb_table.devices.name
+      DEVICES_TABLE_NAME       = aws_dynamodb_table.devices.name
+      SUBSCRIPTIONS_TABLE_NAME = aws_dynamodb_table.subscriptions.name
+      ORG_MEMBERS_TABLE_NAME   = aws_dynamodb_table.org_members.name
     }
   }
 }
