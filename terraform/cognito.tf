@@ -31,6 +31,27 @@ resource "aws_cognito_identity_provider" "google" {
   }
 }
 
+# Microsoft Identity Provider
+resource "aws_cognito_identity_provider" "microsoft" {
+  user_pool_id  = aws_cognito_user_pool.main.id
+  provider_name = "Microsoft"
+  provider_type = "OIDC"
+
+  provider_details = {
+    authorize_scopes          = "email openid profile"
+    client_id                 = var.microsoft_client_id
+    client_secret             = var.microsoft_client_secret
+    oidc_issuer               = "https://login.microsoftonline.com/common/v2.0"
+    attributes_request_method = "GET"
+  }
+
+  attribute_mapping = {
+    email    = "email"
+    username = "sub"
+    name     = "name"
+  }
+}
+
 # Create app client for printerapp website
 resource "aws_cognito_user_pool_client" "main" {
   name         = "printerapp-web-client-${var.environment}"
@@ -42,12 +63,10 @@ resource "aws_cognito_user_pool_client" "main" {
 
   callback_urls = concat(
     [
-      "https://${aws_cloudfront_distribution.website.domain_name}/index.html",
-      "https://${aws_cloudfront_distribution.website.domain_name}/"
+      "https://${aws_cloudfront_distribution.website.domain_name}/callback.html"
     ],
     var.environment == "dev" ? [
-      "http://localhost:8000/index.html",
-      "http://localhost:8000/"
+      "http://localhost:8000/callback.html"
     ] : []
   )
 
@@ -60,11 +79,14 @@ resource "aws_cognito_user_pool_client" "main" {
     ] : []
   )
 
-  supported_identity_providers = ["Google"]
+  supported_identity_providers = ["Google", "Microsoft"]
 
   generate_secret = false
 
-  depends_on = [aws_cognito_identity_provider.google]
+  depends_on = [
+    aws_cognito_identity_provider.google,
+    aws_cognito_identity_provider.microsoft
+  ]
 }
 
 #####################################################################
@@ -90,7 +112,7 @@ resource "aws_cognito_user_pool_client" "extension" {
     for id in concat([var.chrome_extension_id], var.chrome_extension_extra_ids) : "https://${id}.chromiumapp.org/"
   ]
 
-  supported_identity_providers = ["Google"]
+  supported_identity_providers = ["Google", "Microsoft"]
 
   generate_secret = false
 
@@ -105,6 +127,9 @@ resource "aws_cognito_user_pool_client" "extension" {
     refresh_token = "days"
   }
 
-  depends_on = [aws_cognito_identity_provider.google]
+  depends_on = [
+    aws_cognito_identity_provider.google,
+    aws_cognito_identity_provider.microsoft
+  ]
 }
 
