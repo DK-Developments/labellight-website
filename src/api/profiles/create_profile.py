@@ -27,9 +27,15 @@ def lambda_handler(event, context):
     
     # Extract and validate profile fields
     display_name = body.get('display_name', '').strip()
-    bio = body.get('bio', '').strip()
+    bio = body.get('bio', '').strip() if body.get('bio') else None
+    phone = body.get('phone', '').strip() if body.get('phone') else None
+    company = body.get('company', '').strip() if body.get('company') else None
+    address = body.get('address', '').strip() if body.get('address') else None
+    city = body.get('city', '').strip() if body.get('city') else None
+    state = body.get('state', '').strip() if body.get('state') else None
+    country = body.get('country', '').strip() if body.get('country') else None
     
-    # Validate all fields
+    # Validate required fields
     is_valid, error_msg = validate_profile_data(display_name, bio)
     if not is_valid:
         return error_response(error_msg)
@@ -40,9 +46,18 @@ def lambda_handler(event, context):
         'user_id': user_id,
         'display_name': display_name,
         'bio': bio,
+        'phone': phone,
+        'company': company,
+        'address': address,
+        'city': city,
+        'state': state,
+        'country': country,
         'created_at': timestamp,
         'updated_at': timestamp
     }
+    
+    # Remove None values
+    profile = {k: v for k, v in profile.items() if v is not None}
     
     # Check if profile already exists
     existing = table.get_item(Key={'user_id': user_id})

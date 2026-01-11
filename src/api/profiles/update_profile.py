@@ -29,6 +29,12 @@ def lambda_handler(event, context):
     # Extract fields (allowing None for fields not being updated)
     display_name = body.get('display_name', '').strip() if body.get('display_name') else ''
     bio = body.get('bio', '').strip() if 'bio' in body else None
+    phone = body.get('phone', '').strip() if 'phone' in body else None
+    company = body.get('company', '').strip() if 'company' in body else None
+    address = body.get('address', '').strip() if 'address' in body else None
+    city = body.get('city', '').strip() if 'city' in body else None
+    state = body.get('state', '').strip() if 'state' in body else None
+    country = body.get('country', '').strip() if 'country' in body else None
     
     # Validate all provided fields
     is_valid, error_msg = validate_profile_data(display_name, bio, for_update=True)
@@ -44,13 +50,22 @@ def lambda_handler(event, context):
     update_expression = "SET updated_at = :updated_at"
     expression_values = {':updated_at': get_current_timestamp()}
     
-    if display_name:
-        update_expression += ", display_name = :display_name"
-        expression_values[':display_name'] = display_name
+    # Map of field names to values
+    optional_fields = {
+        'display_name': display_name,
+        'bio': bio,
+        'phone': phone,
+        'company': company,
+        'address': address,
+        'city': city,
+        'state': state,
+        'country': country
+    }
     
-    if bio is not None:
-        update_expression += ", bio = :bio"
-        expression_values[':bio'] = bio
+    for field_name, value in optional_fields.items():
+        if value is not None:
+            update_expression += f", {field_name} = :{field_name}"
+            expression_values[f':{field_name}'] = value if value else None
     
     # Update profile
     response = table.update_item(

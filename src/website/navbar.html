@@ -11,9 +11,44 @@
       </a>
     </div>
     <div class="navbar-right">
-      <a href="profile.html" class="nav-link" id="profile-link" style="display: none;">Profile</a>
-      <button onclick="handleLogout()" class="logout-btn" style="display: none;">Logout</button>
-      <a href="login.html" class="login-btn" style="display: none;">Login</a>
+      <!-- Profile Dropdown (shown when logged in) -->
+      <div class="profile-dropdown" id="profile-dropdown" style="display: none;">
+        <button class="profile-dropdown-trigger" id="profile-dropdown-trigger">
+          <span class="profile-avatar-small" id="navbar-avatar">?</span>
+          <span class="profile-name" id="navbar-user-name">Account</span>
+          <span class="dropdown-arrow">▼</span>
+        </button>
+        <div class="profile-dropdown-menu" id="profile-dropdown-menu">
+          <div class="dropdown-header">
+            <span class="dropdown-user-name" id="dropdown-display-name">User</span>
+            <span class="dropdown-user-email" id="dropdown-email">user@example.com</span>
+          </div>
+          <div class="dropdown-divider"></div>
+          <a href="profile.html" class="dropdown-item">
+            <span class="dropdown-icon">👤</span>
+            <span>Profile</span>
+          </a>
+          <a href="profile.html#organisation" class="dropdown-item" data-tab="organisation">
+            <span class="dropdown-icon">🏢</span>
+            <span>Organisation</span>
+          </a>
+          <a href="profile.html#devices" class="dropdown-item" data-tab="devices">
+            <span class="dropdown-icon">💻</span>
+            <span>Devices</span>
+          </a>
+          <a href="profile.html#subscription" class="dropdown-item" data-tab="subscription">
+            <span class="dropdown-icon">💳</span>
+            <span>Subscription</span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <button class="dropdown-item dropdown-item-danger" id="dropdown-logout-btn">
+            <span class="dropdown-icon">🚪</span>
+            <span>Logout</span>
+          </button>
+        </div>
+      </div>
+      <!-- Login Button (shown when logged out) -->
+      <a href="login.html" class="login-btn" id="login-btn" style="display: none;">Login</a>
     </div>
   </div>
 </nav>
