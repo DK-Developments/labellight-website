@@ -29,6 +29,16 @@ document.addEventListener('DOMContentLoaded', function() {
       if (!isActive) {
         item.classList.add('active');
       }
+      
+      // Send event to Google Analytics
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'faq_interaction', {
+          'event_category': 'engagement',
+          'event_label': question.textContent.trim(),
+          'action': isActive ? 'close' : 'open',
+          'page': 'pricing'
+        });
+      }
     });
   });
 
@@ -41,6 +51,15 @@ document.addEventListener('DOMContentLoaded', function() {
  */
 function handleSubscribe(plan) {
   console.log('Subscribe button clicked:', plan);
+  
+  // Track subscription initiation
+  if (typeof gtag !== 'undefined') {
+    gtag('event', 'begin_checkout', {
+      'event_category': 'ecommerce',
+      'event_label': plan,
+      'plan_type': plan
+    });
+  }
   
   // Check if user is authenticated
   if (!auth.isAuthenticated()) {
@@ -116,13 +135,16 @@ function showPlaceholderMessage(plan) {
     `Your selection has been logged for analytics.`
   );
   
-  // Log for analytics (placeholder)
-  console.log('Analytics: Subscription selected', {
-    plan: plan,
-    amount: amount,
-    interval: interval,
-    timestamp: new Date().toISOString()
-  });
+  // Track subscription selection in Google Analytics
+  if (typeof gtag !== 'undefined') {
+    gtag('event', 'subscription_selected', {
+      'event_category': 'ecommerce',
+      'event_label': plan,
+      'plan_type': plan,
+      'amount': amount,
+      'interval': interval
+    });
+  }
 }
 
 /**

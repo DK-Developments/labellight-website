@@ -48,6 +48,14 @@ async function loadNavbarUserInfo() {
 // Handle logout button click
 function handleLogout() {
   if (confirm('Are you sure you want to logout?')) {
+    // Track logout event
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'logout', {
+        'event_category': 'engagement',
+        'event_label': 'navbar'
+      });
+    }
+    
     auth.logout();
   }
 }

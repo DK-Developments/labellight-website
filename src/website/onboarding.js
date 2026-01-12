@@ -50,6 +50,15 @@ document.getElementById('onboardingForm').addEventListener('submit', async (e) =
     // Create profile
     const profile = await createProfile(profileData);
     
+    // Track profile creation
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'sign_up', {
+        'event_category': 'engagement',
+        'event_label': 'profile_created',
+        'method': 'onboarding_form'
+      });
+    }
+    
     // Success - redirect to home
     window.location.href = 'profile.html';
     

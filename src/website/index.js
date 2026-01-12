@@ -32,8 +32,14 @@ document.addEventListener('DOMContentLoaded', function() {
         item.classList.add('active');
       }
       
-      // Log for analytics (placeholder for future implementation)
-      console.log('FAQ clicked:', question.textContent.trim());
+      // Send event to Google Analytics
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'faq_interaction', {
+          'event_category': 'engagement',
+          'event_label': question.textContent.trim(),
+          'action': isActive ? 'close' : 'open'
+        });
+      }
     });
   });
 
@@ -50,8 +56,14 @@ document.addEventListener('DOMContentLoaded', function() {
           block: 'start'
         });
         
-        // Log for analytics (placeholder for future implementation)
-        console.log('CTA clicked: See How It Works');
+        // Send event to Google Analytics
+        if (typeof gtag !== 'undefined') {
+          gtag('event', 'cta_click', {
+            'event_category': 'engagement',
+            'event_label': 'See How It Works',
+            'cta_location': 'hero_section'
+          });
+        }
       }
     });
   }
@@ -61,12 +73,21 @@ document.addEventListener('DOMContentLoaded', function() {
   
   ctaButtons.forEach(button => {
     button.addEventListener('click', function(e) {
-      // Log for analytics (placeholder for future implementation)
       const buttonText = button.textContent.trim();
-      console.log('CTA clicked:', buttonText);
+      
+      // Send event to Google Analytics
+      if (typeof gtag !== 'undefined') {
+        const section = button.closest('section');
+        const sectionClass = section ? section.className : 'unknown';
+        
+        gtag('event', 'cta_click', {
+          'event_category': 'conversion',
+          'event_label': buttonText,
+          'cta_location': sectionClass
+        });
+      }
       
       // Allow default behavior (navigation to pricing.html)
-      // In future, could add tracking pixel or analytics call here
     });
   });
 

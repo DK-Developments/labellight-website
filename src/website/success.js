@@ -80,6 +80,14 @@ function handleDownloadExtension() {
   
   console.log('Extension download requested from success page');
   
+  // Track extension download click
+  if (typeof gtag !== 'undefined') {
+    gtag('event', 'extension_download_click', {
+      'event_category': 'engagement',
+      'event_label': 'success_page'
+    });
+  }
+  
   alert(
     'Extension Download\n\n' +
     'The DYMO Label Printing extension will be available in the Chrome Web Store.\n\n' +
@@ -117,19 +125,38 @@ function showError(message) {
 }
 
 /**
- * Track conversion (analytics placeholder)
+ * Track conversion (analytics)
  */
 function trackConversion() {
-  // TODO: Implement analytics tracking when available
-  console.log('Conversion tracked (placeholder)', {
-    timestamp: new Date().toISOString(),
-    page: 'success'
-  });
+  console.log('Tracking conversion');
   
-  // When analytics is integrated:
-  // gtag('event', 'purchase', { ... });
-  // or
-  // analytics.track('Subscription Created', { ... });
+  // Get plan details from URL if available
+  const urlParams = new URLSearchParams(window.location.search);
+  const plan = urlParams.get('plan') || 'unknown';
+  
+  // Send purchase event to Google Analytics
+  if (typeof gtag !== 'undefined') {
+    gtag('event', 'purchase', {
+      'event_category': 'ecommerce',
+      'event_label': 'subscription',
+      'transaction_id': urlParams.get('session_id') || 'demo',
+      'value': plan === 'monthly' ? 9.99 : 99.00,
+      'currency': 'USD',
+      'items': [{
+        'item_name': `DYMO Label Printing - ${plan} Plan`,
+        'item_category': 'subscription',
+        'price': plan === 'monthly' ? 9.99 : 99.00,
+        'quantity': 1
+      }]
+    });
+    
+    // Also track as a conversion event
+    gtag('event', 'conversion', {
+      'send_to': 'G-J8VPZ7FWEW',
+      'event_category': 'ecommerce',
+      'event_label': 'subscription_completed'
+    });
+  }
 }
 
 // Track conversion on page load

@@ -154,6 +154,14 @@ document.addEventListener('DOMContentLoaded', function() {
   const downloadBtn = document.getElementById('download-extension-btn-profile');
   if (downloadBtn) {
     downloadBtn.addEventListener('click', function() {
+      // Track extension download click
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'extension_download_click', {
+          'event_category': 'engagement',
+          'event_label': 'profile_page'
+        });
+      }
+      
       alert(
         'Extension Download\n\n' +
         'The DYMO Label Printing extension will be available in the Chrome Web Store.\n\n' +
