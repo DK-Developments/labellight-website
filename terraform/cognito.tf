@@ -14,6 +14,7 @@ resource "aws_cognito_user_pool_domain" "main" {
 
 # Google Identity Provider
 resource "aws_cognito_identity_provider" "google" {
+  count         = var.google_client_id != "" && var.google_client_secret != "" ? 1 : 0
   user_pool_id  = aws_cognito_user_pool.main.id
   provider_name = "Google"
   provider_type = "Google"
@@ -33,6 +34,7 @@ resource "aws_cognito_identity_provider" "google" {
 
 # Microsoft Identity Provider
 resource "aws_cognito_identity_provider" "microsoft" {
+  count         = var.microsoft_client_id != "" && var.microsoft_client_secret != "" ? 1 : 0
   user_pool_id  = aws_cognito_user_pool.main.id
   provider_name = "Microsoft"
   provider_type = "OIDC"
@@ -79,7 +81,10 @@ resource "aws_cognito_user_pool_client" "main" {
     ] : []
   )
 
-  supported_identity_providers = ["Google", "Microsoft"]
+  supported_identity_providers = compact([
+    var.google_client_id != "" && var.google_client_secret != "" ? "Google" : "",
+    var.microsoft_client_id != "" && var.microsoft_client_secret != "" ? "Microsoft" : ""
+  ])
 
   generate_secret = false
 
@@ -112,7 +117,10 @@ resource "aws_cognito_user_pool_client" "extension" {
     for id in concat([var.chrome_extension_id], var.chrome_extension_extra_ids) : "https://${id}.chromiumapp.org/"
   ]
 
-  supported_identity_providers = ["Google", "Microsoft"]
+  supported_identity_providers = compact([
+    var.google_client_id != "" && var.google_client_secret != "" ? "Google" : "",
+    var.microsoft_client_id != "" && var.microsoft_client_secret != "" ? "Microsoft" : ""
+  ])
 
   generate_secret = false
 
