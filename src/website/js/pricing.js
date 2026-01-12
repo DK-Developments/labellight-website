@@ -175,30 +175,76 @@ function handleSubscribe(plan) {
 
 /**
  * Show placeholder message (to be removed when Stripe is integrated)
- * @param {string} plan - Selected plan identifier
+ * @param {string} plan - Selected plan identifier (e.g., 'team-monthly', 'single-yearly')
  */
 function showPlaceholderMessage(plan) {
-  const planDetails = CONFIG.PRICING[plan];
+  // Parse plan identifier (e.g., 'team-monthly' -> planKey='team', interval='monthly')
+  const [planKey, interval] = plan.split('-');
   
-  if (!planDetails) {
+  // Handle special cases
+  if (plan === 'trial') {
+    const trialDetails = CONFIG.PRICING.trial;
+    alert(
+      `Stripe Integration Coming Soon!\n\n` +
+      `You selected: Free Trial\n` +
+      `Price: Free for ${trialDetails.duration} ${trialDetails.unit}\n` +
+      `Users: ${trialDetails.userLimit}\n\n` +
+      `This will redirect to Stripe Checkout when integration is complete.\n\n` +
+      `Your selection has been logged for analytics.`
+    );
+    console.log('Analytics: Subscription selected', {
+      plan: plan,
+      name: 'Free Trial',
+      amount: 0,
+      interval: `${trialDetails.duration} ${trialDetails.unit}`,
+      users: trialDetails.userLimit,
+      timestamp: new Date().toISOString()
+    });
+    return;
+  }
+  
+  if (plan === 'enterprise') {
+    const enterpriseDetails = CONFIG.PRICING.enterprise;
+    alert(
+      `Stripe Integration Coming Soon!\n\n` +
+      `You selected: Enterprise\n` +
+      `Price: $${enterpriseDetails.perUser}/user/month (min ${enterpriseDetails.minUsers} users)\n` +
+      `Users: Custom\n\n` +
+      `Please contact sales for enterprise pricing.\n\n` +
+      `Your selection has been logged for analytics.`
+    );
+    console.log('Analytics: Subscription selected', {
+      plan: plan,
+      name: 'Enterprise',
+      amount: enterpriseDetails.perUser,
+      interval: 'per user/month',
+      users: 'custom',
+      timestamp: new Date().toISOString()
+    });
+    return;
+  }
+  
+  // Get plan details from CONFIG
+  const planDetails = CONFIG.PRICING[planKey];
+  
+  if (!planDetails || !interval) {
     alert('Unknown plan selected. Please try again.');
     return;
   }
   
-  const name = planDetails.name;
-  const amount = planDetails.amount;
-  const interval = planDetails.interval;
+  const amount = planDetails[interval];
   const users = planDetails.users;
+  const deviceLimit = planDetails.deviceLimit;
+  const name = `${planKey.charAt(0).toUpperCase() + planKey.slice(1)} (${interval})`;
   
-  const priceDisplay = amount === 0 
-    ? 'Free' 
-    : `$${amount}/${interval}`;
+  const priceDisplay = `$${amount}/${interval === 'monthly' ? 'month' : 'year'}`;
   
   alert(
     `Stripe Integration Coming Soon!\n\n` +
     `You selected: ${name}\n` +
     `Price: ${priceDisplay}\n` +
-    `Users: ${users === 'unlimited' ? 'Unlimited' : users}\n\n` +
+    `Users: ${users}\n` +
+    `Device Limit: ${deviceLimit}\n\n` +
     `This will redirect to Stripe Checkout when integration is complete.\n\n` +
     `Your selection has been logged for analytics.`
   );
@@ -210,6 +256,7 @@ function showPlaceholderMessage(plan) {
     amount: amount,
     interval: interval,
     users: users,
+    deviceLimit: deviceLimit,
     timestamp: new Date().toISOString()
   });
 }
