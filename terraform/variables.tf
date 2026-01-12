@@ -77,3 +77,9 @@ variable "stripe_webhook_secret" {
   default     = ""
   sensitive   = true
 }
+
+variable "domain_name" {
+  description = "Domain name for the website (used for constructing URLs)"
+  type        = string
+  default     = "labellight.com"
+}
