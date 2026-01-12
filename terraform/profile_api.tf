@@ -275,6 +275,7 @@ resource "aws_api_gateway_deployment" "main" {
 
   triggers = {
     redeployment = sha1(jsonencode([
+      # Profile API
       aws_api_gateway_resource.profile.id,
       aws_api_gateway_method.get_profile.id,
       aws_api_gateway_method.create_profile.id,
@@ -284,6 +285,72 @@ resource "aws_api_gateway_deployment" "main" {
       aws_api_gateway_integration.create_profile.id,
       aws_api_gateway_integration.update_profile.id,
       aws_api_gateway_integration.profile_options.id,
+      aws_api_gateway_integration_response.profile_options.id,
+      # Device API
+      aws_api_gateway_resource.devices.id,
+      aws_api_gateway_method.get_devices.id,
+      aws_api_gateway_method.register_device.id,
+      aws_api_gateway_method.devices_options.id,
+      aws_api_gateway_integration.get_devices.id,
+      aws_api_gateway_integration.register_device.id,
+      aws_api_gateway_integration.devices_options.id,
+      aws_api_gateway_integration_response.devices_options.id,
+      aws_api_gateway_resource.device.id,
+      aws_api_gateway_method.remove_device.id,
+      aws_api_gateway_method.device_options.id,
+      aws_api_gateway_integration.remove_device.id,
+      aws_api_gateway_integration.device_options.id,
+      aws_api_gateway_integration_response.device_options.id,
+      aws_api_gateway_resource.device_heartbeat.id,
+      aws_api_gateway_method.device_heartbeat.id,
+      aws_api_gateway_method.device_heartbeat_options.id,
+      aws_api_gateway_integration.device_heartbeat.id,
+      aws_api_gateway_integration.device_heartbeat_options.id,
+      aws_api_gateway_integration_response.device_heartbeat_options.id,
+      # Organisation API
+      aws_api_gateway_resource.organisation.id,
+      aws_api_gateway_method.get_organisation.id,
+      aws_api_gateway_method.create_organisation.id,
+      aws_api_gateway_method.update_organisation.id,
+      aws_api_gateway_method.delete_organisation.id,
+      aws_api_gateway_method.organisation_options.id,
+      aws_api_gateway_integration.get_organisation.id,
+      aws_api_gateway_integration.create_organisation.id,
+      aws_api_gateway_integration.update_organisation.id,
+      aws_api_gateway_integration.delete_organisation.id,
+      aws_api_gateway_integration.organisation_options.id,
+      aws_api_gateway_integration_response.organisation_options.id,
+      aws_api_gateway_resource.organisation_members.id,
+      aws_api_gateway_method.get_members.id,
+      aws_api_gateway_method.update_member.id,
+      aws_api_gateway_method.remove_member.id,
+      aws_api_gateway_method.organisation_members_options.id,
+      aws_api_gateway_integration.get_members.id,
+      aws_api_gateway_integration.update_member.id,
+      aws_api_gateway_integration.remove_member.id,
+      aws_api_gateway_integration.organisation_members_options.id,
+      aws_api_gateway_integration_response.organisation_members_options.id,
+      aws_api_gateway_resource.organisation_invite.id,
+      aws_api_gateway_method.invite_member.id,
+      aws_api_gateway_method.organisation_invite_options.id,
+      aws_api_gateway_integration.invite_member.id,
+      aws_api_gateway_integration.organisation_invite_options.id,
+      aws_api_gateway_integration_response.organisation_invite_options.id,
+      aws_api_gateway_resource.organisation_leave.id,
+      aws_api_gateway_method.leave_organisation.id,
+      aws_api_gateway_method.organisation_leave_options.id,
+      aws_api_gateway_integration.leave_organisation.id,
+      aws_api_gateway_integration.organisation_leave_options.id,
+      aws_api_gateway_integration_response.organisation_leave_options.id,
+      # Subscription API
+      aws_api_gateway_resource.subscription.id,
+      aws_api_gateway_method.get_subscription.id,
+      aws_api_gateway_method.create_checkout.id,
+      aws_api_gateway_method.subscription_options.id,
+      aws_api_gateway_integration.get_subscription.id,
+      aws_api_gateway_integration.create_checkout.id,
+      aws_api_gateway_integration.subscription_options.id,
+      aws_api_gateway_integration_response.subscription_options.id,
     ]))
   }
 
@@ -292,10 +359,37 @@ resource "aws_api_gateway_deployment" "main" {
   }
 
   depends_on = [
+    # Profile API
     aws_api_gateway_integration.get_profile,
     aws_api_gateway_integration.create_profile,
     aws_api_gateway_integration.update_profile,
     aws_api_gateway_integration.profile_options,
+    # Device API
+    aws_api_gateway_integration.get_devices,
+    aws_api_gateway_integration.register_device,
+    aws_api_gateway_integration.devices_options,
+    aws_api_gateway_integration.remove_device,
+    aws_api_gateway_integration.device_options,
+    aws_api_gateway_integration.device_heartbeat,
+    aws_api_gateway_integration.device_heartbeat_options,
+    # Organisation API
+    aws_api_gateway_integration.get_organisation,
+    aws_api_gateway_integration.create_organisation,
+    aws_api_gateway_integration.update_organisation,
+    aws_api_gateway_integration.delete_organisation,
+    aws_api_gateway_integration.organisation_options,
+    aws_api_gateway_integration.get_members,
+    aws_api_gateway_integration.update_member,
+    aws_api_gateway_integration.remove_member,
+    aws_api_gateway_integration.organisation_members_options,
+    aws_api_gateway_integration.invite_member,
+    aws_api_gateway_integration.organisation_invite_options,
+    aws_api_gateway_integration.leave_organisation,
+    aws_api_gateway_integration.organisation_leave_options,
+    # Subscription API
+    aws_api_gateway_integration.get_subscription,
+    aws_api_gateway_integration.create_checkout,
+    aws_api_gateway_integration.subscription_options,
   ]
 }
 
