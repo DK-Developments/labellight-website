@@ -28,6 +28,16 @@ jobs:
       group: deploy-prod
       cancel-in-progress: false
 
+  # Status check job that requires successful dev deployment
+  deployment-status:
+    name: Deployment Status Check
+    if: github.event_name == 'pull_request'
+    needs: deploy-dev
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deployment successful
+        run: echo "Development deployment completed successfully"
+
   # Development environment deployment for PRs and manual triggers
   deploy-dev:
     name: Deploy to Development
