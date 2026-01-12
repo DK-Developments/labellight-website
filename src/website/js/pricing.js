@@ -144,17 +144,14 @@ function handleSubscribe(plan) {
   // TODO: Real Stripe integration
   // When Stripe is available, uncomment and implement:
   /*
-  // Initialize Stripe
-  const stripe = Stripe(CONFIG.STRIPE_PUBLISHABLE_KEY);
-  
-  // Get the appropriate price ID
-  const priceId = CONFIG.STRIPE_PRICE_IDS[plan];
+  // Parse plan identifier (e.g., 'team-monthly' -> planKey='team', billingPeriod='monthly')
+  const [planKey, billingPeriod] = plan.split('-');
   
   // Create checkout session via backend API
-  createCheckoutSession(priceId)
-    .then(session => {
+  createCheckoutSession(planKey, billingPeriod)
+    .then(response => {
       // Redirect to Stripe Checkout
-      return stripe.redirectToCheckout({ sessionId: session.id });
+      window.location.href = response.checkout_url;
     })
     .catch(error => {
       console.error('Stripe checkout error:', error);
@@ -262,24 +259,23 @@ function showPlaceholderMessage(plan) {
 }
 
 /**
- * Create Stripe Checkout Session (to be implemented)
- * @param {string} priceId - Stripe price ID
- * @returns {Promise<Object>} Session object with id
+ * Create Stripe Checkout Session
+ * @param {string} plan - Plan key (e.g., 'single', 'team', 'business')
+ * @param {string} billingPeriod - Billing period ('monthly' or 'yearly')
+ * @returns {Promise<Object>} Response with checkout_url
  */
-async function createCheckoutSession(priceId) {
-  // TODO: Implement when backend API is ready
-  /*
-  const response = await apiRequest('/subscriptions/checkout', {
+async function createCheckoutSession(plan, billingPeriod) {
+  const response = await apiRequest('/subscription', {
     method: 'POST',
-    body: { price_id: priceId },
+    body: {
+      plan: plan,
+      billing_period: billingPeriod,
+      owner_type: 'user'  // TODO: Support organisation subscriptions
+    },
     requireAuth: true
   });
   
   return response;
-  */
-  
-  // Placeholder
-  return Promise.reject(new Error('Backend API not implemented yet'));
 }
 
 /**
