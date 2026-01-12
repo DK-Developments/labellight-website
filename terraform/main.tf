@@ -35,7 +35,7 @@ resource "aws_s3_bucket" "website" {
 }
 
 # CloudFront Origin Access Control - secure access to S3
-resource "aws_cloudfront_origin_access_controasrl" "website" {
+resource "aws_cloudfront_origin_access_control" "website" {
   name                              = "printerapp-oac-${var.environment}"
   description                       = "Origin Access Control for website"
   origin_access_control_origin_type = "s3"
