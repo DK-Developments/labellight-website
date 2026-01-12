@@ -43,8 +43,9 @@ variable "domain_name" {
 }
 
 variable "acm_certificate_arn" {
-  description = "ARN of the existing wildcard ACM certificate for the domain (must be in us-east-1)"
+  description = "ARN of the existing wildcard ACM certificate for the domain (must be in us-east-1). Leave empty to use CloudFront default certificate."
   type        = string
+  default     = ""
 }
 
 variable "chrome_extension_id" {
