@@ -49,7 +49,7 @@ jobs:
           TF_VAR_google_client_id: ${{ secrets.TF_VAR_GOOGLE_CLIENT_ID }}
           TF_VAR_google_client_secret: ${{ secrets.TF_VAR_GOOGLE_CLIENT_SECRET }}
           TF_VAR_environment: ${{ inputs.environment }}
-          TF_VAR_acm_certificate_arn: ${{ secrets.ACM_CERTIFICATE_ARN }}
+          TF_VAR_acm_certificate_arn: ${{ vars.ACM_CERTIFICATE_ARN }}
 
       - name: Terraform Apply
         run: terraform apply -auto-approve tfplan
@@ -57,7 +57,7 @@ jobs:
         env:
           TF_VAR_google_client_id: ${{ secrets.TF_VAR_GOOGLE_CLIENT_ID }}
           TF_VAR_google_client_secret: ${{ secrets.TF_VAR_GOOGLE_CLIENT_SECRET }}
-          TF_VAR_acm_certificate_arn: ${{ secrets.ACM_CERTIFICATE_ARN }}
+          TF_VAR_acm_certificate_arn: ${{ vars.ACM_CERTIFICATE_ARN }}
 
       - name: Get Terraform Outputs
         id: tf_outputs

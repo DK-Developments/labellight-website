@@ -87,8 +87,10 @@ resource "aws_cloudfront_distribution" "website" {
   default_root_object = "index.html"
   price_class         = "PriceClass_All"  # Includes Australia/NZ for better local performance. Can change to save money.
 
-  # Custom domain aliases
-  aliases = var.environment == "prod" ? [var.domain_name, "www.${var.domain_name}"] : ["${var.environment}.${var.domain_name}"]
+  # Custom domain aliases - only when ACM certificate is provided
+  aliases = var.acm_certificate_arn != "" ? (
+    var.environment == "prod" ? [var.domain_name, "www.${var.domain_name}"] : ["${var.environment}.${var.domain_name}"]
+  ) : []
 
   origin {
     domain_name              = aws_s3_bucket.website.bucket_regional_domain_name
