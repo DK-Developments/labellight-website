@@ -7,8 +7,9 @@
 # terraform.tfstate
 # terraform.tfstate.backup
 
-# Lambda deployment packagesz
+# Lambda deployment packages
 *.zip
+terraform/stripe_layer/
 
 # OS files
 .DS_Store

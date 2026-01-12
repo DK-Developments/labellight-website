@@ -42,12 +42,24 @@ jobs:
             -backend-config="dynamodb_table=printerapp-terraform-locks-${{ inputs.environment }}"
         working-directory: ./terraform
 
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Build Lambda Layer for Stripe
+        run: |
+          mkdir -p ./terraform/stripe_layer/python
+          pip install -r ./src/api/requirements.txt -t ./terraform/stripe_layer/python --quiet
+
       - name: Terraform Plan
         run: terraform plan -out=tfplan
         working-directory: ./terraform
         env:
           TF_VAR_google_client_id: ${{ secrets.TF_VAR_GOOGLE_CLIENT_ID }}
           TF_VAR_google_client_secret: ${{ secrets.TF_VAR_GOOGLE_CLIENT_SECRET }}
+          TF_VAR_stripe_secret_key: ${{ secrets.STRIPE_SECRET_KEY }}
+          TF_VAR_stripe_webhook_secret: ${{ secrets.STRIPE_WEBHOOK_SECRET }}
           TF_VAR_environment: ${{ inputs.environment }}
 
       - name: Terraform Apply
@@ -56,6 +68,8 @@ jobs:
         env:
           TF_VAR_google_client_id: ${{ secrets.TF_VAR_GOOGLE_CLIENT_ID }}
           TF_VAR_google_client_secret: ${{ secrets.TF_VAR_GOOGLE_CLIENT_SECRET }}
+          TF_VAR_stripe_secret_key: ${{ secrets.STRIPE_SECRET_KEY }}
+          TF_VAR_stripe_webhook_secret: ${{ secrets.STRIPE_WEBHOOK_SECRET }}
 
       - name: Get Terraform Outputs
         id: tf_outputs

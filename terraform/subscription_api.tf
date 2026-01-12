@@ -83,6 +83,24 @@ resource "aws_iam_role_policy" "lambda_subscription_dynamodb_policy" {
 }
 
 #####################################################################
+# LAMBDA LAYER FOR STRIPE
+#####################################################################
+
+data "archive_file" "stripe_layer" {
+  type        = "zip"
+  source_dir  = "${path.module}/stripe_layer"
+  output_path = "${path.module}/stripe_layer.zip"
+}
+
+resource "aws_lambda_layer_version" "stripe" {
+  filename            = data.archive_file.stripe_layer.output_path
+  layer_name          = "printerapp-stripe-${var.environment}"
+  compatible_runtimes = ["python3.12"]
+  source_code_hash    = data.archive_file.stripe_layer.output_base64sha256
+  description         = "Stripe Python SDK for payment processing"
+}
+
+#####################################################################
 # LAMBDA FUNCTIONS
 #####################################################################
 
@@ -121,6 +139,7 @@ resource "aws_lambda_function" "create_checkout" {
   source_code_hash = data.archive_file.subscription_lambda.output_base64sha256
   runtime          = "python3.12"
   timeout          = 10
+  layers           = [aws_lambda_layer_version.stripe.arn]
 
   environment {
     variables = {
@@ -142,6 +161,7 @@ resource "aws_lambda_function" "stripe_webhook" {
   source_code_hash = data.archive_file.subscription_lambda.output_base64sha256
   runtime          = "python3.12"
   timeout          = 30
+  layers           = [aws_lambda_layer_version.stripe.arn]
 
   environment {
     variables = {
@@ -161,6 +181,7 @@ resource "aws_lambda_function" "create_portal" {
   source_code_hash = data.archive_file.subscription_lambda.output_base64sha256
   runtime          = "python3.12"
   timeout          = 10
+  layers           = [aws_lambda_layer_version.stripe.arn]
 
   environment {
     variables = {
