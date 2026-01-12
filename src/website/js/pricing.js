@@ -141,11 +141,18 @@ function handleSubscribe(plan) {
   button.disabled = true;
   button.textContent = 'Processing...';
 
-  // TODO: Real Stripe integration
-  // When Stripe is available, uncomment and implement:
-  /*
   // Parse plan identifier (e.g., 'team-monthly' -> planKey='team', billingPeriod='monthly')
-  const [planKey, billingPeriod] = plan.split('-');
+  const parts = plan.split('-');
+  const planKey = parts[0];
+  const billingPeriod = parts[1] || 'monthly';
+  
+  // Handle enterprise separately (contact sales)
+  if (planKey === 'enterprise') {
+    button.disabled = false;
+    button.textContent = originalText;
+    window.location.href = 'mailto:sales@printerapp.com?subject=Enterprise%20Pricing%20Inquiry';
+    return;
+  }
   
   // Create checkout session via backend API
   createCheckoutSession(planKey, billingPeriod)
@@ -159,103 +166,6 @@ function handleSubscribe(plan) {
       button.disabled = false;
       button.textContent = originalText;
     });
-  */
-
-  // PLACEHOLDER: Show message that Stripe integration is coming
-  setTimeout(() => {
-    button.disabled = false;
-    button.textContent = originalText;
-    
-    showPlaceholderMessage(plan);
-  }, 500);
-}
-
-/**
- * Show placeholder message (to be removed when Stripe is integrated)
- * @param {string} plan - Selected plan identifier (e.g., 'team-monthly', 'single-yearly')
- */
-function showPlaceholderMessage(plan) {
-  // Parse plan identifier (e.g., 'team-monthly' -> planKey='team', interval='monthly')
-  const [planKey, interval] = plan.split('-');
-  
-  // Handle special cases
-  if (plan === 'trial') {
-    const trialDetails = CONFIG.PRICING.trial;
-    alert(
-      `Stripe Integration Coming Soon!\n\n` +
-      `You selected: Free Trial\n` +
-      `Price: Free for ${trialDetails.duration} ${trialDetails.unit}\n` +
-      `Users: ${trialDetails.userLimit}\n\n` +
-      `This will redirect to Stripe Checkout when integration is complete.\n\n` +
-      `Your selection has been logged for analytics.`
-    );
-    console.log('Analytics: Subscription selected', {
-      plan: plan,
-      name: 'Free Trial',
-      amount: 0,
-      interval: `${trialDetails.duration} ${trialDetails.unit}`,
-      users: trialDetails.userLimit,
-      timestamp: new Date().toISOString()
-    });
-    return;
-  }
-  
-  if (plan === 'enterprise') {
-    const enterpriseDetails = CONFIG.PRICING.enterprise;
-    alert(
-      `Stripe Integration Coming Soon!\n\n` +
-      `You selected: Enterprise\n` +
-      `Price: $${enterpriseDetails.perUser}/user/month (min ${enterpriseDetails.minUsers} users)\n` +
-      `Users: Custom\n\n` +
-      `Please contact sales for enterprise pricing.\n\n` +
-      `Your selection has been logged for analytics.`
-    );
-    console.log('Analytics: Subscription selected', {
-      plan: plan,
-      name: 'Enterprise',
-      amount: enterpriseDetails.perUser,
-      interval: 'per user/month',
-      users: 'custom',
-      timestamp: new Date().toISOString()
-    });
-    return;
-  }
-  
-  // Get plan details from CONFIG
-  const planDetails = CONFIG.PRICING[planKey];
-  
-  if (!planDetails || !interval) {
-    alert('Unknown plan selected. Please try again.');
-    return;
-  }
-  
-  const amount = planDetails[interval];
-  const users = planDetails.users;
-  const deviceLimit = planDetails.deviceLimit;
-  const name = `${planKey.charAt(0).toUpperCase() + planKey.slice(1)} (${interval})`;
-  
-  const priceDisplay = `$${amount}/${interval === 'monthly' ? 'month' : 'year'}`;
-  
-  alert(
-    `Stripe Integration Coming Soon!\n\n` +
-    `You selected: ${name}\n` +
-    `Price: ${priceDisplay}\n` +
-    `Users: ${users}\n` +
-    `Device Limit: ${deviceLimit}\n\n` +
-    `This will redirect to Stripe Checkout when integration is complete.\n\n` +
-    `Your selection has been logged for analytics.`
-  );
-  
-  // Log for analytics (placeholder)
-  console.log('Analytics: Subscription selected', {
-    plan: plan,
-    name: name,
-    amount: amount,
-    interval: interval,
-    users: users,
-    deviceLimit: deviceLimit,
-    timestamp: new Date().toISOString()
-  });
 }
 
 /**
@@ -277,12 +187,3 @@ async function createCheckoutSession(plan, billingPeriod) {
   
   return response;
 }
-
-/**
- * Mock function to check authentication
- * Uses the auth object from auth.js
- */
-function mockCheckAuth() {
-  return auth.isAuthenticated();
-}
-
