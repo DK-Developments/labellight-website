@@ -18,11 +18,6 @@ output "website_url" {
   value       = "https://${aws_cloudfront_distribution.website.domain_name}"
 }
 
-output "custom_domain_url" {
-  description = "Custom domain URL of the website"
-  value       = var.environment == "prod" ? "https://www.${var.domain_name}" : "https://${var.environment}.${var.domain_name}"
-}
-
 output "cognito_user_pool_id" {
   description = "Cognito User Pool ID"
   value       = aws_cognito_user_pool.main.id
