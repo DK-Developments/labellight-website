@@ -23,7 +23,5 @@ Thumbs.db
 # Generated config file
 src/website/config.js
 src/website/js/config.js
-src/website/js/config.js
-src/website/js/config.js
+src/website/js/jwt-utils.js
 /docs
-src/website/js/config.js
