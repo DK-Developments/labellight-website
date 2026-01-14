@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Installation Guide - LabelLight Docs</title>
+  <meta name="description" content="Learn how to install the LabelLight Chrome extension and DYMO Connect software.">
+  <link rel="icon" type="image/png" href="../images/favicon.png">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <div id="navbar-container"></div>
+
+  <div class="docs-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="docs-sidebar">
+      <div class="docs-sidebar-header">
+        <h3>Documentation</h3>
+      </div>
+      <nav class="docs-nav">
+        <div class="docs-nav-section">
+          <h4>Getting Started</h4>
+          <ul>
+            <li><a href="index.html">Overview</a></li>
+            <li><a href="installation.html" class="active">Installation</a></li>
+            <li><a href="quick-start.html">Quick Start Guide</a></li>
+          </ul>
+        </div>
+        <div class="docs-nav-section">
+          <h4>Configuration</h4>
+          <ul>
+            <li><a href="settings.html">Extension Settings</a></li>
+            <li><a href="label-templates.html">Label Templates</a></li>
+            <li><a href="field-mappings.html">Field Mappings</a></li>
+          </ul>
+        </div>
+        <div class="docs-nav-section">
+          <h4>Features</h4>
+          <ul>
+            <li><a href="consignment-printing.html">Consignment Printing</a></li>
+            <li><a href="product-printing.html">Product Printing</a></li>
+            <li><a href="product-list-printing.html">Product List Printing</a></li>
+          </ul>
+        </div>
+        <div class="docs-nav-section">
+          <h4>Troubleshooting</h4>
+          <ul>
+            <li><a href="error-messages.html">Error Messages</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+          </ul>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="docs-main">
+      <div class="docs-content">
+        <div class="docs-breadcrumb">
+          <a href="../index.html">Home</a> / <a href="index.html">Documentation</a> / <span>Installation</span>
+        </div>
+
+        <h1>Installation Guide</h1>
+        
+        <p class="docs-lead">This guide covers everything you need to install and set up LabelLight for printing labels from Lightspeed Retail.</p>
+
+        <section class="docs-section">
+          <h2>Prerequisites</h2>
+          <p>Before installing LabelLight, ensure you have the following:</p>
+          
+          <ul class="docs-list">
+            <li><strong>Google Chrome</strong> - The extension only works with Chrome browser</li>
+            <li><strong>DYMO LabelWriter Printer</strong> - Connected to your computer via USB</li>
+            <li><strong>Lightspeed Retail Account</strong> - Active subscription with web access</li>
+            <li><strong>LabelLight Subscription</strong> - Sign up at our pricing page</li>
+          </ul>
+        </section>
+
+        <section class="docs-section">
+          <h2>Step 1: Install DYMO Connect Software</h2>
+          
+          <p>LabelLight requires DYMO Connect (or DYMO Label Web Service) to communicate with your printer. This software must be running for the extension to work.</p>
+
+          <ol class="docs-steps">
+            <li>
+              <strong>Download DYMO Connect</strong>
+              <p>Visit the <a href="https://www.dymo.com/support" target="_blank" rel="noopener">DYMO Support page</a> and download DYMO Connect for your operating system.</p>
+            </li>
+            <li>
+              <strong>Install the Software</strong>
+              <p>Run the installer and follow the on-screen instructions. Accept the default installation options.</p>
+            </li>
+            <li>
+              <strong>Connect Your Printer</strong>
+              <p>Connect your DYMO LabelWriter printer to your computer via USB. Windows should automatically detect and install drivers.</p>
+            </li>
+            <li>
+              <strong>Verify DYMO Connect is Running</strong>
+              <p>Look for the DYMO icon in your system tray (Windows) or menu bar (Mac). DYMO Connect must be running whenever you want to print labels.</p>
+            </li>
+          </ol>
+
+          <div class="docs-callout docs-callout-info">
+            <div class="docs-callout-title">💡 Tip</div>
+            <p>Set DYMO Connect to start automatically with Windows to ensure it's always available when you need to print.</p>
+          </div>
+
+          <div class="image-container">
+            <img src="../images/dymo_connect_tray.jpg" alt="DYMO Connect Icon" />
+          </div>
+        </section>
+
+        <section class="docs-section">
+          <h2>Step 2: Install LabelLight Extension</h2>
+          
+          <h3>From Chrome Web Store (Recommended)</h3>
+          
+          <ol class="docs-steps">
+            <li>
+              <strong>Open Chrome Web Store</strong>
+              <p>Visit the LabelLight page on the Chrome Web Store (link coming soon).</p>
+            </li>
+            <li>
+              <strong>Click "Add to Chrome"</strong>
+              <p>Click the blue "Add to Chrome" button to begin installation.</p>
+            </li>
+            <li>
+              <strong>Confirm Installation</strong>
+              <p>A popup will appear asking for permissions. Click "Add extension" to confirm.</p>
+            </li>
+            <li>
+              <strong>Extension Installed</strong>
+              <p>The LabelLight icon will appear in your Chrome toolbar. Click it to open settings.</p>
+            </li>
+          </ol>
+
+          <div class="docs-image-placeholder">
+            <!-- TODO: Add screenshot of Chrome extension installation -->
+            <p>📸 Screenshot: Adding LabelLight from Chrome Web Store</p>
+          </div>
+
+          <h3>Manual Installation (Development)</h3>
+          
+          <p>For developers or testing purposes, you can install the extension manually:</p>
+          
+          <ol class="docs-steps">
+            <li>
+              <strong>Download the Extension</strong>
+              <p>Download the extension files from the provided source.</p>
+            </li>
+            <li>
+              <strong>Open Chrome Extensions</strong>
+              <p>Navigate to <code class="docs-inline-code">chrome://extensions/</code> in your browser.</p>
+            </li>
+            <li>
+              <strong>Enable Developer Mode</strong>
+              <p>Toggle on "Developer mode" in the top right corner of the page.</p>
+            </li>
+            <li>
+              <strong>Load Unpacked Extension</strong>
+              <p>Click "Load unpacked" and select the folder containing the extension files.</p>
+            </li>
+          </ol>
+        </section>
+
+        <section class="docs-section">
+          <h2>Step 3: Sign In to LabelLight</h2>
+          
+          <ol class="docs-steps">
+            <li>
+              <strong>Click the Extension Icon</strong>
+              <p>Click the LabelLight icon in your Chrome toolbar to open the settings page.</p>
+            </li>
+            <li>
+              <strong>Sign In with Google</strong>
+              <p>Click the "Sign in with Google" button. A popup will appear for Google authentication.</p>
+            </li>
+            <li>
+              <strong>Authorize the Extension</strong>
+              <p>Select your Google account and authorize LabelLight to access your basic profile information.</p>
+            </li>
+            <li>
+              <strong>Subscription Verification</strong>
+              <p>After signing in, the extension will verify your subscription status. Ensure you have an active subscription.</p>
+            </li>
+          </ol>
+
+          <div class="docs-callout docs-callout-warning">
+            <div class="docs-callout-title">⚠️ Important</div>
+            <p>Your Google account is used only for authentication and subscription verification. LabelLight does not access your emails, documents, or other Google services.</p>
+          </div>
+
+          <div class="docs-image-placeholder">
+            <!-- TODO: Add screenshot of Google sign-in process -->
+            <p>📸 Screenshot: Google sign-in authentication</p>
+          </div>
+        </section>
+
+        <section class="docs-section">
+          <h2>Verifying Installation</h2>
+          
+          <p>To verify that LabelLight is installed and working correctly:</p>
+          
+          <ol class="docs-steps">
+            <li>
+              <strong>Check Extension Icon</strong>
+              <p>The LabelLight icon should be visible in your Chrome toolbar. If not, click the puzzle piece icon to pin it.</p>
+            </li>
+            <li>
+              <strong>Open Extension Settings</strong>
+              <p>Click the icon and verify that the settings page loads without errors.</p>
+            </li>
+            <li>
+              <strong>Check Printer Detection</strong>
+              <p>In the settings page, go to "General Settings" and verify that your DYMO printer appears in the dropdown.</p>
+            </li>
+            <li>
+              <strong>Test on Lightspeed</strong>
+              <p>Navigate to Lightspeed Retail. Open a product or consignment page and look for the enhanced "Print Labels" button.</p>
+            </li>
+          </ol>
+
+          <div class="docs-callout docs-callout-success">
+            <div class="docs-callout-title">✅ Success</div>
+            <p>If you can see your printer in the dropdown and the print buttons appear on Lightspeed pages, installation is complete!</p>
+          </div>
+        </section>
+
+        <section class="docs-section">
+          <h2>Troubleshooting Installation</h2>
+          
+          <h4>DYMO Connect Not Running</h4>
+          <p>If printers don't appear, ensure DYMO Connect is running. Look for the DYMO icon in your system tray. If it's not there, launch DYMO Connect from your Start menu.</p>
+          
+          <h4>Extension Not Loading</h4>
+          <p>Try refreshing the Lightspeed page after installing the extension. If problems persist, disable and re-enable the extension in Chrome's extension settings.</p>
+          
+          <h4>Printer Not Detected</h4>
+          <p>If your printer isn't showing up:</p>
+          <ul class="docs-list">
+            <li>Check USB connection to the printer</li>
+            <li>Restart DYMO Connect software</li>
+            <li>Try the "Bypass Printer Detection" option in settings (some DYMO Connect versions have a detection bug)</li>
+          </ul>
+          
+          <p>For more troubleshooting help, see the <a href="error-messages.html">Error Messages</a> guide.</p>
+        </section>
+
+        <div class="docs-next-prev">
+          <div class="docs-prev">
+            <a href="index.html">← Previous: Overview</a>
+          </div>
+          <div class="docs-next">
+            <a href="quick-start.html">Next: Quick Start Guide →</a>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <div id="footer-container"></div>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/utils.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/navbar.js"></script>
+  <script src="../js/footer.js"></script>
+  <script src="../js/anchor-links.js"></script>
+</body>
+</html>

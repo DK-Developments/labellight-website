@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pricing - DYMO Label Printing for Lightspeed</title>
+  <title>Pricing Plans - LabelLight</title>
   <meta name="description" content="Simple, transparent pricing for DYMO Label Printing extension. Choose monthly or annual plans with unlimited label printing.">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
   <!-- Navigation -->
@@ -15,61 +16,112 @@
   <section class="pricing-hero-section">
     <div class="content-container">
       <h1>Simple, Transparent Pricing</h1>
-      <p class="pricing-subtitle">Choose the plan that works for your business. Cancel anytime.</p>
+      <p class="pricing-subtitle">7-day free trial, then choose the plan that works for your business. 30-day money-back guarantee.</p>
+    </div>
+  </section>
+
+  <!-- Free Trial Section -->
+  <section class="pricing-trial-section">
+    <div class="content-container">
+      <div class="trial-card">
+        <h3 class="trial-title">Start Your Free Trial</h3>
+        <p class="trial-description">Try all features free for 7 days. Credit card required.</p>
+        <button class="btn btn-primary btn-large subscribe-btn" data-plan="trial">
+          Start Free Trial
+        </button>
+      </div>
     </div>
   </section>
 
   <!-- Pricing Cards Section -->
   <section class="pricing-cards-section">
     <div class="content-container">
+      <!-- Billing Toggle -->
+      <div class="billing-toggle-container">
+        <span class="billing-label" id="monthly-label">Monthly</span>
+        <label class="billing-toggle">
+          <input type="checkbox" id="billing-toggle" />
+          <span class="toggle-slider"></span>
+        </label>
+        <span class="billing-label" id="yearly-label">
+          Yearly
+          <span class="savings-badge">Save 17%</span>
+        </span>
+      </div>
+
       <div class="pricing-cards">
-        <!-- Monthly Plan Card -->
-        <div class="plan-card">
-          <h3 class="plan-name">Monthly Plan</h3>
+        <!-- 1 User Plan -->
+        <div class="plan-card" data-plan-key="single">
+          <h3 class="plan-name">1 User</h3>
           <div class="plan-price">
-            <span class="price-amount">$9.99</span>
+            <span class="price-amount" data-monthly="14.99" data-yearly="149.99">$14.99</span>
             <span class="price-interval">/month</span>
           </div>
-          <p class="plan-description">Perfect for getting started</p>
-          <button class="btn btn-primary btn-large subscribe-btn" data-plan="monthly">
-            Subscribe Monthly
+          <p class="plan-description plan-savings" data-savings="29.89"></p>
+          <button class="btn btn-primary btn-large subscribe-btn" data-plan-monthly="single-monthly" data-plan-yearly="single-yearly" data-plan="single-monthly">
+            Subscribe Now
           </button>
-          <ul class="feature-list">
-            <li>✓ Unlimited label printing</li>
-            <li>✓ Direct Lightspeed integration</li>
-            <li>✓ Bulk printing support</li>
-            <li>✓ Custom label templates</li>
-            <li>✓ Priority email support</li>
-            <li>✓ Free updates forever</li>
-            <li>✓ Cancel anytime</li>
-          </ul>
         </div>
 
-        <!-- Annual Plan Card (Most Popular) -->
-        <div class="plan-card plan-card-featured">
+        <!-- Up To 3 Users Plan (Most Popular) -->
+        <div class="plan-card plan-card-featured" data-plan-key="team">
           <div class="plan-badge">Most Popular</div>
-          <h3 class="plan-name">Annual Plan</h3>
+          <h3 class="plan-name">Up To 3 Users</h3>
           <div class="plan-price">
-            <span class="price-amount">$99</span>
-            <span class="price-interval">/year</span>
+            <span class="price-amount" data-monthly="29.99" data-yearly="299.00">$29.99</span>
+            <span class="price-interval">/month</span>
           </div>
-          <p class="plan-description">Save $20 per year (17% discount)</p>
-          <button class="btn btn-primary btn-large subscribe-btn" data-plan="annual">
-            Subscribe Annually
+          <p class="plan-description plan-savings" data-savings="60.88"></p>
+          <button class="btn btn-primary btn-large subscribe-btn" data-plan-monthly="team-monthly" data-plan-yearly="team-yearly" data-plan="team-monthly">
+            Subscribe Now
           </button>
-          <ul class="feature-list">
-            <li>✓ Unlimited label printing</li>
-            <li>✓ Direct Lightspeed integration</li>
-            <li>✓ Bulk printing support</li>
-            <li>✓ Custom label templates</li>
-            <li>✓ Priority email support</li>
-            <li>✓ Free updates forever</li>
-            <li>✓ Cancel anytime</li>
-          </ul>
+        </div>
+
+        <!-- Up To 10 Users Plan -->
+        <div class="plan-card" data-plan-key="business">
+          <h3 class="plan-name">Up To 10 Users</h3>
+          <div class="plan-price">
+            <span class="price-amount" data-monthly="79.99" data-yearly="799.99">$79.99</span>
+            <span class="price-interval">/month</span>
+          </div>
+          <p class="plan-description plan-savings" data-savings="159.89"></p>
+          <button class="btn btn-primary btn-large subscribe-btn" data-plan-monthly="business-monthly" data-plan-yearly="business-yearly" data-plan="business-monthly">
+            Subscribe Now
+          </button>
+        </div>
+
+        <!-- Enterprise / 10+ Users Plan -->
+        <div class="plan-card plan-card-enterprise" data-plan-key="enterprise">
+          <h3 class="plan-name">10+ Users</h3>
+          <div class="plan-price">
+            <span class="price-amount">$7.49</span>
+            <span class="price-interval">/user/month</span>
+          </div>
+          <p class="plan-description">Custom pricing for larger teams</p>
+          <a href="mailto:sales@example.com" class="btn btn-primary btn-large subscribe-btn">
+            Contact Sales
+          </a>
         </div>
       </div>
       
-      <p class="pricing-note">All prices in USD. Cancel anytime, no long-term commitment required.</p>
+      <p class="pricing-note">All prices in USD. 7-day free trial • 30-day money-back guarantee • Cancel anytime</p>
+    </div>
+  </section>
+
+  <!-- All Plans Include Section -->
+  <section class="features-included-section">
+    <div class="content-container">
+      <h2>All Plans Include</h2>
+      <p class="features-subtitle">Every plan comes with the same powerful features. The only difference is the number of users.</p>
+      <ul class="features-grid">
+        <li>✓ Unlimited label printing</li>
+        <li>✓ Consignment Printing</li>
+        <li>✓ Product List Printing</li>
+        <li>✓ Product Edit Printing</li>
+        <li>✓ Custom label templates</li>
+        <li>✓ Email support</li>
+        <li>✓ Free updates forever</li>
+      </ul>
     </div>
   </section>
 
@@ -140,7 +192,7 @@
             <span class="faq-icon">+</span>
           </button>
           <div class="faq-answer">
-            <p>Yes, you can cancel your subscription at any time with no penalties or fees. You'll retain access until the end of your current billing period. No long-term contracts or commitments required.</p>
+            <p>Yes, you can cancel your subscription at any time with no penalties or fees. Plus, all plans include a 30-day money-back guarantee. You'll retain access until the end of your current billing period.</p>
           </div>
         </div>
       </div>
@@ -153,34 +205,19 @@
       <h2>Ready to Get Started?</h2>
       <p class="cta-subtitle">Join retailers who are saving hours every week on label printing.</p>
       <a href="#pricing-cards-section" class="btn btn-primary btn-large">Choose Your Plan</a>
-      <p class="cta-disclaimer">No credit card required for demo • Cancel anytime</p>
+      <p class="cta-disclaimer">7-day free trial • 30-day money-back guarantee • Cancel anytime</p>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="footer">
-    <div class="footer-container">
-      <div class="footer-links">
-        <a href="index.html">Home</a>
-        <a href="pricing.html">Pricing</a>
-        <a href="#support">Support</a>
-        <a href="#privacy">Privacy Policy</a>
-        <a href="#terms">Terms of Service</a>
-      </div>
-      <div class="footer-contact">
-        <p>Questions? Email us at support@example.com</p>
-      </div>
-      <div class="footer-copyright">
-        <p>&copy; 2025 DYMO Label Printing for Lightspeed. All rights reserved.</p>
-      </div>
-    </div>
-  </footer>
+  <div id="footer-container"></div>
 
-  <script src="config.js"></script>
-  <script src="utils.js"></script>
-  <script src="auth.js"></script>
-  <script src="navbar.js"></script>
-  <script src="pricing.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/navbar.js"></script>
+  <script src="js/pricing.js"></script>
+  <script src="js/footer.js"></script>
 </body>
 </html>
 

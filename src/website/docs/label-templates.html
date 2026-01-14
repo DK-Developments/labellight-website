@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Label Templates - LabelLight Documentation</title>
+  <meta name="description" content="Learn how to create and customize DYMO label templates for use with LabelLight.">
+  <link rel="icon" type="image/png" href="../images/favicon.png">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <div id="navbar-container"></div>
+
+  <div class="docs-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="docs-sidebar">
+      <div class="docs-sidebar-header">
+        <h3>Documentation</h3>
+      </div>
+      <nav class="docs-nav">
+        <div class="docs-nav-section">
+          <h4>Getting Started</h4>
+          <ul>
+            <li><a href="index.html">Overview</a></li>
+            <li><a href="installation.html">Installation</a></li>
+            <li><a href="quick-start.html">Quick Start Guide</a></li>
+          </ul>
+        </div>
+        <div class="docs-nav-section">
+          <h4>Configuration</h4>
+          <ul>
+            <li><a href="settings.html">Extension Settings</a></li>
+            <li><a href="label-templates.html" class="active">Label Templates</a></li>
+            <li><a href="field-mappings.html">Field Mappings</a></li>
+          </ul>
+        </div>
+        <div class="docs-nav-section">
+          <h4>Features</h4>
+          <ul>
+            <li><a href="consignment-printing.html">Consignment Printing</a></li>
+            <li><a href="product-printing.html">Product Printing</a></li>
+            <li><a href="product-list-printing.html">Product List Printing</a></li>
+          </ul>
+        </div>
+        <div class="docs-nav-section">
+          <h4>Troubleshooting</h4>
+          <ul>
+            <li><a href="error-messages.html">Error Messages</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+          </ul>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="docs-main">
+      <div class="docs-content">
+        <div class="docs-breadcrumb">
+          <a href="../index.html">Home</a> / <a href="index.html">Documentation</a> / <span>Label Templates</span>
+        </div>
+
+        <h1>Label Templates</h1>
+        
+        <p class="docs-lead">Label templates define the layout and design of your printed labels. This guide covers how to create, customize, and manage DYMO label templates for use with LabelLight.</p>
+
+        <section class="docs-section">
+          <h2>What is a Label Template?</h2>
+          
+          <p>A label template is a file that defines:</p>
+          <ul class="docs-list">
+            <li><strong>Label Size</strong> - The physical dimensions of the label (e.g., 30mm x 89mm)</li>
+            <li><strong>Layout</strong> - Where text, barcodes, and images are positioned</li>
+            <li><strong>Styling</strong> - Fonts, sizes, alignment, and formatting</li>
+            <li><strong>Field Placeholders</strong> - Named objects that will be replaced with product data</li>
+          </ul>
+
+          <p>LabelLight uses standard DYMO label template files with <code class="docs-inline-code">.label</code> or <code class="docs-inline-code">.dymo</code> extensions.</p>
+
+          <div class="docs-image-placeholder">
+            <!-- TODO: Add example of a label template design -->
+            <p>📸 Screenshot: Example label template in DYMO Label Software</p>
+          </div>
+        </section>
+
+        <section class="docs-section">
+          <h2>Creating a Label Template</h2>
+          
+          <p>You create label templates using DYMO Label Software, which is included with DYMO Connect.</p>
+
+          <ol class="docs-steps">
+            <li>
+              <strong>Open DYMO Label Software</strong>
+              <p>Launch DYMO Label Software from your computer.</p>
+            </li>
+            <li>
+              <strong>Select Label Size</strong>
+              <p>Choose the label size that matches your label roll (e.g., 30323 Shipping Labels, 30252 Address Labels).</p>
+            </li>
+            <li>
+              <strong>Add Objects</strong>
+              <p>Use the toolbox to add text objects, barcode objects, and image objects to your label.</p>
+            </li>
+            <li>
+              <strong>Name Your Objects</strong>
+              <p>Give each object a meaningful name (e.g., "ProductName", "Price", "SKU"). These names will be used for field mapping.</p>
+            </li>
+            <li>
+              <strong>Style Your Label</strong>
+              <p>Set fonts, sizes, alignment, and positioning to create your desired design.</p>
+            </li>
+            <li>
+              <strong>Save the Template</strong>
+              <p>Save your label as a .label file. Use File > Save As and choose the location.</p>
+            </li>
+          </ol>
+
+          <div class="docs-callout docs-callout-info">
+            <div class="docs-callout-title">💡 Object Naming</div>
+            <p>Use descriptive names for your objects like "ProductName", "Price", "SKUBarcode". Avoid spaces and special characters. These names appear in LabelLight's field mapping interface.</p>
+          </div>
+        </section>
+
+        <section class="docs-section">
+          <h2>Template Object Types</h2>
+          
+          <p>DYMO templates support several types of objects:</p>
+
+          <div class="docs-setting-group">
+            <h3>📝 Text Objects</h3>
+            <p>Display text content like product names, descriptions, or prices.</p>
+            <ul class="docs-list">
+              <li>Can be single-line or multi-line</li>
+              <li>Support various fonts and sizes</li>
+              <li>Can include static text combined with mapped fields</li>
+            </ul>
+          </div>
+
+          <div class="docs-setting-group">
+            <h3>📊 Barcode Objects</h3>
+            <p>Generate scannable barcodes from text data like SKUs.</p>
+            <ul class="docs-list">
+              <li>Support multiple barcode formats (Code128, UPC, EAN, QR Code)</li>
+              <li>Can optionally show the barcode text below</li>
+              <li>Commonly used for SKU or product codes</li>
+            </ul>
+          </div>
+
+          <div class="docs-setting-group">
+            <h3>🖼️ Image Objects</h3>
+            <p>Display static images like logos.</p>
+            <ul class="docs-list">
+              <li>Can display your company logo (uploaded in LabelLight settings)</li>
+              <li>Fixed position and size on the label</li>
+            </ul>
+          </div>
+
+          <div class="docs-image-placeholder">
+            <!-- TODO: Add screenshot showing different object types in DYMO Label Software -->
+            <p>📸 Screenshot: DYMO Label Software showing text, barcode, and image objects</p>
+          </div>
+        </section>
+
+        <section class="docs-section">
+          <h2>Recommended Label Layouts</h2>
+          
+          <p>Here are some common label layouts for retail use:</p>
+
+          <div class="docs-setting-group">
+            <h3>Basic Product Label</h3>
+            <table class="docs-table">
+              <thead>
+                <tr>
+                  <th>Object Name</th>
+                  <th>Type</th>
+                  <th>Maps To</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>ProductName</td>
+                  <td>Text</td>
+                  <td>name</td>
+                </tr>
+                <tr>
+                  <td>Price</td>
+                  <td>Text</td>
+                  <td>price_including_tax</td>
+                </tr>
+                <tr>
+                  <td>SKUBarcode</td>
+                  <td>Barcode</td>
+                  <td>sku</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="docs-setting-group">
+            <h3>Detailed Product Label</h3>
+            <table class="docs-table">
+              <thead>
+                <tr>
+                  <th>Object Name</th>
+                  <th>Type</th>
+                  <th>Maps To</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>ProductName</td>
+                  <td>Text</td>
+                  <td>name</td>
+                </tr>
+                <tr>
+                  <td>Brand</td>
+                  <td>Text</td>
+                  <td>brand.name</td>
+                </tr>
+                <tr>
+                  <td>SKU</td>
+                  <td>Text</td>
+                  <td>sku</td>
+                </tr>
+                <tr>
+                  <td>Price</td>
+                  <td>Text</td>
+                  <td>price_including_tax</td>
+                </tr>
+                <tr>
+                  <td>Barcode</td>
+                  <td>Barcode</td>
+                  <td>sku</td>
+                </tr>
+                <tr>
+                  <td>Logo</td>
+                  <td>Image</td>
+                  <td>(Your uploaded logo)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="docs-image-placeholder">
+            <!-- TODO: Add visual example of label layouts -->
+            <p>📸 Screenshot: Examples of basic and detailed label layouts</p>
+          </div>
+        </section>
+
+        <section class="docs-section">
+          <h2>Uploading Templates to LabelLight</h2>
+          
+          <ol class="docs-steps">
+            <li>
+              <strong>Open Extension Settings</strong>
+              <p>Click the LabelLight icon and open settings.</p>
+            </li>
+            <li>
+              <strong>Navigate to Label Templates</strong>
+              <p>Scroll to the "Label Templates" section.</p>
+            </li>
+            <li>
+              <strong>Upload Your Template</strong>
+              <p>Click the upload area or drag and drop your .label file.</p>
+            </li>
+            <li>
+              <strong>Set as Default</strong>
+              <p>Click "Set as Default" to make this your primary printing template.</p>
+            </li>
+          </ol>
+
+          <div class="docs-callout docs-callout-warning">
+            <div class="docs-callout-title">⚠️ Supported Label Types</div>
+            <p>LabelLight works with die-cut labels (standard label rolls). Continuous tape labels may not be fully supported.</p>
+          </div>
+        </section>
+
+        <section class="docs-section">
+          <h2>Managing Multiple Templates</h2>
+          
+          <p>You can upload multiple templates for different use cases:</p>
+
+          <ul class="docs-list">
+            <li><strong>Small price tags</strong> - For shelf pricing</li>
+            <li><strong>Large product labels</strong> - For product packaging</li>
+            <li><strong>Shipping labels</strong> - For order fulfillment</li>
+          </ul>
+
+          <p>When printing, you can select which template to use from the template dropdown in the print modal.</p>
+
+          <h3>Template Management Actions</h3>
+          <ul class="docs-list">
+            <li><strong>Set as Default</strong> - Makes a template the primary choice</li>
+            <li><strong>Delete</strong> - Removes a template from your list</li>
+          </ul>
+        </section>
+
+        <section class="docs-section">
+          <h2>Best Practices</h2>
+          
+          <div class="docs-callout docs-callout-success">
+            <div class="docs-callout-title">✅ Template Design Tips</div>
+            <ul class="docs-list">
+              <li>Use clear, readable fonts - Sans-serif fonts work best for small labels</li>
+              <li>Leave margins - Don't place objects too close to label edges</li>
+              <li>Test print - Always test your template with real data before bulk printing</li>
+              <li>Name objects clearly - Use descriptive names for easy field mapping</li>
+              <li>Consider barcode size - Ensure barcodes are large enough to scan reliably</li>
+              <li>Keep it simple - Too much information makes labels hard to read</li>
+            </ul>
+          </div>
+        </section>
+
+        <div class="docs-next-prev">
+          <div class="docs-prev">
+            <a href="settings.html">← Previous: Extension Settings</a>
+          </div>
+          <div class="docs-next">
+            <a href="field-mappings.html">Next: Field Mappings →</a>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <div id="footer-container"></div>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/utils.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/navbar.js"></script>
+  <script src="../js/footer.js"></script>
+  <script src="../js/anchor-links.js"></script>
+</body>
+</html>

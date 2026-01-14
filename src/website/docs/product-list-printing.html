@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product List Printing - LabelLight Docs</title>
+  <meta name="description" content="Learn how to print labels from Lightspeed product list pages by clicking on expanded product rows.">
+  <link rel="icon" type="image/png" href="../images/favicon.png">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <div id="navbar-container"></div>
+
+  <div class="docs-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="docs-sidebar">
+      <div class="docs-sidebar-header">
+        <h3>Documentation</h3>
+      </div>
+      <nav class="docs-nav">
+        <div class="docs-nav-section">
+          <h4>Getting Started</h4>
+          <ul>
+            <li><a href="index.html">Overview</a></li>
+            <li><a href="installation.html">Installation</a></li>
+            <li><a href="quick-start.html">Quick Start Guide</a></li>
+          </ul>
+        </div>
+        <div class="docs-nav-section">
+          <h4>Configuration</h4>
+          <ul>
+            <li><a href="settings.html">Extension Settings</a></li>
+            <li><a href="label-templates.html">Label Templates</a></li>
+            <li><a href="field-mappings.html">Field Mappings</a></li>
+          </ul>
+        </div>
+        <div class="docs-nav-section">
+          <h4>Features</h4>
+          <ul>
+            <li><a href="consignment-printing.html">Consignment Printing</a></li>
+            <li><a href="product-printing.html">Product Printing</a></li>
+            <li><a href="product-list-printing.html" class="active">Product List Printing</a></li>
+          </ul>
+        </div>
+        <div class="docs-nav-section">
+          <h4>Troubleshooting</h4>
+          <ul>
+            <li><a href="error-messages.html">Error Messages</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+          </ul>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="docs-main">
+      <div class="docs-content">
+        <div class="docs-breadcrumb">
+          <a href="../index.html">Home</a> / <a href="index.html">Documentation</a> / <span>Product List Printing</span>
+        </div>
+
+        <h1>Product List Printing</h1>
+        
+        <p class="docs-lead">Print labels for individual products directly from the Lightspeed products list page. LabelLight overrides the "Print Label" button that appears in expanded product rows.</p>
+
+        <section class="docs-section">
+          <h2>Overview</h2>
+          
+          <p>When browsing your products list in Lightspeed Retail, you can expand any product row to see more details and actions. Lightspeed provides a "Print Label" button in this expanded view. LabelLight intercepts this button to provide custom DYMO label printing.</p>
+
+          <div class="docs-image-placeholder">
+            <!-- TODO: Add screenshot of products list with expanded row showing Print Label button -->
+            <p>📸 Screenshot: Products list page with expanded product row showing "Print Label" button</p>
+          </div>
+
+          <h3>How It Works</h3>
+          <ol class="docs-steps">
+            <li>
+              <strong>Go to Products List</strong>
+              <p>Navigate to your products list in Lightspeed Retail: <code class="docs-inline-code">yourdomain.retail.lightspeed.app/products</code></p>
+            </li>
+            <li>
+              <strong>Expand a Product Row</strong>
+              <p>Click on a product row to expand it and reveal additional details and action buttons.</p>
+            </li>
+            <li>
+              <strong>Click "Print Label"</strong>
+              <p>In the expanded area, find and click the "Print Label" button. LabelLight intercepts this action.</p>
+            </li>
+            <li>
+              <strong>LabelLight Modal Opens</strong>
+              <p>The LabelLight printing modal appears with the selected product's variants.</p>
+            </li>
+            <li>
+              <strong>Review and Print</strong>
+              <p>Set quantities and print your labels.</p>
+            </li>
+          </ol>
+        </section>
+
+        <section class="docs-section">
+          <h2>Accessing Print Label from Product List</h2>
+          
+          <p>The "Print Label" button in the products list is different from the consignment print button. Here's how to find it:</p>
+
+          <div class="docs-setting-group">
+            <h3>Step-by-Step</h3>
+            <ol class="docs-steps">
+              <li>
+                <strong>Open Products List</strong>
+                <p>From your Lightspeed dashboard, click on "Products" in the main navigation to open the products list.</p>
+              </li>
+              <li>
+                <strong>Find Your Product</strong>
+                <p>Use search or scroll to find the product you want to print labels for.</p>
+              </li>
+              <li>
+                <strong>Expand the Row</strong>
+                <p>Click anywhere on the product row to expand it. An expanded section appears below the row.</p>
+              </li>
+              <li>
+                <strong>Locate Print Label Button</strong>
+                <p>In the expanded section, look for the "Print Label" button (usually has a printer icon).</p>
+              </li>
+            </ol>
+          </div>
+
+          <div class="docs-image-placeholder">
+            <!-- TODO: Add annotated screenshot showing where to click -->
+            <p>📸 Screenshot: Annotated view of expanded product row with Print Label button highlighted</p>
+          </div>
+        </section>
+
+        <section class="docs-section">
+          <h2>Data Extraction</h2>
+          
+          <p>When you click "Print Label" from the products list, LabelLight extracts product information differently than from other pages:</p>
+
+          <div class="docs-setting-group">
+            <h3>Variant Detection</h3>
+            <p>LabelLight reads variant information from the expanded row's inventory table. Each variant row is detected and can be printed separately.</p>
+
+            <h4>What LabelLight Extracts:</h4>
+            <ul class="docs-list">
+              <li><strong>Variant ID</strong> - The unique identifier for each variant</li>
+              <li><strong>SKU</strong> - Product/variant SKU code</li>
+              <li><strong>Product details</strong> - Additional data fetched from API</li>
+            </ul>
+          </div>
+
+          <div class="docs-setting-group">
+            <h3>API Enhancement</h3>
+            <p>After extracting basic variant information from the page, LabelLight makes API calls to fetch complete product data. This provides access to all fields defined in your field mappings.</p>
+          </div>
+
+          <div class="docs-callout docs-callout-info">
+            <div class="docs-callout-title">💡 Variant IDs</div>
+            <p>LabelLight uses multiple detection methods to find variant IDs including data attributes, URL patterns, and UUID scanning. This ensures reliable detection across different Lightspeed interface versions.</p>
+          </div>
+        </section>
+
+        <section class="docs-section">
+          <h2>The Print Modal</h2>
+          
+          <p>The modal for products list printing works similarly to other printing modes:</p>
+
+          <div class="docs-image-placeholder">
+            <!-- TODO: Add screenshot of print modal from products list -->
+            <p>📸 Screenshot: Print modal showing variants from products list</p>
+          </div>
+
+          <h3>Modal Contents</h3>
+          <ul class="docs-list">
+            <li><strong>Product/Variant List</strong> - All detected variants from the expanded row</li>
+            <li><strong>Quantity Controls</strong> - Set label count for each variant</li>
+            <li><strong>Label Preview</strong> - Hover to preview labels</li>
+            <li><strong>Template Selection</strong> - Choose your label template</li>
+            <li><strong>Print Button</strong> - Send labels to printer</li>
+          </ul>
+        </section>
+
+        <section class="docs-section">
+          <h2>Fallback to Lightspeed Printing</h2>
+          
+          <p>If LabelLight encounters issues (DYMO not connected, errors, etc.), you can fall back to Lightspeed's native printing:</p>
+
+          <div class="docs-callout docs-callout-warning">
+            <div class="docs-callout-title">⚠️ Lightspeed Fallback</div>
+            <p>When fallback is triggered from the products list, LabelLight will attempt to simulate a click on Lightspeed's original "Print Label" button. This opens Lightspeed's native print dialog.</p>
+          </div>
+
+          <h3>How Fallback Works</h3>
+          <p>LabelLight temporarily removes its click handler and triggers the original Lightspeed button action. This ensures you can always print labels even if there are DYMO connectivity issues.</p>
+
+          <h3>When Fallback May Occur</h3>
+          <ul class="docs-list">
+            <li>DYMO Connect not running</li>
+            <li>No DYMO printers detected</li>
+            <li>API errors preventing data fetch</li>
+            <li>User manually requests Lightspeed printing</li>
+          </ul>
+        </section>
+
+        <section class="docs-section">
+          <h2>Products List vs Other Print Methods</h2>
+          
+          <table class="docs-table">
+            <thead>
+              <tr>
+                <th>Feature</th>
+                <th>Products List</th>
+                <th>Product Edit Page</th>
+                <th>Consignment</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Access Method</td>
+                <td>Expanded row button</td>
+                <td>Injected button in action bar</td>
+                <td>Existing "Print Label" button</td>
+              </tr>
+              <tr>
+                <td>Products Included</td>
+                <td>Single product variants</td>
+                <td>All variants of one product</td>
+                <td>All products in consignment</td>
+              </tr>
+              <tr>
+                <td>Best For</td>
+                <td>Quick single-product printing</td>
+                <td>Printing while editing</td>
+                <td>Bulk consignment labels</td>
+              </tr>
+              <tr>
+                <td>Fallback Method</td>
+                <td>Simulates original click</td>
+                <td>N/A (button is added)</td>
+                <td>Redirects to barcode page</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section class="docs-section">
+          <h2>Troubleshooting</h2>
+          
+          <h4>"Print Label" button behaves like normal Lightspeed</h4>
+          <p>Ensure LabelLight extension is enabled and you're signed in. The extension needs to be active before you load the products page. Try refreshing the page.</p>
+          
+          <h4>No variants detected in the modal</h4>
+          <p>Make sure you expanded the product row before clicking "Print Label". LabelLight reads variant data from the expanded inventory table.</p>
+          
+          <h4>Modal opens but shows empty or loading</h4>
+          <p>This may indicate an API error. Check that your Personal Token is configured and valid. Check the browser console for error messages.</p>
+          
+          <h4>Fallback keeps triggering</h4>
+          <p>Verify DYMO Connect is running and your printer is connected. If the bypass setting is needed, enable it in extension settings.</p>
+
+          <p>For more troubleshooting, see <a href="error-messages.html">Error Messages</a>.</p>
+        </section>
+
+        <div class="docs-next-prev">
+          <div class="docs-prev">
+            <a href="product-printing.html">← Previous: Product Printing</a>
+          </div>
+          <div class="docs-next">
+            <a href="error-messages.html">Next: Error Messages →</a>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <div id="footer-container"></div>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/utils.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/navbar.js"></script>
+  <script src="../js/footer.js"></script>
+  <script src="../js/anchor-links.js"></script>
+</body>
+</html>

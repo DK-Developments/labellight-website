@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quick Start Guide - LabelLight Docs</title>
+  <meta name="description" content="Get started with LabelLight in 5 minutes. Step-by-step guide to configure your first label and start printing.">
+  <link rel="icon" type="image/png" href="../images/favicon.png">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <div id="navbar-container"></div>
+
+  <div class="docs-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="docs-sidebar">
+      <div class="docs-sidebar-header">
+        <h3>Documentation</h3>
+      </div>
+      <nav class="docs-nav">
+        <div class="docs-nav-section">
+          <h4>Getting Started</h4>
+          <ul>
+            <li><a href="index.html">Overview</a></li>
+            <li><a href="installation.html">Installation</a></li>
+            <li><a href="quick-start.html" class="active">Quick Start Guide</a></li>
+          </ul>
+        </div>
+        <div class="docs-nav-section">
+          <h4>Configuration</h4>
+          <ul>
+            <li><a href="settings.html">Extension Settings</a></li>
+            <li><a href="label-templates.html">Label Templates</a></li>
+            <li><a href="field-mappings.html">Field Mappings</a></li>
+          </ul>
+        </div>
+        <div class="docs-nav-section">
+          <h4>Features</h4>
+          <ul>
+            <li><a href="consignment-printing.html">Consignment Printing</a></li>
+            <li><a href="product-printing.html">Product Printing</a></li>
+            <li><a href="product-list-printing.html">Product List Printing</a></li>
+          </ul>
+        </div>
+        <div class="docs-nav-section">
+          <h4>Troubleshooting</h4>
+          <ul>
+            <li><a href="error-messages.html">Error Messages</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+          </ul>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="docs-main">
+      <div class="docs-content">
+        <div class="docs-breadcrumb">
+          <a href="../index.html">Home</a> / <a href="index.html">Documentation</a> / <span>Quick Start Guide</span>
+        </div>
+
+        <h1>Quick Start Guide</h1>
+        
+        <p class="docs-lead">Get up and running with LabelLight in just a few minutes. This guide walks you through the essential setup steps to print your first label.</p>
+
+        <div class="docs-callout docs-callout-info">
+          <div class="docs-callout-title">⏱️ Time Required</div>
+          <p>This guide takes approximately 5-10 minutes to complete.</p>
+        </div>
+
+        <section class="docs-section">
+          <h2>Prerequisites Checklist</h2>
+          
+          <p>Before starting, make sure you have:</p>
+          
+          <ul class="docs-list">
+            <li>✅ Google Chrome installed</li>
+            <li>✅ DYMO Connect software installed and running</li>
+            <li>✅ DYMO printer connected and powered on</li>
+            <li>✅ Active LabelLight subscription</li>
+            <li>✅ A DYMO label template file (.label or .dymo)</li>
+          </ul>
+
+          <p>If you don't have DYMO Connect installed, see the <a href="installation.html">Installation Guide</a> first.</p>
+        </section>
+
+        <section class="docs-section">
+          <h2>Step 1: Open LabelLight Settings</h2>
+          
+          <ol class="docs-steps">
+            <li>
+              <strong>Find the Extension Icon</strong>
+              <p>Look for the LabelLight icon in your Chrome toolbar. If you don't see it, click the puzzle piece icon and pin LabelLight.</p>
+            </li>
+            <li>
+              <strong>Click to Open</strong>
+              <p>Click the LabelLight icon. The settings page will open in a new tab.</p>
+            </li>
+          </ol>
+
+          <div class="docs-image-placeholder">
+            <!-- TODO: Add screenshot of Chrome toolbar with LabelLight icon -->
+            <p>📸 Screenshot: LabelLight icon in Chrome toolbar</p>
+          </div>
+        </section>
+
+        <section class="docs-section">
+          <h2>Step 2: Sign In</h2>
+          
+          <ol class="docs-steps">
+            <li>
+              <strong>Click "Sign in with Google"</strong>
+              <p>On the settings page, click the Google sign-in button.</p>
+            </li>
+            <li>
+              <strong>Authenticate</strong>
+              <p>Select your Google account and authorize LabelLight.</p>
+            </li>
+            <li>
+              <strong>Verify Sign-In</strong>
+              <p>You should see your profile picture and email appear in the authentication section.</p>
+            </li>
+          </ol>
+
+          <div class="docs-image-placeholder">
+            <!-- TODO: Add screenshot of signed-in state -->
+            <p>📸 Screenshot: Successfully signed in showing profile</p>
+          </div>
+        </section>
+
+        <section class="docs-section">
+          <h2>Step 3: Select Your Printer</h2>
+          
+          <ol class="docs-steps">
+            <li>
+              <strong>Find Printer Settings</strong>
+              <p>Scroll to the "General Settings" section.</p>
+            </li>
+            <li>
+              <strong>Select Printer</strong>
+              <p>Click the "Default Printer" dropdown and select your DYMO printer.</p>
+            </li>
+            <li>
+              <strong>Save Settings</strong>
+              <p>Click "Save Settings" to confirm your printer selection.</p>
+            </li>
+          </ol>
+
+          <div class="docs-callout docs-callout-warning">
+            <div class="docs-callout-title">⚠️ Printer Not Showing?</div>
+            <p>If no printers appear, ensure DYMO Connect is running. Click the refresh button next to the dropdown. If it still doesn't show, try enabling "Bypass Printer Detection".</p>
+          </div>
+
+          <div class="docs-image-placeholder">
+            <!-- TODO: Add screenshot of printer selection -->
+            <p>📸 Screenshot: Printer selection dropdown</p>
+          </div>
+        </section>
+
+        <section class="docs-section">
+          <h2>Step 4: Upload a Label Template</h2>
+          
+          <ol class="docs-steps">
+            <li>
+              <strong>Find Label Templates Section</strong>
+              <p>Scroll down to the "Label Templates" section.</p>
+            </li>
+            <li>
+              <strong>Upload Your Template</strong>
+              <p>Click the upload area and select your .label or .dymo template file, or drag and drop the file onto the upload area.</p>
+            </li>
+            <li>
+              <strong>Set as Default</strong>
+              <p>After upload, click "Set as Default" next to your template.</p>
+            </li>
+          </ol>
+
+          <div class="docs-callout docs-callout-info">
+            <div class="docs-callout-title">💡 Don't Have a Template?</div>
+            <p>Create one using DYMO Label Software, which comes with DYMO Connect. Include text objects for product name, price, and a barcode object for SKU. See <a href="label-templates.html">Label Templates</a> for detailed instructions.</p>
+          </div>
+
+          <div class="docs-image-placeholder">
+            <!-- TODO: Add screenshot of template upload -->
+            <p>📸 Screenshot: Label template uploaded and set as default</p>
+          </div>
+        </section>
+
+        <section class="docs-section">
+          <h2>Step 5: Configure Field Mappings</h2>
+          
+          <ol class="docs-steps">
+            <li>
+              <strong>Find Field Mappings Section</strong>
+              <p>After setting a default template, the "Field Mappings" section becomes available.</p>
+            </li>
+            <li>
+              <strong>Map Your Fields</strong>
+              <p>For each field in your template (e.g., "ProductName", "Price", "Barcode"), select the corresponding Lightspeed data:</p>
+              <ul class="docs-list">
+                <li>ProductName → <code class="docs-inline-code">name</code></li>
+                <li>Price → <code class="docs-inline-code">price_including_tax</code></li>
+                <li>Barcode → <code class="docs-inline-code">sku</code></li>
+              </ul>
+            </li>
+            <li>
+              <strong>Save Mappings</strong>
+              <p>Click "Save Mappings" to save your configuration.</p>
+            </li>
+          </ol>
+
+          <div class="docs-image-placeholder">
+            <!-- TODO: Add screenshot of field mappings -->
+            <p>📸 Screenshot: Field mappings configured</p>
+          </div>
+        </section>
+
+        <section class="docs-section">
+          <h2>Step 6: Print Your First Label!</h2>
+          
+          <ol class="docs-steps">
+            <li>
+              <strong>Open Lightspeed Retail</strong>
+              <p>Navigate to your Lightspeed Retail backoffice in Chrome.</p>
+            </li>
+            <li>
+              <strong>Go to a Product or Consignment</strong>
+              <p>Open any product edit page or consignment page.</p>
+            </li>
+            <li>
+              <strong>Click Print Labels</strong>
+              <p>Click the "Print Labels" button. The LabelLight modal will open.</p>
+            </li>
+            <li>
+              <strong>Set Quantity</strong>
+              <p>Enter "1" in the quantity field for any product.</p>
+            </li>
+            <li>
+              <strong>Print!</strong>
+              <p>Click "Print Labels" to send the label to your DYMO printer.</p>
+            </li>
+          </ol>
+
+          <div class="docs-callout docs-callout-success">
+            <div class="docs-callout-title">🎉 Congratulations!</div>
+            <p>You've printed your first label with LabelLight! Continue to explore the full features in the documentation.</p>
+          </div>
+
+          <div class="docs-image-placeholder">
+            <!-- TODO: Add screenshot of printing modal with label preview -->
+            <p>📸 Screenshot: Print modal showing label preview and print button</p>
+          </div>
+        </section>
+
+        <section class="docs-section">
+          <h2>Next Steps</h2>
+          
+          <p>Now that you've printed your first label, explore these topics to get the most out of LabelLight:</p>
+
+          <div class="docs-card-grid">
+            <a href="settings.html" class="docs-card">
+              <div class="docs-card-icon">⚙️</div>
+              <h3>Full Settings Guide</h3>
+              <p>Learn about all configuration options including currency formatting and Personal Tokens.</p>
+            </a>
+
+            <a href="label-templates.html" class="docs-card">
+              <div class="docs-card-icon">🏷️</div>
+              <h3>Create Custom Templates</h3>
+              <p>Design professional labels that match your brand.</p>
+            </a>
+
+            <a href="consignment-printing.html" class="docs-card">
+              <div class="docs-card-icon">📦</div>
+              <h3>Consignment Printing</h3>
+              <p>Print labels for your incoming orders efficiently.</p>
+            </a>
+          </div>
+        </section>
+
+        <div class="docs-next-prev">
+          <div class="docs-prev">
+            <a href="installation.html">← Previous: Installation</a>
+          </div>
+          <div class="docs-next">
+            <a href="settings.html">Next: Extension Settings →</a>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <div id="footer-container"></div>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/utils.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/navbar.js"></script>
+  <script src="../js/footer.js"></script>
+  <script src="../js/anchor-links.js"></script>
+</body>
+</html>

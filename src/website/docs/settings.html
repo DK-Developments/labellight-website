@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Extension Settings - LabelLight Docs</title>
+  <meta name="description" content="Complete guide to configuring LabelLight extension settings including printer selection, Personal Token, branding, and label templates.">
+  <link rel="icon" type="image/png" href="../images/favicon.png">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <div id="navbar-container"></div>
+
+  <div class="docs-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="docs-sidebar">
+      <div class="docs-sidebar-header">
+        <h3>Documentation</h3>
+      </div>
+      <nav class="docs-nav">
+        <div class="docs-nav-section">
+          <h4>Getting Started</h4>
+          <ul>
+            <li><a href="index.html">Overview</a></li>
+            <li><a href="installation.html">Installation</a></li>
+            <li><a href="quick-start.html">Quick Start Guide</a></li>
+          </ul>
+        </div>
+        <div class="docs-nav-section">
+          <h4>Configuration</h4>
+          <ul>
+            <li><a href="settings.html" class="active">Extension Settings</a></li>
+            <li><a href="label-templates.html">Label Templates</a></li>
+            <li><a href="field-mappings.html">Field Mappings</a></li>
+          </ul>
+        </div>
+        <div class="docs-nav-section">
+          <h4>Features</h4>
+          <ul>
+            <li><a href="consignment-printing.html">Consignment Printing</a></li>
+            <li><a href="product-printing.html">Product Printing</a></li>
+            <li><a href="product-list-printing.html">Product List Printing</a></li>
+          </ul>
+        </div>
+        <div class="docs-nav-section">
+          <h4>Troubleshooting</h4>
+          <ul>
+            <li><a href="error-messages.html">Error Messages</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+          </ul>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="docs-main">
+      <div class="docs-content">
+        <div class="docs-breadcrumb">
+          <a href="../index.html">Home</a> / <a href="index.html">Documentation</a> / <span>Extension Settings</span>
+        </div>
+
+        <h1>Extension Settings</h1>
+        
+        <p class="docs-lead">This guide covers all the configuration options available in the LabelLight settings page. Access settings by clicking the LabelLight icon in your Chrome toolbar.</p>
+
+        <div class="docs-image-placeholder">
+          <!-- TODO: Add screenshot of the full settings page -->
+          <p>📸 Screenshot: LabelLight Settings Page Overview</p>
+        </div>
+
+        <!-- Authentication Section -->
+        <section class="docs-section">
+          <h2>1. Authentication</h2>
+          
+          <p>The authentication section allows you to sign in with your Google account to verify your LabelLight subscription.</p>
+
+          <div class="docs-setting-group">
+            <h3>Sign In</h3>
+            <p>Click the <strong>"Sign in with Google"</strong> button to authenticate. This connects your Google account to your LabelLight subscription.</p>
+            
+            <div class="docs-image-placeholder">
+              <!-- TODO: Add screenshot of sign-in section -->
+              <p>📸 Screenshot: Google Sign-In Button</p>
+            </div>
+
+            <h4>After Signing In</h4>
+            <p>Once signed in, you'll see:</p>
+            <ul class="docs-list">
+              <li><strong>Profile Picture</strong> - Your Google account avatar</li>
+              <li><strong>Name</strong> - Your Google account name</li>
+              <li><strong>Email</strong> - Your Google account email</li>
+              <li><strong>Sign Out Button</strong> - Click to sign out of your account</li>
+            </ul>
+          </div>
+
+          <div class="docs-callout docs-callout-info">
+            <div class="docs-callout-title">💡 Why Google Sign-In?</div>
+            <p>Google Sign-In provides secure authentication without requiring you to create another password. Your subscription is linked to your Google account for easy access across devices.</p>
+          </div>
+        </section>
+
+        <!-- Language Selection -->
+        <section class="docs-section">
+          <h2>2. Language Selection</h2>
+          
+          <p>LabelLight supports multiple languages. The language selector is located in the top-right corner of the settings page.</p>
+
+          <div class="docs-setting-item">
+            <h4>🌐 Language</h4>
+            <p>Choose your preferred language from the dropdown:</p>
+            <ul class="docs-list">
+              <li><strong>English (US)</strong> - American English</li>
+              <li><strong>English (UK)</strong> - British English</li>
+              <li><strong>Español</strong> - Spanish</li>
+              <li><strong>Français</strong> - French</li>
+            </ul>
+          </div>
+
+          <div class="docs-image-placeholder">
+            <!-- TODO: Add screenshot of language selector -->
+            <p>📸 Screenshot: Language Selector Dropdown</p>
+          </div>
+
+          <p>The language setting affects all text in the extension interface. Changes apply immediately after selection.</p>
+        </section>
+
+        <!-- General Settings Section -->
+        <section class="docs-section">
+          <h2>3. General Settings</h2>
+          
+          <p>General settings control your printer selection and currency formatting options.</p>
+
+          <div class="docs-setting-group">
+            <h3>Printer Settings</h3>
+            
+            <div class="docs-setting-item">
+              <h4>🖨️ Default Printer <span class="docs-setting-badge docs-setting-badge-required">Required</span></h4>
+              <p>Select your default DYMO printer from the dropdown. This is the printer that will be used when printing labels. If you have multiple DYMO printers connected, you can choose which one to use as the default.</p>
+            </div>
+
+            <div class="docs-setting-item">
+              <h4>🔄 Refresh Printers</h4>
+              <p>Click the refresh button (circular arrow icon) next to the printer dropdown to rescan for connected printers. Use this if you've connected a new printer or if your printer isn't showing up.</p>
+            </div>
+
+            <div class="docs-setting-item">
+              <h4>🐛 Bypass Printer Detection <span class="docs-setting-badge docs-setting-badge-optional">Optional</span></h4>
+              <p>Enable this option if your printer is connected but not being detected. Some versions of DYMO Connect have a bug where printer detection always returns false, even when a printer is properly connected. Enabling this option skips the detection check.</p>
+            </div>
+
+            <div class="docs-callout docs-callout-warning">
+              <div class="docs-callout-title">⚠️ When to Use Bypass</div>
+              <p>Only enable "Bypass Printer Detection" if you're certain your printer is connected and working, but the extension shows "No printers found." Test printing from DYMO Label Software first to confirm your printer works.</p>
+            </div>
+
+            <div class="docs-image-placeholder">
+              <!-- TODO: Add screenshot of printer settings section -->
+              <p>📸 Screenshot: Printer Selection Settings</p>
+            </div>
+          </div>
+
+          <div class="docs-setting-group">
+            <h3>Currency &amp; Formatting</h3>
+            
+            <p>Configure how prices and monetary values appear on your labels.</p>
+
+            <div class="docs-setting-item">
+              <h4>💱 Currency Symbol</h4>
+              <p>Enter the currency symbol to display on labels (e.g., $, €, £, ¥). Maximum 5 characters.</p>
+            </div>
+
+            <div class="docs-setting-item">
+              <h4>📍 Currency Position</h4>
+              <p>Choose where the currency symbol appears relative to the price:</p>
+              <ul class="docs-list">
+                <li><strong>Before price</strong> - $10.00 (most common for USD)</li>
+                <li><strong>After price</strong> - 10.00€ (common in some European countries)</li>
+                <li><strong>No currency symbol</strong> - 10.00 (displays number only)</li>
+              </ul>
+            </div>
+
+            <div class="docs-setting-item">
+              <h4>🔢 Decimal Rounding</h4>
+              <p>Set how many decimal places to display for prices fetched from the Lightspeed API:</p>
+              <ul class="docs-list">
+                <li><strong>No rounding</strong> - Shows exact value from API</li>
+                <li><strong>2 decimal places</strong> - Standard for most currencies (recommended)</li>
+                <li><strong>3 decimal places</strong> - For currencies with smaller units</li>
+                <li><strong>4 decimal places</strong> - Maximum precision</li>
+              </ul>
+            </div>
+
+            <div class="docs-image-placeholder">
+              <!-- TODO: Add screenshot of currency settings -->
+              <p>📸 Screenshot: Currency & Formatting Settings</p>
+            </div>
+          </div>
+
+          <div class="docs-callout docs-callout-info">
+            <div class="docs-callout-title">💡 Save Your Settings</div>
+            <p>Click the <strong>"Save Settings"</strong> button after making changes to the General Settings section. Changes won't take effect until saved.</p>
+          </div>
+        </section>
+
+        <!-- Personal Token Section -->
+        <section class="docs-section">
+          <h2>4. Personal Token</h2>
+          
+          <p>Personal Token is <strong>required</strong> for LabelLight to function. The extension uses Lightspeed's API to fetch product data for printing labels.</p>
+
+          <div class="docs-setting-group">
+            <div class="docs-setting-item">
+              <h4>🔑 Personal Token <span class="docs-setting-badge docs-setting-badge-required">Required</span></h4>
+              <p>Enter your Lightspeed personal token. This token authorizes LabelLight to access your Lightspeed product data. <strong>The extension will not work without a valid personal token.</strong></p>
+            </div>
+          </div>
+
+          <div class="docs-callout docs-callout-warning">
+            <div class="docs-callout-title">⚠️ Required Configuration</div>
+            <p>The Personal Token is <strong>mandatory</strong>. LabelLight requires API access to fetch product information from Lightspeed. Without a valid token, you will not be able to print labels.</p>
+          </div>
+
+          <h3>How to Get Your Personal Token</h3>
+          
+          <ol class="docs-steps">
+            <li>
+              <strong>Log in to Lightspeed Retail</strong>
+              <p>Open your Lightspeed Retail backoffice in Chrome.</p>
+            </li>
+            <li>
+              <strong>Navigate to Personal Tokens Page</strong>
+              <p>Go to <code class="docs-inline-code">https://{YOUR_DOMAIN}.retail.lightspeed.app/setup/personal-tokens</code></p>
+              <p>Replace <code class="docs-inline-code">{YOUR_DOMAIN}</code> with your actual Lightspeed domain (e.g., <code class="docs-inline-code">mystore.retail.lightspeed.app</code>).</p>
+            </li>
+            <li>
+              <strong>Create a New Token</strong>
+              <p>Click the button to create a new personal token. Give it a descriptive name like "LabelLight Extension".</p>
+            </li>
+            <li>
+              <strong>Copy the Token</strong>
+              <p>Once created, copy the token value immediately. <strong>Important:</strong> You won't be able to see this token again after leaving the page.</p>
+            </li>
+            <li>
+              <strong>Paste into LabelLight Settings</strong>
+              <p>Paste the token into the "Personal Token" field in LabelLight settings and save.</p>
+            </li>
+          </ol>
+
+          <div class="docs-callout docs-callout-info">
+            <div class="docs-callout-title">📚 Learn More</div>
+            <p>For more information about personal tokens in Lightspeed Retail, see the <a href="https://x-series-support.lightspeedhq.com/hc/en-us/articles/25534105904027-Understanding-personal-tokens-in-Retail-POS-X-Series" target="_blank" rel="noopener noreferrer">Lightspeed support article on personal tokens</a>.</p>
+          </div>
+
+          <div class="docs-callout docs-callout-warning">
+            <div class="docs-callout-title">⚠️ Token Security</div>
+            <p>Your personal token provides access to your Lightspeed data. Keep it secure and never share it publicly. The token is stored securely in your browser's local storage. If you suspect your token has been compromised, revoke it immediately from the Personal Tokens page and create a new one.</p>
+          </div>
+
+          <div class="docs-callout docs-callout-info">
+            <div class="docs-callout-title">💡 Token Management</div>
+            <p>Personal tokens don't expire automatically, but you can revoke them at any time from the Personal Tokens page. If you revoke a token that's being used by LabelLight, you'll need to create a new one and update it in the extension settings.</p>
+          </div>
+
+          <div class="docs-image-placeholder">
+            <!-- TODO: Add screenshot of Personal Token section and DevTools showing how to get token -->
+            <p>📸 Screenshot: Personal Token Section</p>
+          </div>
+        </section>
+
+        <!-- Branding Section -->
+        <section class="docs-section">
+          <h2>5. Branding</h2>
+          
+          <p>Add your company logo to customize the appearance of your labels.</p>
+
+          <div class="docs-setting-group">
+            <div class="docs-setting-item">
+              <h4>🖼️ Company Logo <span class="docs-setting-badge docs-setting-badge-optional">Optional</span></h4>
+              <p>Upload your company logo to include it on printed labels. The logo can be mapped to image fields in your DYMO label templates.</p>
+            </div>
+          </div>
+
+          <h3>Uploading a Logo</h3>
+          <ol class="docs-steps">
+            <li>
+              <strong>Click the Upload Area</strong>
+              <p>Click on the dotted upload area or drag and drop your logo file.</p>
+            </li>
+            <li>
+              <strong>Select Your Logo File</strong>
+              <p>Choose a logo file from your computer. Supported formats: PNG, JPG, SVG.</p>
+            </li>
+            <li>
+              <strong>Preview and Confirm</strong>
+              <p>Your logo will appear in the preview area. Click "Remove" if you want to choose a different file.</p>
+            </li>
+          </ol>
+
+          <div class="docs-callout docs-callout-info">
+            <div class="docs-callout-title">💡 Logo Requirements</div>
+            <p>For best results, use a logo with a transparent background (PNG format). Maximum file size: 2MB. Square or landscape logos work best on most label layouts.</p>
+          </div>
+
+          <div class="docs-image-placeholder">
+            <!-- TODO: Add screenshot of branding/logo upload section -->
+            <p>📸 Screenshot: Logo Upload Area and Preview</p>
+          </div>
+        </section>
+
+        <!-- Label Templates Section -->
+        <section class="docs-section">
+          <h2>6. Label Templates</h2>
+          
+          <p>Upload your custom DYMO label template files to use when printing. Templates define the layout, size, and design of your printed labels.</p>
+
+          <div class="docs-setting-group">
+            <h3>Uploading Templates</h3>
+            <ol class="docs-steps">
+              <li>
+                <strong>Click the Upload Area</strong>
+                <p>Click the upload area or drag and drop your template files.</p>
+              </li>
+              <li>
+                <strong>Select Template Files</strong>
+                <p>Choose one or more DYMO template files (.label or .dymo extension). You can upload multiple templates.</p>
+              </li>
+              <li>
+                <strong>Templates Appear in List</strong>
+                <p>Uploaded templates will appear in the list below the upload area.</p>
+              </li>
+            </ol>
+          </div>
+
+          <div class="docs-setting-group">
+            <h3>Managing Templates</h3>
+            <p>Each uploaded template shows:</p>
+            <ul class="docs-list">
+              <li><strong>Template Name</strong> - The filename of the template</li>
+              <li><strong>Set as Default</strong> - Mark as the default template for printing</li>
+              <li><strong>Delete</strong> - Remove the template from your list</li>
+            </ul>
+          </div>
+
+          <div class="docs-callout docs-callout-warning">
+            <div class="docs-callout-title">⚠️ Default Template Required</div>
+            <p>You must set one template as the default before you can configure field mappings. The default template is used when printing labels.</p>
+          </div>
+
+          <div class="docs-image-placeholder">
+            <!-- TODO: Add screenshot of label templates section -->
+            <p>📸 Screenshot: Label Templates List</p>
+          </div>
+
+          <p>For detailed information on creating and customizing label templates, see <a href="label-templates.html">Label Templates</a>.</p>
+        </section>
+
+        <!-- Field Mappings Section -->
+        <section class="docs-section">
+          <h2>7. Field Mappings</h2>
+          
+          <p>Field mappings connect your Lightspeed product data to the text and barcode fields in your DYMO label templates. This section appears after you set a default label template.</p>
+
+          <div class="docs-callout docs-callout-info">
+            <div class="docs-callout-title">💡 Prerequisites</div>
+            <p>Before configuring field mappings, you must: (1) Upload at least one label template, and (2) Set one template as the default.</p>
+          </div>
+
+          <div class="docs-callout docs-callout-info">
+            <div class="docs-callout-title">💡 Field Mappings Persistence</div>
+            <p>Your field mappings are preserved when you switch between different default label templates. They are only cleared when you delete a label template from your collection. This allows you to maintain multiple templates with different layouts while keeping your field configurations intact.</p>
+          </div>
+
+          <div class="docs-setting-group">
+            <h3>How Field Mapping Works</h3>
+            <p>Each text or barcode object in your DYMO template can be mapped to a Lightspeed product field. When you print, the mapped data replaces the placeholder content in your template.</p>
+
+            <h4>Example Mappings:</h4>
+            <table class="docs-table">
+              <thead>
+                <tr>
+                  <th>Template Field</th>
+                  <th>Lightspeed Data</th>
+                  <th>Result</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>ProductName</td>
+                  <td>name</td>
+                  <td>Shows the product name</td>
+                </tr>
+                <tr>
+                  <td>Price</td>
+                  <td>price_including_tax</td>
+                  <td>Shows the price with tax</td>
+                </tr>
+                <tr>
+                  <td>Barcode</td>
+                  <td>sku</td>
+                  <td>Generates barcode from SKU</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="docs-image-placeholder">
+            <!-- TODO: Add screenshot of field mappings interface -->
+            <p>📸 Screenshot: Field Mappings Configuration</p>
+          </div>
+
+          <p>For a complete guide to field mappings including all available fields, see <a href="field-mappings.html">Field Mappings</a>.</p>
+
+          <h3>Troubleshooting Field Mappings</h3>
+          
+          <div class="docs-callout docs-callout-warning">
+            <div class="docs-callout-title">⚠️ Problem: I can only see my product name, without any variant options</div>
+            <p><strong>Solution:</strong> Change from the "Product Name" API field to the "Variant Name" API field in your field mappings. The Product Name field only shows the base product name, while the Variant Name field includes the complete name with variant options (e.g., "T-Shirt - Blue - Large" instead of just "T-Shirt").</p>
+          </div>
+        </section>
+
+        <!-- Saving Settings -->
+        <section class="docs-section">
+          <h2>Saving Your Settings</h2>
+          
+          <p>Each section has its own save button. Be sure to save changes in each section you modify:</p>
+          
+          <ul class="docs-list">
+            <li><strong>General Settings</strong> - Click "Save Settings" after changing printer or currency options</li>
+            <li><strong>Personal Token</strong> - Click "Save Token" after entering your Personal Token (required for the extension to work)</li>
+            <li><strong>Field Mappings</strong> - Click "Save Mappings" after configuring your field mappings</li>
+          </ul>
+
+          <div class="docs-callout docs-callout-success">
+            <div class="docs-callout-title">✅ Success Messages</div>
+            <p>After saving, you'll see a success notification confirming your settings were saved. If there's an error, an error message will appear explaining the issue.</p>
+          </div>
+
+          <div class="docs-callout docs-callout-warning">
+            <div class="docs-callout-title">⚠️ Minimum Required Settings</div>
+            <p>To use LabelLight, you must configure at a minimum: (1) A default printer, (2) A valid Personal Token, and (3) At least one label template with field mappings.</p>
+          </div>
+        </section>
+
+        <div class="docs-next-prev">
+          <div class="docs-prev">
+            <a href="quick-start.html">← Previous: Quick Start Guide</a>
+          </div>
+          <div class="docs-next">
+            <a href="label-templates.html">Next: Label Templates →</a>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <div id="footer-container"></div>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/utils.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/navbar.js"></script>
+  <script src="../js/footer.js"></script>
+  <script src="../js/anchor-links.js"></script>
+</body>
+</html>

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQ - LabelLight Docs</title>
+  <meta name="description" content="Frequently asked questions about LabelLight - Lightspeed Label Printer Extension.">
+  <link rel="icon" type="image/png" href="../images/favicon.png">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <div id="navbar-container"></div>
+
+  <div class="docs-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="docs-sidebar">
+      <div class="docs-sidebar-header">
+        <h3>Documentation</h3>
+      </div>
+      <nav class="docs-nav">
+        <div class="docs-nav-section">
+          <h4>Getting Started</h4>
+          <ul>
+            <li><a href="index.html">Overview</a></li>
+            <li><a href="installation.html">Installation</a></li>
+            <li><a href="quick-start.html">Quick Start Guide</a></li>
+          </ul>
+        </div>
+        <div class="docs-nav-section">
+          <h4>Configuration</h4>
+          <ul>
+            <li><a href="settings.html">Extension Settings</a></li>
+            <li><a href="label-templates.html">Label Templates</a></li>
+            <li><a href="field-mappings.html">Field Mappings</a></li>
+          </ul>
+        </div>
+        <div class="docs-nav-section">
+          <h4>Features</h4>
+          <ul>
+            <li><a href="consignment-printing.html">Consignment Printing</a></li>
+            <li><a href="product-printing.html">Product Printing</a></li>
+            <li><a href="product-list-printing.html">Product List Printing</a></li>
+          </ul>
+        </div>
+        <div class="docs-nav-section">
+          <h4>Troubleshooting</h4>
+          <ul>
+            <li><a href="error-messages.html">Error Messages</a></li>
+            <li><a href="faq.html" class="active">FAQ</a></li>
+          </ul>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="docs-main">
+      <div class="docs-content">
+        <div class="docs-breadcrumb">
+          <a href="../index.html">Home</a> / <a href="index.html">Documentation</a> / <span>FAQ</span>
+        </div>
+
+        <h1>Frequently Asked Questions</h1>
+        
+        <p class="docs-lead">Find answers to common questions about LabelLight. Can't find what you're looking for? Contact <a href="mailto:support@labellight.com">support@labellight.com</a>.</p>
+
+        <!-- General Questions -->
+        <section class="docs-section">
+          <h2>General Questions</h2>
+
+          <div class="docs-setting-group">
+            <h3>What is LabelLight?</h3>
+            <p>LabelLight is a Chrome browser extension that enhances Lightspeed Retail with custom DYMO label printing capabilities. It allows you to print product labels using your own DYMO templates directly from Lightspeed's interface.</p>
+          </div>
+
+          <div class="docs-setting-group">
+            <h3>Which browsers are supported?</h3>
+            <p>LabelLight currently only supports Google Chrome. Support for other Chromium-based browsers (Edge, Brave) may work but is not officially supported.</p>
+          </div>
+
+          <div class="docs-setting-group">
+            <h3>Which Lightspeed versions are supported?</h3>
+            <p>LabelLight works with Lightspeed Retail (X-Series), previously known as Vend. It is not compatible with Lightspeed Restaurant, Lightspeed eCom, or Lightspeed R-Series (legacy).</p>
+          </div>
+
+          <div class="docs-setting-group">
+            <h3>Do I need to keep the browser open while printing?</h3>
+            <p>Yes, the Chrome browser must remain open during printing. However, you can switch to other tabs or applications - the printing continues in the background.</p>
+          </div>
+        </section>
+
+        <!-- Printer Questions -->
+        <section class="docs-section">
+          <h2>Printer Questions</h2>
+
+          <div class="docs-setting-group">
+            <h3>Which DYMO printers are supported?</h3>
+            <p>LabelLight supports all DYMO LabelWriter models that work with DYMO Connect software, including:</p>
+            <ul class="docs-list">
+              <li>LabelWriter 450 / 450 Turbo / 450 Duo</li>
+              <li>LabelWriter 4XL</li>
+              <li>LabelWriter 550 / 550 Turbo</li>
+              <li>LabelWriter Wireless</li>
+            </ul>
+          </div>
+
+          <div class="docs-setting-group">
+            <h3>Can I use a non-DYMO printer?</h3>
+            <p>No, LabelLight is specifically designed for DYMO printers and uses the DYMO Framework API. Other label printer brands (Zebra, Brother, etc.) are not supported.</p>
+          </div>
+
+          <div class="docs-setting-group">
+            <h3>Why isn't my printer detected?</h3>
+            <p>If your printer isn't showing up:</p>
+            <ol>
+              <li>Ensure DYMO Connect is installed and running</li>
+              <li>Check that the printer is connected via USB</li>
+              <li>Verify the printer appears in DYMO Label Software</li>
+              <li>Try enabling "Bypass Printer Detection" in LabelLight settings</li>
+            </ol>
+            <p>See <a href="error-messages.html">Error Messages</a> for more troubleshooting tips.</p>
+          </div>
+
+          <div class="docs-setting-group">
+            <h3>What is "Bypass Printer Detection"?</h3>
+            <p>Some versions of DYMO Connect have a bug where printer detection returns false even when printers are connected. Enabling this option skips the detection check and assumes your printer is available. Only enable this if your printer works in DYMO Label Software but isn't detected by LabelLight.</p>
+          </div>
+        </section>
+
+        <!-- Subscription Questions -->
+        <section class="docs-section">
+          <h2>Subscription Questions</h2>
+
+          <div class="docs-setting-group">
+            <h3>Is there a free trial?</h3>
+            <p>Yes, we offer a risk-free trial period with all subscriptions. If LabelLight doesn't meet your needs, you can cancel during the trial period for a full refund.</p>
+          </div>
+
+          <div class="docs-setting-group">
+            <h3>How do I cancel my subscription?</h3>
+            <p>You can cancel your subscription at any time from your profile page. Cancellation takes effect at the end of your current billing period.</p>
+          </div>
+
+          <div class="docs-setting-group">
+            <h3>Can I use my subscription on multiple computers?</h3>
+            <p>Subscriptions are tied to your Google account, so you can sign in from any computer. However, some subscription plans may limit the number of active devices. Check your subscription details for specifics.</p>
+          </div>
+
+          <div class="docs-setting-group">
+            <h3>What happens if my subscription expires?</h3>
+            <p>If your subscription expires, you won't be able to print labels using LabelLight. The extension will prompt you to renew. Your settings and templates are preserved, so you can pick up right where you left off after renewing.</p>
+          </div>
+        </section>
+
+        <!-- Template Questions -->
+        <section class="docs-section">
+          <h2>Template Questions</h2>
+
+          <div class="docs-setting-group">
+            <h3>What label sizes can I use?</h3>
+            <p>LabelLight supports any die-cut label size compatible with DYMO LabelWriter printers. Common sizes include:</p>
+            <ul class="docs-list">
+              <li>30252 - Address Labels (1-1/8" x 3-1/2")</li>
+              <li>30323 - Shipping Labels (2-1/8" x 4")</li>
+              <li>30332 - Square Labels (1" x 1")</li>
+              <li>30334 - Multi-purpose Labels (2-1/4" x 1-1/4")</li>
+            </ul>
+          </div>
+
+          <div class="docs-setting-group">
+            <h3>Can I use continuous tape labels?</h3>
+            <p>Continuous tape labels are not fully tested with LabelLight. For best results, use die-cut labels with fixed dimensions.</p>
+          </div>
+
+          <div class="docs-setting-group">
+            <h3>How do I create a label template?</h3>
+            <p>Use DYMO Label Software (included with DYMO Connect) to design your labels. Add text objects, barcode objects, and images, then save the file as a .label file. See <a href="label-templates.html">Label Templates</a> for detailed instructions.</p>
+          </div>
+
+          <div class="docs-setting-group">
+            <h3>Can I include my company logo on labels?</h3>
+            <p>Yes! Upload your logo in the Branding section of settings, then include an image object in your label template. LabelLight will display your logo on printed labels.</p>
+          </div>
+        </section>
+
+        <!-- Data & Privacy Questions -->
+        <section class="docs-section">
+          <h2>Data & Privacy Questions</h2>
+
+          <div class="docs-setting-group">
+            <h3>What data does LabelLight access?</h3>
+            <p>LabelLight accesses:</p>
+            <ul class="docs-list">
+              <li>Product data from Lightspeed pages you visit</li>
+              <li>Product data via Lightspeed API (if you configure a Personal Token)</li>
+              <li>Your Google account email for authentication</li>
+            </ul>
+          </div>
+
+          <div class="docs-setting-group">
+            <h3>Is my Lightspeed data stored anywhere?</h3>
+            <p>No. LabelLight processes data in your browser only. Product data is fetched from Lightspeed, used for printing, and then discarded. We do not store, transmit, or have access to your Lightspeed data.</p>
+          </div>
+
+          <div class="docs-setting-group">
+            <h3>Why do I need to provide a Personal Token?</h3>
+            <p>The Personal Token allows LabelLight to fetch additional product data from Lightspeed's API. This provides access to fields like brand, supplier, and variant options that aren't available on the web page. The token is stored locally in your browser and never transmitted to our servers.</p>
+          </div>
+
+          <div class="docs-setting-group">
+            <h3>Why is Google Sign-In required?</h3>
+            <p>Google Sign-In provides secure authentication for your LabelLight subscription without requiring you to create another password. Your subscription is linked to your Google account.</p>
+          </div>
+        </section>
+
+        <!-- Lightspeed Fallback Questions -->
+        <section class="docs-section">
+          <h2>Lightspeed Fallback Questions</h2>
+
+          <div class="docs-setting-group">
+            <h3>What is the Lightspeed fallback?</h3>
+            <p>If LabelLight can't connect to your DYMO printer or encounters an error, you can fall back to Lightspeed's built-in label printing. This ensures you can always print labels even if there are issues with DYMO connectivity.</p>
+          </div>
+
+          <div class="docs-setting-group">
+            <h3>When does fallback occur?</h3>
+            <p>Fallback can be triggered when:</p>
+            <ul class="docs-list">
+              <li>DYMO Connect is not running</li>
+              <li>No printers are detected</li>
+              <li>API or authentication errors occur</li>
+              <li>You manually request Lightspeed printing from the modal</li>
+            </ul>
+          </div>
+
+          <div class="docs-setting-group">
+            <h3>What's the difference between LabelLight and Lightspeed printing?</h3>
+            <p>LabelLight uses your custom DYMO templates with full field mapping control. Lightspeed's built-in printing uses their default label format with limited customization. LabelLight gives you more control over label appearance and data.</p>
+          </div>
+        </section>
+
+        <!-- Technical Questions -->
+        <section class="docs-section">
+          <h2>Technical Questions</h2>
+
+          <div class="docs-setting-group">
+            <h3>How does LabelLight communicate with my printer?</h3>
+            <p>LabelLight communicates with DYMO Connect's local web service (running on port 41951). DYMO Connect then sends print jobs to your connected printer. This is the same method used by DYMO's own web printing tools.</p>
+          </div>
+
+          <div class="docs-setting-group">
+            <h3>Does LabelLight work offline?</h3>
+            <p>Partially. Once you're signed in and have configured settings, the extension can print using cached data. However, initial authentication and API data fetching require internet connectivity.</p>
+          </div>
+
+          <div class="docs-setting-group">
+            <h3>Why is printing sometimes slow?</h3>
+            <p>Print speed depends on:</p>
+            <ul class="docs-list">
+              <li>Number of labels being printed</li>
+              <li>Complexity of your label template</li>
+              <li>API response time (for data fetching)</li>
+              <li>Your printer's native speed</li>
+            </ul>
+            <p>Labels are processed sequentially to ensure print quality.</p>
+          </div>
+
+          <div class="docs-setting-group">
+            <h3>Can I print to multiple printers?</h3>
+            <p>Currently, LabelLight prints to your selected default printer. To print to a different printer, change the selection in settings. Multiple simultaneous printer support may be added in future versions.</p>
+          </div>
+        </section>
+
+        <!-- Getting Help -->
+        <section class="docs-section">
+          <h2>Getting Help</h2>
+
+          <div class="docs-setting-group">
+            <h3>How do I contact support?</h3>
+            <p>For technical support, email <a href="mailto:support@labellight.com">support@labellight.com</a>. Please include:</p>
+            <ul class="docs-list">
+              <li>Description of the issue</li>
+              <li>Any error messages you're seeing</li>
+              <li>Your browser version</li>
+              <li>Your operating system</li>
+              <li>DYMO printer model</li>
+            </ul>
+          </div>
+
+          <div class="docs-setting-group">
+            <h3>Where can I suggest new features?</h3>
+            <p>We welcome feature suggestions! Email your ideas to <a href="mailto:support@labellight.com">support@labellight.com</a> with "Feature Request" in the subject line.</p>
+          </div>
+        </section>
+
+        <div class="docs-next-prev">
+          <div class="docs-prev">
+            <a href="error-messages.html">← Previous: Error Messages</a>
+          </div>
+          <div class="docs-next"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <div id="footer-container"></div>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/utils.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/navbar.js"></script>
+  <script src="../js/footer.js"></script>
+  <script src="../js/anchor-links.js"></script>
+</body>
+</html>

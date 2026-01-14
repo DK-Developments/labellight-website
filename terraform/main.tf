@@ -91,7 +91,7 @@ resource "aws_cloudfront_distribution" "website" {
     allowed_methods        = ["GET", "HEAD", "OPTIONS"]
     cached_methods         = ["GET", "HEAD"]
     target_origin_id       = "S3-${var.bucket_name}-${var.environment}"
-    viewer_protocol_policy = "allow-all"
+    viewer_protocol_policy = "redirect-to-https"
 
     # No caching configuration
     min_ttl     = 0

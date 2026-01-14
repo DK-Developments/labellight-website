@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Error Messages & Troubleshooting - LabelLight Docs</title>
+  <meta name="description" content="Understand and resolve common error messages in LabelLight, including authentication, subscription, DYMO connection, and API errors.">
+  <link rel="icon" type="image/png" href="../images/favicon.png">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <div id="navbar-container"></div>
+
+  <div class="docs-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="docs-sidebar">
+      <div class="docs-sidebar-header">
+        <h3>Documentation</h3>
+      </div>
+      <nav class="docs-nav">
+        <div class="docs-nav-section">
+          <h4>Getting Started</h4>
+          <ul>
+            <li><a href="index.html">Overview</a></li>
+            <li><a href="installation.html">Installation</a></li>
+            <li><a href="quick-start.html">Quick Start Guide</a></li>
+          </ul>
+        </div>
+        <div class="docs-nav-section">
+          <h4>Configuration</h4>
+          <ul>
+            <li><a href="settings.html">Extension Settings</a></li>
+            <li><a href="label-templates.html">Label Templates</a></li>
+            <li><a href="field-mappings.html">Field Mappings</a></li>
+          </ul>
+        </div>
+        <div class="docs-nav-section">
+          <h4>Features</h4>
+          <ul>
+            <li><a href="consignment-printing.html">Consignment Printing</a></li>
+            <li><a href="product-printing.html">Product Printing</a></li>
+            <li><a href="product-list-printing.html">Product List Printing</a></li>
+          </ul>
+        </div>
+        <div class="docs-nav-section">
+          <h4>Troubleshooting</h4>
+          <ul>
+            <li><a href="error-messages.html" class="active">Error Messages</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+          </ul>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="docs-main">
+      <div class="docs-content">
+        <div class="docs-breadcrumb">
+          <a href="../index.html">Home</a> / <a href="index.html">Documentation</a> / <span>Error Messages</span>
+        </div>
+
+        <h1>Error Messages Guide</h1>
+        
+        <p class="docs-lead">This guide explains common error messages you may encounter when using LabelLight, along with solutions to resolve them. Errors are grouped by category for easy reference.</p>
+
+        <!-- Initial Loading Errors -->
+        <section class="docs-section">
+          <h2>Initial Loading Errors</h2>
+          
+          <p>These errors may appear when the LabelLight print modal is first loading. The modal performs several checks to ensure everything is ready for printing.</p>
+
+          <div class="docs-error-item">
+            <div class="docs-error-header">
+              <h4>🔐 Google Account Required</h4>
+            </div>
+            <div class="docs-error-body">
+              <p><strong>Message:</strong> "Please sign in with your Google account to use LabelLight."</p>
+              <p><strong>Cause:</strong> You are not signed in to LabelLight with your Google account, or your session has expired.</p>
+              <div class="docs-error-solution">
+                <strong>Solution:</strong>
+                <ol>
+                  <li>Click the LabelLight extension icon in Chrome toolbar</li>
+                  <li>Click "Sign in with Google" button</li>
+                  <li>Complete the Google authentication process</li>
+                  <li>Return to Lightspeed and try printing again</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <div class="docs-error-item">
+            <div class="docs-error-header">
+              <h4>📋 Subscription Required</h4>
+            </div>
+            <div class="docs-error-body">
+              <p><strong>Message:</strong> "An active subscription is required to print labels."</p>
+              <p><strong>Cause:</strong> Your LabelLight subscription has expired, was cancelled, or you haven't subscribed yet.</p>
+              <div class="docs-error-solution">
+                <strong>Solution:</strong>
+                <ol>
+                  <li>Visit the <a href="../pricing.html">Pricing page</a> to subscribe or renew</li>
+                  <li>Ensure your payment method is valid</li>
+                  <li>After subscribing, sign out and sign back in to refresh your subscription status</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <div class="docs-error-item">
+            <div class="docs-error-header">
+              <h4>⏰ Subscription Expired</h4>
+            </div>
+            <div class="docs-error-body">
+              <p><strong>Message:</strong> "Your subscription has expired. Please renew to continue using LabelLight."</p>
+              <p><strong>Cause:</strong> Your subscription period has ended and needs to be renewed.</p>
+              <div class="docs-error-solution">
+                <strong>Solution:</strong>
+                <ol>
+                  <li>Visit the subscription management page in your LabelLight profile</li>
+                  <li>Click "Renew Subscription" or update your payment method</li>
+                  <li>Once renewed, the extension will automatically reactivate</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- DYMO Connection Errors -->
+        <section class="docs-section">
+          <h2>DYMO Connection Errors</h2>
+          
+          <p>These errors relate to the connection between LabelLight and the DYMO Connect software on your computer.</p>
+
+          <div class="docs-error-item">
+            <div class="docs-error-header">
+              <h4>🔌 DYMO Connect Not Running</h4>
+            </div>
+            <div class="docs-error-body">
+              <p><strong>Message:</strong> "Please ensure DYMO Connect software is installed and running."</p>
+              <p><strong>Cause:</strong> DYMO Connect (or DYMO Label Web Service) is not running on your computer, or the service has crashed.</p>
+              <div class="docs-error-solution">
+                <strong>Solution:</strong>
+                <ol>
+                  <li>Check your system tray/menu bar for the DYMO icon</li>
+                  <li>If not visible, launch DYMO Connect from your Start menu or Applications folder</li>
+                  <li>Wait a few seconds for the service to start</li>
+                  <li>Click "Retry Connection" in the LabelLight modal</li>
+                </ol>
+              </div>
+              <div class="docs-image-placeholder">
+                <!-- TODO: Add screenshot of DYMO Connect in system tray -->
+                <p>📸 Screenshot: DYMO Connect icon in system tray</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="docs-error-item">
+            <div class="docs-error-header">
+              <h4>⏱️ DYMO Connection Timeout</h4>
+            </div>
+            <div class="docs-error-body">
+              <p><strong>Message:</strong> "DYMO environment check timed out - DYMO Connect may not be running."</p>
+              <p><strong>Cause:</strong> LabelLight couldn't connect to DYMO Connect within the timeout period (10 seconds by default).</p>
+              <div class="docs-error-solution">
+                <strong>Solution:</strong>
+                <ol>
+                  <li>Restart DYMO Connect software</li>
+                  <li>Check that no firewall is blocking DYMO's local web service (port 41951)</li>
+                  <li>Restart your browser and try again</li>
+                  <li>As a last resort, restart your computer</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <div class="docs-error-item">
+            <div class="docs-error-header">
+              <h4>🌐 DYMO Web Connect Unavailable</h4>
+            </div>
+            <div class="docs-error-body">
+              <p><strong>Message:</strong> "The DYMO Web Connect application is not available."</p>
+              <p><strong>Cause:</strong> DYMO Connect's web service component is not responding. This is the service that allows web applications to communicate with DYMO printers.</p>
+              <div class="docs-error-solution">
+                <strong>Solution:</strong>
+                <ol>
+                  <li>Make sure you have DYMO Connect installed (not just DYMO Label)</li>
+                  <li>Download DYMO Connect from <a href="https://www.dymo.com/support" target="_blank">DYMO Support</a></li>
+                  <li>Reinstall DYMO Connect if necessary</li>
+                  <li>Check Windows Services to ensure "DYMO Label Web Service" is running</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <div class="docs-error-item">
+            <div class="docs-error-header">
+              <h4>📚 DYMO Framework Not Loaded</h4>
+            </div>
+            <div class="docs-error-body">
+              <p><strong>Message:</strong> "DYMO framework library has not been loaded properly."</p>
+              <p><strong>Cause:</strong> The DYMO JavaScript framework failed to load in the browser.</p>
+              <div class="docs-error-solution">
+                <strong>Solution:</strong>
+                <ol>
+                  <li>Refresh the page and try again</li>
+                  <li>Clear your browser cache</li>
+                  <li>Disable other extensions temporarily to check for conflicts</li>
+                  <li>Reinstall the LabelLight extension</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Printer Errors -->
+        <section class="docs-section">
+          <h2>Printer Errors</h2>
+          
+          <p>These errors relate to detecting and communicating with your DYMO printer.</p>
+
+          <div class="docs-error-item">
+            <div class="docs-error-header">
+              <h4>🖨️ No Printers Found</h4>
+            </div>
+            <div class="docs-error-body">
+              <p><strong>Message:</strong> "No DYMO printers detected. Make sure your printer is connected and DYMO Connect is running."</p>
+              <p><strong>Cause:</strong> No DYMO printers were detected by the DYMO service.</p>
+              <div class="docs-error-solution">
+                <strong>Solution:</strong>
+                <ol>
+                  <li>Check that your DYMO printer is connected via USB</li>
+                  <li>Ensure the printer is powered on</li>
+                  <li>Verify the printer appears in DYMO Label Software</li>
+                  <li>Try the "Refresh Printers" button in settings</li>
+                  <li>If the printer is connected but still not detected, enable "Bypass Printer Detection" in settings</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <div class="docs-error-item">
+            <div class="docs-error-header">
+              <h4>❌ Printer Not Found</h4>
+            </div>
+            <div class="docs-error-body">
+              <p><strong>Message:</strong> "The printer '[printer name]' was not found or is not available."</p>
+              <p><strong>Cause:</strong> The printer you selected is no longer available. It may have been disconnected or turned off.</p>
+              <div class="docs-error-solution">
+                <strong>Solution:</strong>
+                <ol>
+                  <li>Check the printer connection</li>
+                  <li>Refresh the printer list in settings</li>
+                  <li>Select a different printer if available</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <div class="docs-error-item">
+            <div class="docs-error-header">
+              <h4>📴 Printer Offline</h4>
+            </div>
+            <div class="docs-error-body">
+              <p><strong>Message:</strong> "The printer '[printer name]' is not connected or is offline."</p>
+              <p><strong>Cause:</strong> The printer is in an offline state, possibly due to connection issues, paper jam, or power issues.</p>
+              <div class="docs-error-solution">
+                <strong>Solution:</strong>
+                <ol>
+                  <li>Check the printer's LCD display for error messages</li>
+                  <li>Verify USB connection is secure</li>
+                  <li>Check for paper jams or empty label rolls</li>
+                  <li>Turn the printer off and back on</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <div class="docs-error-item">
+            <div class="docs-error-header">
+              <h4>🚫 No Printer Selected</h4>
+            </div>
+            <div class="docs-error-body">
+              <p><strong>Message:</strong> "Please select a DYMO printer from the dropdown."</p>
+              <p><strong>Cause:</strong> No default printer has been selected in extension settings.</p>
+              <div class="docs-error-solution">
+                <strong>Solution:</strong>
+                <ol>
+                  <li>Open LabelLight extension settings</li>
+                  <li>In "General Settings", select your printer from the dropdown</li>
+                  <li>Click "Save Settings"</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Label Template Errors -->
+        <section class="docs-section">
+          <h2>Label Template Errors</h2>
+          
+          <p>These errors relate to label templates and their configuration.</p>
+
+          <div class="docs-error-item">
+            <div class="docs-error-header">
+              <h4>📝 No Label Templates Uploaded</h4>
+            </div>
+            <div class="docs-error-body">
+              <p><strong>Message:</strong> "No label templates uploaded. Please upload a label template in settings."</p>
+              <p><strong>Cause:</strong> You haven't uploaded any DYMO label templates to LabelLight.</p>
+              <div class="docs-error-solution">
+                <strong>Solution:</strong>
+                <ol>
+                  <li>Open LabelLight settings</li>
+                  <li>Go to "Label Templates" section</li>
+                  <li>Click the upload area and select your .label or .dymo template files</li>
+                  <li>Set one template as the default</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <div class="docs-error-item">
+            <div class="docs-error-header">
+              <h4>⚠️ No Label Template Selected</h4>
+            </div>
+            <div class="docs-error-body">
+              <p><strong>Message:</strong> "No label template selected. Please select a label template in settings."</p>
+              <p><strong>Cause:</strong> You have templates uploaded but haven't set one as the default.</p>
+              <div class="docs-error-solution">
+                <strong>Solution:</strong>
+                <ol>
+                  <li>Open LabelLight settings</li>
+                  <li>Go to "Label Templates" section</li>
+                  <li>Click "Set as Default" next to your preferred template</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <div class="docs-error-item">
+            <div class="docs-error-header">
+              <h4>🔍 Label Template Not Found</h4>
+            </div>
+            <div class="docs-error-body">
+              <p><strong>Message:</strong> "Selected label template not found. Please select a different template in settings."</p>
+              <p><strong>Cause:</strong> The template you had selected as default has been deleted or is corrupted.</p>
+              <div class="docs-error-solution">
+                <strong>Solution:</strong>
+                <ol>
+                  <li>Open settings and re-upload your template file</li>
+                  <li>Or select a different template as default</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <div class="docs-error-item">
+            <div class="docs-error-header">
+              <h4>❓ No Field Mappings Configured</h4>
+            </div>
+            <div class="docs-error-body">
+              <p><strong>Message:</strong> "No field mappings configured for this label. Please configure field mappings in settings."</p>
+              <p><strong>Cause:</strong> Your label template has text/barcode fields, but you haven't mapped them to Lightspeed data.</p>
+              <div class="docs-error-solution">
+                <strong>Solution:</strong>
+                <ol>
+                  <li>Open settings and go to "Field Mappings" section</li>
+                  <li>For each field in your template, select the corresponding Lightspeed data field</li>
+                  <li>Click "Save Mappings"</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <div class="docs-error-item">
+            <div class="docs-error-header">
+              <h4>📄 Invalid Label Format</h4>
+            </div>
+            <div class="docs-error-body">
+              <p><strong>Message:</strong> "Invalid label format: root element must be DieCutLabel."</p>
+              <p><strong>Cause:</strong> The uploaded file is not a valid DYMO label template, or it's for an unsupported label type.</p>
+              <div class="docs-error-solution">
+                <strong>Solution:</strong>
+                <ol>
+                  <li>Ensure you're uploading a file created with DYMO Label Software</li>
+                  <li>The file should have a .label or .dymo extension</li>
+                  <li>LabelLight works with die-cut labels (not continuous tape)</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- API Errors -->
+        <section class="docs-section">
+          <h2>API &amp; Data Errors</h2>
+          
+          <p>These errors relate to fetching data from Lightspeed's API.</p>
+
+          <div class="docs-error-item">
+            <div class="docs-error-header">
+              <h4>🔑 Personal Token Not Configured</h4>
+            </div>
+            <div class="docs-error-body">
+              <p><strong>Message:</strong> "Personal Token not configured. Please configure in settings."</p>
+              <p><strong>Cause:</strong> You haven't entered your Lightspeed API Personal Token in settings.</p>
+              <div class="docs-error-solution">
+                <strong>Solution:</strong>
+                <ol>
+                  <li>Obtain your Personal Token from Lightspeed (see <a href="settings.html#api-configuration">Personal Token</a>)</li>
+                  <li>Open LabelLight settings</li>
+                  <li>Paste the token in the "Personal Token" field</li>
+                  <li>Click "Save Token"</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <div class="docs-error-item">
+            <div class="docs-error-header">
+              <h4>🚫 Invalid Personal Token</h4>
+            </div>
+            <div class="docs-error-body">
+              <p><strong>Message:</strong> "The provided Personal Token is invalid or has expired."</p>
+              <p><strong>Cause:</strong> Your Personal Token is incorrect or has expired.</p>
+              <div class="docs-error-solution">
+                <strong>Solution:</strong>
+                <ol>
+                  <li>Obtain a fresh Personal Token from Lightspeed</li>
+                  <li>Personal Tokens can expire - you may need to get a new one periodically</li>
+                  <li>Update the token in extension settings</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <div class="docs-error-item">
+            <div class="docs-error-header">
+              <h4>🌐 Lightspeed Domain Not Detected</h4>
+            </div>
+            <div class="docs-error-body">
+              <p><strong>Message:</strong> "Lightspeed domain not detected. Please refresh the page."</p>
+              <p><strong>Cause:</strong> LabelLight couldn't determine your Lightspeed store domain.</p>
+              <div class="docs-error-solution">
+                <strong>Solution:</strong>
+                <ol>
+                  <li>Make sure you're on a Lightspeed Retail page</li>
+                  <li>Refresh the page</li>
+                  <li>The URL should be in the format: yourdomain.retail.lightspeed.app</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <div class="docs-error-item">
+            <div class="docs-error-header">
+              <h4>📡 API Request Failed</h4>
+            </div>
+            <div class="docs-error-body">
+              <p><strong>Message:</strong> "Failed to fetch data from Lightspeed API. Please check your Personal Token and try again."</p>
+              <p><strong>Cause:</strong> The API request to Lightspeed failed due to network issues, server errors, or authentication problems.</p>
+              <div class="docs-error-solution">
+                <strong>Solution:</strong>
+                <ol>
+                  <li>Check your internet connection</li>
+                  <li>Verify your Personal Token is correct and not expired</li>
+                  <li>Try refreshing the page and attempting again</li>
+                  <li>Check Lightspeed status for any service outages</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <div class="docs-error-item">
+            <div class="docs-error-header">
+              <h4>📦 No Products Found</h4>
+            </div>
+            <div class="docs-error-body">
+              <p><strong>Message:</strong> "No products found to print."</p>
+              <p><strong>Cause:</strong> The API returned no products, or the product extraction from the page failed.</p>
+              <div class="docs-error-solution">
+                <strong>Solution:</strong>
+                <ol>
+                  <li>Ensure you're on a page with products (consignment, product edit, or products list)</li>
+                  <li>Check that products have SKUs assigned</li>
+                  <li>Verify your Personal Token has permission to access product data</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Print Errors -->
+        <section class="docs-section">
+          <h2>Print Errors</h2>
+          
+          <p>These errors occur during the label printing process.</p>
+
+          <div class="docs-error-item">
+            <div class="docs-error-header">
+              <h4>🚫 No Labels to Print</h4>
+            </div>
+            <div class="docs-error-body">
+              <p><strong>Message:</strong> "No labels to print. Please set quantity for at least one product."</p>
+              <p><strong>Cause:</strong> All product quantities are set to 0.</p>
+              <div class="docs-error-solution">
+                <strong>Solution:</strong>
+                <ol>
+                  <li>Set the quantity to 1 or more for at least one product</li>
+                  <li>Or use "Select All" to set quantities for all products</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <div class="docs-error-item">
+            <div class="docs-error-header">
+              <h4>❌ Print Failed</h4>
+            </div>
+            <div class="docs-error-body">
+              <p><strong>Message:</strong> "Failed to print label: [error details]"</p>
+              <p><strong>Cause:</strong> An error occurred while sending the label to the printer.</p>
+              <div class="docs-error-solution">
+                <strong>Solution:</strong>
+                <ol>
+                  <li>Check the specific error message for details</li>
+                  <li>Ensure the printer has labels loaded</li>
+                  <li>Verify the printer is not jammed</li>
+                  <li>Try printing a test label from DYMO Label Software</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- General Tips -->
+        <section class="docs-section">
+          <h2>General Troubleshooting Tips</h2>
+          
+          <div class="docs-callout docs-callout-info">
+            <div class="docs-callout-title">💡 When in Doubt</div>
+            <p>Try these steps in order when encountering any error:</p>
+          </div>
+
+          <ol class="docs-steps">
+            <li>
+              <strong>Refresh the Page</strong>
+              <p>Many issues can be resolved by simply refreshing the Lightspeed page.</p>
+            </li>
+            <li>
+              <strong>Check DYMO Connect</strong>
+              <p>Ensure DYMO Connect is running and your printer is connected.</p>
+            </li>
+            <li>
+              <strong>Verify Extension is Signed In</strong>
+              <p>Click the extension icon and confirm you're signed in with Google.</p>
+            </li>
+            <li>
+              <strong>Check Settings</strong>
+              <p>Verify your printer, template, and Personal Token are all configured correctly.</p>
+            </li>
+            <li>
+              <strong>Restart Browser</strong>
+              <p>Close and reopen Chrome to reset the extension state.</p>
+            </li>
+            <li>
+              <strong>Contact Support</strong>
+              <p>If problems persist, contact <a href="mailto:support@labellight.com">support@labellight.com</a> with details about the error.</p>
+            </li>
+          </ol>
+        </section>
+
+        <div class="docs-next-prev">
+          <div class="docs-prev">
+            <a href="product-list-printing.html">← Previous: Product List Printing</a>
+          </div>
+          <div class="docs-next">
+            <a href="faq.html">Next: FAQ →</a>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <div id="footer-container"></div>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/utils.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/navbar.js"></script>
+  <script src="../js/footer.js"></script>
+  <script src="../js/anchor-links.js"></script>
+</body>
+</html>
