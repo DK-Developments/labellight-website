@@ -2474,6 +2474,10 @@ section h2 {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
+.docs-section:first-of-type {
+  margin-top: 32px;
+}
+
 .docs-section h2 {
   font-size: 24px;
   font-weight: 700;
