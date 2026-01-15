@@ -7,10 +7,11 @@ const analytics = (function() {
   }
   
   function init() {
-    if (!isProduction()) {
-      console.log('[Analytics] Skipped - not in production environment');
-      return;
-    }
+    // TODO: Re-enable production check before go-live
+    // if (!isProduction()) {
+    //   console.log('[Analytics] Skipped - not in production environment');
+    //   return;
+    // }
     
     window.dataLayer = window.dataLayer || [];
     loadGTM();
@@ -31,13 +32,15 @@ const analytics = (function() {
   }
   
   function trackEvent(eventName, params = {}) {
-    if (!isProduction()) return;
+    // TODO: Re-enable production check before go-live
+    // if (!isProduction()) return;
     
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({
       event: eventName,
       ...params
     });
+    console.log('[Analytics] Event tracked:', eventName, params);
   }
   
   // Auto-initialize
