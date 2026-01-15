@@ -1,21 +1,23 @@
+/**
+ * Analytics Module
+ * Initializes Google Tag Manager and GA4 with environment tagging.
+ */
+
 const analytics = (function() {
   const GTM_ID = 'GTM-NFB2CLVX';
-  const PRODUCTION_HOSTS = ['d104hl1uvuv9ge.cloudfront.net', 'www.d104hl1uvuv9ge.cloudfront.net'];
   
-  function isProduction() {
-    return PRODUCTION_HOSTS.includes(window.location.hostname);
+  function getEnvironment() {
+    const host = window.location.hostname;
+    if (host === 'localhost' || host === '127.0.0.1') return 'local';
+    if (host.includes('cloudfront.net')) return 'dev';
+    if (host.includes('labellight.com')) return 'prod';
+    return 'unknown';
   }
   
   function init() {
-    // TODO: Re-enable production check before go-live
-    // if (!isProduction()) {
-    //   console.log('[Analytics] Skipped - not in production environment');
-    //   return;
-    // }
-    
     window.dataLayer = window.dataLayer || [];
     loadGTM();
-    console.log('[Analytics] Initialized');
+    console.log('[Analytics] Initialized - Environment:', getEnvironment());
   }
   
   function loadGTM() {
@@ -32,22 +34,19 @@ const analytics = (function() {
   }
   
   function trackEvent(eventName, params = {}) {
-    // TODO: Re-enable production check before go-live
-    // if (!isProduction()) return;
-    
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({
       event: eventName,
+      environment: getEnvironment(),
       ...params
     });
     console.log('[Analytics] Event tracked:', eventName, params);
   }
   
-  // Auto-initialize
   init();
   
   return {
     trackEvent,
-    isProduction
+    getEnvironment
   };
 })();
