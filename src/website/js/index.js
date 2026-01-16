@@ -25,8 +25,10 @@ document.addEventListener('DOMContentLoaded', function() {
         item.classList.add('active');
       }
       
-      // Log for analytics (placeholder for future implementation)
       console.log('FAQ clicked:', question.textContent.trim());
+      analytics.trackEvent('faq_opened', { 
+        question: question.textContent.trim() 
+      });
     });
   });
 
@@ -43,8 +45,11 @@ document.addEventListener('DOMContentLoaded', function() {
           block: 'start'
         });
         
-        // Log for analytics (placeholder for future implementation)
         console.log('CTA clicked: See How It Works');
+        analytics.trackEvent('cta_click', { 
+          button_name: 'see_how_it_works',
+          location: 'hero'
+        });
       }
     });
   }
@@ -54,12 +59,12 @@ document.addEventListener('DOMContentLoaded', function() {
   
   ctaButtons.forEach(button => {
     button.addEventListener('click', function(e) {
-      // Log for analytics (placeholder for future implementation)
       const buttonText = button.textContent.trim();
       console.log('CTA clicked:', buttonText);
-      
-      // Allow default behavior (navigation to pricing.html)
-      // In future, could add tracking pixel or analytics call here
+      analytics.trackEvent('cta_click', { 
+        button_name: buttonText,
+        destination: button.getAttribute('href') || 'none'
+      });
     });
   });
 
