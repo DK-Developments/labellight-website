@@ -37,37 +37,36 @@ function setupEventListeners() {
 }
 
 /**
- * Verify the Stripe Checkout session (to be implemented)
- * @param {string} sessionId - Stripe session ID
+ * Verify the Stripe Checkout session
+ * Note: The webhook handles subscription creation. This just confirms the session was successful
+ * by fetching the user's current subscription status.
+ * @param {string} sessionId - Stripe session ID (for logging/tracking)
  */
 async function verifyCheckoutSession(sessionId) {
   console.log('Verifying checkout session:', sessionId);
   
   try {
-    // TODO: Implement when backend API is ready
-    /*
-    const response = await apiRequest('/subscriptions/verify-session', {
-      method: 'POST',
-      body: { session_id: sessionId },
+    // Fetch current subscription status
+    // The webhook should have already created the subscription record
+    const response = await apiRequest('/subscription', {
+      method: 'GET',
       requireAuth: true
     });
     
-    if (response.success) {
-      console.log('Checkout session verified:', response);
-      // Session is valid, subscription is created
-      // No action needed, page displays success message
+    if (response && response.status === 'active' || response.status === 'trialing') {
+      console.log('Subscription confirmed:', response);
+      // Subscription is active, page displays success message
     } else {
-      console.error('Checkout session verification failed');
-      showError('Unable to verify your purchase. Please contact support.');
+      // Subscription not found yet - webhook may still be processing
+      console.log('Subscription pending, webhook may still be processing');
+      // Still show success - Stripe confirmed payment, webhook will process shortly
     }
-    */
-    
-    // Placeholder
-    console.log('Session verification will be implemented when backend API is ready');
     
   } catch (error) {
     console.error('Error verifying session:', error);
-    showError('Unable to verify your purchase. Please contact support if you were charged.');
+    // Don't show error to user - Stripe already confirmed payment
+    // Webhook will process the subscription shortly
+    console.log('Unable to verify subscription status, but payment was successful');
   }
 }
 

@@ -1,8 +1,10 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home - Goal Pyramid</title>
+  <title>My Profile - LabelLight</title>
+  <meta name="description" content="Manage your LabelLight profile, organisation, and devices.">
   <link rel="icon" type="image/png" href="images/favicon.png">
   <link rel="stylesheet" href="css/styles.css">
 </head>
@@ -10,47 +12,391 @@
   <!-- Navbar -->
   <div id="navbar-container"></div>
   
-  <!-- Main Content -->
-  <div class="main-content">
-    <div class="header">
-      <h1>Welcome, <span id="user-name">...</span>!</h1>
-      <p>Manage your subscription and download the extension</p>
-    </div>
-    
-    <!-- Subscription Status Section -->
-    <div class="content-section" id="subscription-section">
-      <h2>Your Subscription</h2>
-      <div id="subscription-content">
-        <p style="text-align: center; padding: 20px;">Loading subscription status...</p>
+  <!-- Profile Page -->
+  <div class="profile-page">
+    <div class="profile-container">
+      
+      <!-- Page Header -->
+      <div class="profile-header-section">
+        <div class="profile-header-content">
+          <div class="profile-avatar" id="profile-avatar">
+            <span id="avatar-initials">?</span>
+          </div>
+          <div class="profile-header-info">
+            <h1>Welcome, <span id="user-name">...</span>!</h1>
+            <p id="user-email">Loading...</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Content Layout -->
+      <div class="profile-layout">
+        <!-- Sidebar Navigation -->
+        <aside class="profile-sidebar">
+          <nav class="profile-nav">
+            <button class="profile-nav-item active" data-tab="profile">
+              <span class="nav-icon">👤</span>
+              <span class="nav-text">Profile</span>
+            </button>
+            <button class="profile-nav-item" data-tab="organisation">
+              <span class="nav-icon">🏢</span>
+              <span class="nav-text">Organisation</span>
+            </button>
+            <button class="profile-nav-item" data-tab="devices">
+              <span class="nav-icon">💻</span>
+              <span class="nav-text">Devices</span>
+            </button>
+            <button class="profile-nav-item" data-tab="subscription">
+              <span class="nav-icon">💳</span>
+              <span class="nav-text">Subscription</span>
+            </button>
+          </nav>
+        </aside>
+
+        <!-- Tab Content -->
+        <div class="profile-main">
+        
+        <!-- Profile Tab -->
+        <div class="tab-panel active" id="tab-profile">
+          <div class="profile-section">
+            <div class="section-header">
+              <h2>Personal Information</h2>
+              <button class="btn btn-secondary btn-medium" id="edit-profile-btn">Edit Profile</button>
+            </div>
+            
+            <div class="profile-details" id="profile-details-view">
+              <div class="detail-grid">
+                <div class="detail-item">
+                  <div class="detail-label">Display Name</div>
+                  <div class="detail-value" id="display-name-value">-</div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-label">Email</div>
+                  <div class="detail-value" id="email-value">-</div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-label">Phone</div>
+                  <div class="detail-value" id="phone-value">-</div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-label">Company</div>
+                  <div class="detail-value" id="company-value">-</div>
+                </div>
+              </div>
+              
+              <div class="detail-item full-width">
+                <div class="detail-label">Address</div>
+                <div class="detail-value" id="address-value">-</div>
+              </div>
+              
+              <div class="detail-item full-width">
+                <div class="detail-label">Bio</div>
+                <div class="detail-value" id="bio-value">-</div>
+              </div>
+            </div>
+            
+            <!-- Edit Profile Form (hidden by default) -->
+            <form id="profile-edit-form" class="profile-form" style="display: none;">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="edit-display-name">Display Name <span class="required">*</span></label>
+                  <input type="text" id="edit-display-name" name="display_name" class="form-input" required minlength="2" maxlength="50">
+                </div>
+                <div class="form-group">
+                  <label for="edit-phone">Phone</label>
+                  <input type="tel" id="edit-phone" name="phone" class="form-input" placeholder="+1 (555) 000-0000">
+                </div>
+              </div>
+              
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="edit-company">Company</label>
+                  <input type="text" id="edit-company" name="company" class="form-input" maxlength="100">
+                </div>
+                <div class="form-group">
+                  <label for="edit-city">City</label>
+                  <input type="text" id="edit-city" name="city" class="form-input" maxlength="100">
+                </div>
+              </div>
+              
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="edit-state">State/Province</label>
+                  <input type="text" id="edit-state" name="state" class="form-input" maxlength="100">
+                </div>
+                <div class="form-group">
+                  <label for="edit-country">Country</label>
+                  <input type="text" id="edit-country" name="country" class="form-input" maxlength="100">
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label for="edit-address">Street Address</label>
+                <input type="text" id="edit-address" name="address" class="form-input" maxlength="200">
+              </div>
+              
+              <div class="form-group">
+                <label for="edit-bio">Bio</label>
+                <textarea id="edit-bio" name="bio" class="form-input" rows="3" maxlength="500" placeholder="Tell us about yourself..."></textarea>
+              </div>
+              
+              <div id="profile-error-message" class="error-message" style="display: none;"></div>
+              
+              <div class="form-actions">
+                <button type="button" class="btn btn-secondary" id="cancel-edit-btn">Cancel</button>
+                <button type="submit" class="btn btn-primary" id="save-profile-btn">Save Changes</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Organisation Tab -->
+        <div class="tab-panel" id="tab-organisation">
+          <!-- No Organisation State -->
+          <div class="profile-section" id="no-org-section">
+            <div class="empty-state">
+              <div class="empty-state-icon">🏢</div>
+              <h3>No Organisation</h3>
+              <p>You're not part of any organisation yet. Create one to share your subscription with team members.</p>
+              <button class="btn btn-primary" id="create-org-btn">Create Organisation</button>
+            </div>
+          </div>
+          
+          <!-- Has Organisation State -->
+          <div id="org-content" style="display: none;">
+            <!-- Organisation Details -->
+            <div class="profile-section">
+              <div class="section-header">
+                <h2>Organisation Details</h2>
+                <span class="role-badge" id="user-role-badge">Member</span>
+              </div>
+              
+              <div class="org-details" id="org-details-view">
+                <div class="detail-grid">
+                  <div class="detail-item">
+                    <div class="detail-label">Organisation Name</div>
+                    <div class="detail-value" id="org-name-value">-</div>
+                  </div>
+                  <div class="detail-item">
+                    <div class="detail-label">Created</div>
+                    <div class="detail-value" id="org-created-value">-</div>
+                  </div>
+                  <div class="detail-item">
+                    <div class="detail-label">Total Members</div>
+                    <div class="detail-value" id="org-members-count">-</div>
+                  </div>
+                  <div class="detail-item">
+                    <div class="detail-label">Subscription Status</div>
+                    <div class="detail-value" id="org-subscription-status">-</div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Admin Only: Edit Organisation -->
+              <div class="admin-actions" id="org-admin-actions" style="display: none;">
+                <button class="btn btn-secondary btn-medium" id="edit-org-btn">Edit Organisation</button>
+              </div>
+            </div>
+            
+            <!-- Organisation Members -->
+            <div class="profile-section">
+              <div class="section-header">
+                <h2>Team Members</h2>
+                <button class="btn btn-primary btn-medium" id="invite-member-btn" style="display: none;">Invite Member</button>
+              </div>
+              
+              <div class="members-list" id="members-list">
+                <div class="loading-state">Loading members...</div>
+              </div>
+            </div>
+            
+            <!-- Leave Organisation (for non-admins) -->
+            <div class="profile-section danger-zone" id="leave-org-section" style="display: none;">
+              <h3>Leave Organisation</h3>
+              <p>You will lose access to the shared subscription and team features.</p>
+              <button class="btn btn-danger" id="leave-org-btn">Leave Organisation</button>
+            </div>
+            
+            <!-- Admin Only: Danger Zone -->
+            <div class="profile-section danger-zone" id="org-danger-zone" style="display: none;">
+              <h3>Danger Zone</h3>
+              <p>Deleting your organisation will remove all members and cannot be undone.</p>
+              <button class="btn btn-danger" id="delete-org-btn">Delete Organisation</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Devices Tab -->
+        <div class="tab-panel" id="tab-devices">
+          <div class="profile-section">
+            <div class="section-header">
+              <h2>Registered Devices</h2>
+              <div class="device-limit" id="device-limit-info">
+                <span class="device-count">0</span> / <span class="device-max">3</span> devices
+              </div>
+            </div>
+            
+            <p class="section-description">Manage devices that have access to your LabelLight extension. Your subscription plan allows a limited number of active devices.</p>
+            
+            <div class="devices-list" id="devices-list">
+              <div class="loading-state">Loading devices...</div>
+            </div>
+            
+            <div class="device-info-callout">
+              <div class="callout-icon">💡</div>
+              <div class="callout-content">
+                <strong>Need more devices?</strong>
+                <p>Upgrade your plan to add more devices, or remove unused devices to free up slots.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Subscription Tab -->
+        <div class="tab-panel" id="tab-subscription">
+          <!-- Subscription Status Section -->
+          <div class="profile-section">
+            <div class="section-header">
+              <h2>Subscription Status</h2>
+              <span class="status-badge" id="subscription-status-badge">Loading...</span>
+            </div>
+            
+            <div id="subscription-content">
+              <div class="loading-state">Loading subscription status...</div>
+            </div>
+          </div>
+
+          <!-- Extension Download Section -->
+          <div class="profile-section extension-download-section" id="extension-section" style="display: none;">
+            <h3>Download Extension</h3>
+            <p>Your subscription is active! Download the LabelLight extension to start printing labels from Lightspeed.</p>
+            <button class="btn btn-primary btn-large" id="download-extension-btn-profile">Download Extension</button>
+            <p class="extension-note">
+              After installation, the extension will automatically integrate with Lightspeed Retail.
+            </p>
+          </div>
+          
+          <!-- Getting Started Section (for non-subscribed users) -->
+          <div class="profile-section" id="no-subscription-section" style="display: none;">
+            <div class="empty-state">
+              <div class="empty-state-icon">💳</div>
+              <h3>No Active Subscription</h3>
+              <p>Subscribe now to start printing labels directly from Lightspeed Retail. Save hours every week with automated label printing.</p>
+              <a href="pricing.html" class="btn btn-primary btn-large">View Pricing & Subscribe</a>
+            </div>
+          </div>
+        </div>
+        </div>
       </div>
     </div>
+  </div>
 
-    <!-- Extension Download Section -->
-    <div class="content-section" id="extension-section" style="display: none;">
-      <h2>Download Extension</h2>
-      <p>Your subscription is active! Download the DYMO Label Printing extension to start printing labels from Lightspeed.</p>
-      <button class="btn btn-primary btn-large" id="download-extension-btn-profile" style="margin-top: 15px;">Download Extension</button>
-      <p style="margin-top: 15px; font-size: 14px; color: #666;">
-        After installation, the extension will automatically integrate with Lightspeed Retail.
-      </p>
-    </div>
-    
-    <!-- Getting Started Section (for non-subscribed users) -->
-    <div class="content-section" id="no-subscription-section" style="display: none;">
-      <h2>Get Started with DYMO Label Printing</h2>
-      <p>Subscribe now to start printing labels directly from Lightspeed Retail.</p>
-      <p>Save hours every week with automated label printing, bulk operations, and seamless integration.</p>
-      <a href="pricing.html" class="btn btn-primary btn-large" style="margin-top: 15px;">View Pricing & Subscribe</a>
+  <!-- Create Organisation Modal -->
+  <div class="modal-overlay" id="create-org-modal" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Create Organisation</h2>
+        <button class="modal-close" id="close-create-org-modal">&times;</button>
+      </div>
+      <form id="create-org-form">
+        <div class="form-group">
+          <label for="new-org-name">Organisation Name <span class="required">*</span></label>
+          <input type="text" id="new-org-name" name="name" class="form-input" required minlength="2" maxlength="100" placeholder="Enter organisation name">
+        </div>
+        <div id="create-org-error" class="error-message" style="display: none;"></div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" id="cancel-create-org">Cancel</button>
+          <button type="submit" class="btn btn-primary">Create Organisation</button>
+        </div>
+      </form>
     </div>
   </div>
+
+  <!-- Invite Member Modal -->
+  <div class="modal-overlay" id="invite-member-modal" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Invite Team Member</h2>
+        <button class="modal-close" id="close-invite-modal">&times;</button>
+      </div>
+      <form id="invite-member-form">
+        <div class="form-group">
+          <label for="invite-email">Email Address <span class="required">*</span></label>
+          <input type="email" id="invite-email" name="email" class="form-input" required placeholder="colleague@company.com">
+        </div>
+        <div class="form-group">
+          <label for="invite-role">Role</label>
+          <select id="invite-role" name="role" class="form-input">
+            <option value="member">Member</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
+        <div id="invite-error" class="error-message" style="display: none;"></div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" id="cancel-invite">Cancel</button>
+          <button type="submit" class="btn btn-primary">Send Invitation</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Edit Member Role Modal -->
+  <div class="modal-overlay" id="edit-member-modal" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Edit Member</h2>
+        <button class="modal-close" id="close-edit-member-modal">&times;</button>
+      </div>
+      <form id="edit-member-form">
+        <input type="hidden" id="edit-member-id" name="member_id">
+        <div class="member-info-display">
+          <div class="detail-label">Member</div>
+          <div class="detail-value" id="edit-member-name">-</div>
+        </div>
+        <div class="form-group">
+          <label for="edit-member-role">Role</label>
+          <select id="edit-member-role" name="role" class="form-input">
+            <option value="member">Member</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
+        <div id="edit-member-error" class="error-message" style="display: none;"></div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" id="cancel-edit-member">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Confirmation Modal -->
+  <div class="modal-overlay" id="confirm-modal" style="display: none;">
+    <div class="modal-content modal-small">
+      <div class="modal-header">
+        <h2 id="confirm-title">Confirm Action</h2>
+        <button class="modal-close" id="close-confirm-modal">&times;</button>
+      </div>
+      <p id="confirm-message">Are you sure you want to proceed?</p>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-secondary" id="confirm-cancel">Cancel</button>
+        <button type="button" class="btn btn-danger" id="confirm-action">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div id="footer-container"></div>
 
   <script src="js/config.js"></script>
   <script src="js/utils.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/api-client.js"></script>
   <script src="js/profile-api.js"></script>
+  <script src="js/organisation-api.js"></script>
+  <script src="js/device-api.js"></script>
   <script src="js/navbar.js"></script>
   <script src="js/profile.js"></script>
+  <script src="js/footer.js"></script>
 </body>
 </html>
 

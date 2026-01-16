@@ -42,12 +42,24 @@ jobs:
             -backend-config="dynamodb_table=printerapp-terraform-locks-${{ inputs.environment }}"
         working-directory: ./terraform
 
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Build Lambda Layer for Stripe
+        run: |
+          mkdir -p ./terraform/stripe_layer/python
+          pip install -r ./src/api/requirements.txt -t ./terraform/stripe_layer/python --quiet
+
       - name: Terraform Plan
         run: terraform plan -out=tfplan
         working-directory: ./terraform
         env:
           TF_VAR_google_client_id: ${{ secrets.TF_VAR_GOOGLE_CLIENT_ID }}
           TF_VAR_google_client_secret: ${{ secrets.TF_VAR_GOOGLE_CLIENT_SECRET }}
+          TF_VAR_stripe_secret_key: ${{ secrets.STRIPE_SECRET_KEY }}
+          TF_VAR_stripe_webhook_secret: ${{ secrets.STRIPE_WEBHOOK_SECRET }}
           TF_VAR_environment: ${{ inputs.environment }}
 
       - name: Terraform Apply
@@ -56,6 +68,8 @@ jobs:
         env:
           TF_VAR_google_client_id: ${{ secrets.TF_VAR_GOOGLE_CLIENT_ID }}
           TF_VAR_google_client_secret: ${{ secrets.TF_VAR_GOOGLE_CLIENT_SECRET }}
+          TF_VAR_stripe_secret_key: ${{ secrets.STRIPE_SECRET_KEY }}
+          TF_VAR_stripe_webhook_secret: ${{ secrets.STRIPE_WEBHOOK_SECRET }}
 
       - name: Get Terraform Outputs
         id: tf_outputs
@@ -70,12 +84,63 @@ jobs:
 
       - name: Generate config.js
         run: |
-          cat > ./src/website/config.js << 'EOF'
+          cat > ./src/website/js/config.js << EOF
           const CONFIG = {
             COGNITO_DOMAIN: '${{ steps.tf_outputs.outputs.cognito_domain }}',
             CLIENT_ID: '${{ steps.tf_outputs.outputs.cognito_client_id }}',
             API_URL: '${{ steps.tf_outputs.outputs.api_url }}'
           };
+          EOF
+
+      - name: Generate jwt-utils.js
+        run: |
+          cat > ./src/website/js/jwt-utils.js << 'EOF'
+          // JWT utility functions for token validation and decoding
+
+          /**
+           * Decode a JWT token and return the payload
+           * @param {string} token - The JWT token to decode
+           * @returns {object|null} - The decoded payload or null if invalid
+           */
+          function decodeJwtToken(token) {
+            if (!token) return null;
+            
+            try {
+              const parts = token.split('.');
+              if (parts.length !== 3) return null;
+              
+              const payload = parts[1];
+              const decoded = atob(payload.replace(/-/g, '+').replace(/_/g, '/'));
+              return JSON.parse(decoded);
+            } catch (e) {
+              console.error('Failed to decode JWT token:', e);
+              return null;
+            }
+          }
+
+          /**
+           * Check if a JWT token is valid and not expired
+           * @param {string} token - The JWT token to validate
+           * @returns {boolean} - True if token is valid and not expired
+           */
+          function isTokenValid(token) {
+            if (!token) return false;
+            
+            try {
+              const payload = decodeJwtToken(token);
+              if (!payload) return false;
+              
+              // Check expiration
+              const exp = payload.exp;
+              if (!exp) return false;
+              
+              const now = Math.floor(Date.now() / 1000);
+              return exp > now;
+            } catch (e) {
+              console.error('Failed to validate JWT token:', e);
+              return false;
+            }
+          }
           EOF
 
       - name: Sync website files to S3

@@ -141,20 +141,24 @@ function handleSubscribe(plan) {
   button.disabled = true;
   button.textContent = 'Processing...';
 
-  // TODO: Real Stripe integration
-  // When Stripe is available, uncomment and implement:
-  /*
-  // Initialize Stripe
-  const stripe = Stripe(CONFIG.STRIPE_PUBLISHABLE_KEY);
+  // Parse plan identifier (e.g., 'team-monthly' -> planKey='team', billingPeriod='monthly')
+  const parts = plan.split('-');
+  const planKey = parts[0];
+  const billingPeriod = parts[1] || 'monthly';
   
-  // Get the appropriate price ID
-  const priceId = CONFIG.STRIPE_PRICE_IDS[plan];
+  // Handle enterprise separately (contact sales)
+  if (planKey === 'enterprise') {
+    button.disabled = false;
+    button.textContent = originalText;
+    window.location.href = 'mailto:sales@printerapp.com?subject=Enterprise%20Pricing%20Inquiry';
+    return;
+  }
   
   // Create checkout session via backend API
-  createCheckoutSession(priceId)
-    .then(session => {
+  createCheckoutSession(planKey, billingPeriod)
+    .then(response => {
       // Redirect to Stripe Checkout
-      return stripe.redirectToCheckout({ sessionId: session.id });
+      window.location.href = response.checkout_url;
     })
     .catch(error => {
       console.error('Stripe checkout error:', error);
@@ -162,84 +166,24 @@ function handleSubscribe(plan) {
       button.disabled = false;
       button.textContent = originalText;
     });
-  */
-
-  // PLACEHOLDER: Show message that Stripe integration is coming
-  setTimeout(() => {
-    button.disabled = false;
-    button.textContent = originalText;
-    
-    showPlaceholderMessage(plan);
-  }, 500);
 }
 
 /**
- * Show placeholder message (to be removed when Stripe is integrated)
- * @param {string} plan - Selected plan identifier
+ * Create Stripe Checkout Session
+ * @param {string} plan - Plan key (e.g., 'single', 'team', 'business')
+ * @param {string} billingPeriod - Billing period ('monthly' or 'yearly')
+ * @returns {Promise<Object>} Response with checkout_url
  */
-function showPlaceholderMessage(plan) {
-  const planDetails = CONFIG.PRICING[plan];
-  
-  if (!planDetails) {
-    alert('Unknown plan selected. Please try again.');
-    return;
-  }
-  
-  const name = planDetails.name;
-  const amount = planDetails.amount;
-  const interval = planDetails.interval;
-  const users = planDetails.users;
-  
-  const priceDisplay = amount === 0 
-    ? 'Free' 
-    : `$${amount}/${interval}`;
-  
-  alert(
-    `Stripe Integration Coming Soon!\n\n` +
-    `You selected: ${name}\n` +
-    `Price: ${priceDisplay}\n` +
-    `Users: ${users === 'unlimited' ? 'Unlimited' : users}\n\n` +
-    `This will redirect to Stripe Checkout when integration is complete.\n\n` +
-    `Your selection has been logged for analytics.`
-  );
-  
-  // Log for analytics (placeholder)
-  console.log('Analytics: Subscription selected', {
-    plan: plan,
-    name: name,
-    amount: amount,
-    interval: interval,
-    users: users,
-    timestamp: new Date().toISOString()
-  });
-}
-
-/**
- * Create Stripe Checkout Session (to be implemented)
- * @param {string} priceId - Stripe price ID
- * @returns {Promise<Object>} Session object with id
- */
-async function createCheckoutSession(priceId) {
-  // TODO: Implement when backend API is ready
-  /*
-  const response = await apiRequest('/subscriptions/checkout', {
+async function createCheckoutSession(plan, billingPeriod) {
+  const response = await apiRequest('/subscription', {
     method: 'POST',
-    body: { price_id: priceId },
+    body: {
+      plan: plan,
+      billing_period: billingPeriod,
+      owner_type: 'user'  // TODO: Support organisation subscriptions
+    },
     requireAuth: true
   });
   
   return response;
-  */
-  
-  // Placeholder
-  return Promise.reject(new Error('Backend API not implemented yet'));
 }
-
-/**
- * Mock function to check authentication
- * Uses the auth object from auth.js
- */
-function mockCheckAuth() {
-  return auth.isAuthenticated();
-}
-

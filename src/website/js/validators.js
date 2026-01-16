@@ -5,7 +5,7 @@
 
 // Validation constants (must match backend)
 const DISPLAY_NAME_MIN_LENGTH = 2;
-const DISPLAY_NAME_MAX_LENGTH = 20;
+const DISPLAY_NAME_MAX_LENGTH = 50;
 const BIO_MAX_LENGTH = 500;
 
 function validateDisplayName(displayName) {

@@ -1,22 +1,30 @@
 // Use configuration from config.js
-const REDIRECT_URI = window.location.origin + '/index.html';
+const REDIRECT_URI = window.location.origin + '/callback.html';
+const LOGOUT_REDIRECT_URI = window.location.origin + '/index.html';
 
 // Auth helper functions
 const auth = {
-  // Build Cognito login URL
-  getLoginUrl() {
-    return `https://${CONFIG.COGNITO_DOMAIN}/oauth2/authorize?` +
+  // Build Cognito login URL with optional identity provider
+  getLoginUrl(provider = null) {
+    let url = `https://${CONFIG.COGNITO_DOMAIN}/oauth2/authorize?` +
       `client_id=${CONFIG.CLIENT_ID}&` +
       `response_type=token&` +
       `scope=email+openid+profile&` +
       `redirect_uri=${encodeURIComponent(REDIRECT_URI)}`;
+    
+    // If provider specified, go directly to that provider
+    if (provider) {
+      url += `&identity_provider=${encodeURIComponent(provider)}`;
+    }
+    
+    return url;
   },
 
   // Build Cognito logout URL
   getLogoutUrl() {
     return `https://${CONFIG.COGNITO_DOMAIN}/logout?` +
       `client_id=${CONFIG.CLIENT_ID}&` +
-      `logout_uri=${encodeURIComponent(REDIRECT_URI)}`;
+      `logout_uri=${encodeURIComponent(LOGOUT_REDIRECT_URI)}`;
   },
 
   // Function that checks if there are OAuth tokens in the current page URL. 
@@ -78,8 +86,18 @@ const auth = {
   },
 
   // Redirect to login
-  login() {
-    window.location.href = this.getLoginUrl();
+  login(provider = null) {
+    window.location.href = this.getLoginUrl(provider);
+  },
+
+  // Login with Google
+  loginWithGoogle() {
+    this.login('Google');
+  },
+
+  // Login with Microsoft
+  loginWithMicrosoft() {
+    this.login('Microsoft');
   },
 
   // Check profile and redirect appropriately after login

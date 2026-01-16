@@ -30,6 +30,20 @@ variable "google_client_secret" {
   sensitive   = true
 }
 
+variable "microsoft_client_id" {
+  description = "Microsoft OAuth Client ID (Azure AD Application ID)"
+  type        = string
+  default     = ""
+  sensitive   = true
+}
+
+variable "microsoft_client_secret" {
+  description = "Microsoft OAuth Client Secret (Azure AD Client Secret)"
+  type        = string
+  default     = ""
+  sensitive   = true
+}
+
 variable "environment" {
   description = "Environment name for API Gateway stage"
   type        = string
@@ -50,3 +64,22 @@ variable "chrome_extension_extra_ids" {
   ]
 }
 
+variable "stripe_secret_key" {
+  description = "Stripe Secret API Key for server-side operations"
+  type        = string
+  default     = ""
+  sensitive   = true
+}
+
+variable "stripe_webhook_secret" {
+  description = "Stripe Webhook Signing Secret for validating webhook events"
+  type        = string
+  default     = ""
+  sensitive   = true
+}
+
+variable "domain_name" {
+  description = "Domain name for the website (used for constructing URLs)"
+  type        = string
+  default     = "labellight.com"
+}
