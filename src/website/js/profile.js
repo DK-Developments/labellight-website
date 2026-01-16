@@ -1,6 +1,6 @@
 /**
  * Profile Page Controller
- * Handles user profile, organisation, devices, and subscription management
+ * Handles user profile, organisation, and subscription management
  * 
  * @author Eprouvez
  * @version 2.0.0
@@ -42,7 +42,7 @@ function handleInitialTab() {
   
   // Check URL hash
   const hash = window.location.hash.replace('#', '');
-  if (hash && ['profile', 'organisation', 'devices', 'subscription'].includes(hash)) {
+  if (hash && ['profile', 'organisation', 'subscription'].includes(hash)) {
     switchTab(hash);
   }
 }
@@ -50,7 +50,7 @@ function handleInitialTab() {
 // Listen for hash changes
 window.addEventListener('hashchange', function() {
   const hash = window.location.hash.replace('#', '');
-  if (hash && ['profile', 'organisation', 'devices', 'subscription'].includes(hash)) {
+  if (hash && ['profile', 'organisation', 'subscription'].includes(hash)) {
     switchTab(hash);
   }
 });
@@ -64,7 +64,6 @@ async function loadAllData() {
     await Promise.all([
       loadUserProfile(),
       loadOrganisation(),
-      loadDevices(),
       loadSubscriptionStatus()
     ]);
   } catch (error) {
@@ -590,127 +589,6 @@ async function handleUpdateMemberRole(e) {
 }
 
 // ========================================
-// Device Functions
-// ========================================
-
-async function loadDevices() {
-  const devicesList = document.getElementById('devices-list');
-  const limitInfo = document.getElementById('device-limit-info');
-  
-  try {
-    const response = await getDevices();
-    
-    if (!response) {
-      displayDevicesError(devicesList, 'Unable to load devices. Please try again later.');
-      return;
-    }
-    
-    const devices = response.devices || [];
-    const limits = response.limits || { current: 0, max: 3 };
-    
-    // Update limit display
-    if (limitInfo) {
-      limitInfo.querySelector('.device-count').textContent = limits.current;
-      limitInfo.querySelector('.device-max').textContent = limits.max;
-    }
-    
-    if (devices.length === 0) {
-      displayEmptyDevices(devicesList);
-      return;
-    }
-    
-    // Get current device fingerprint for comparison
-    const currentFingerprint = generateDeviceFingerprint();
-    
-    devicesList.innerHTML = devices.map(device => createDeviceItem(device, currentFingerprint)).join('');
-    
-    // Add event listeners for device actions
-    attachDeviceActionListeners();
-    
-  } catch (error) {
-    console.error('Error loading devices:', error);
-    displayDevicesError(devicesList, 'Failed to load devices: ' + (error.message || 'Unknown error'));
-  }
-}
-
-function displayDevicesError(container, message) {
-  container.innerHTML = `
-    <div class="empty-state" style="padding: 32px;">
-      <div class="empty-state-icon">⚠️</div>
-      <p style="margin: 0 0 16px;">${escapeHtml(message)}</p>
-      <button class="btn btn-secondary" onclick="loadDevices()">Try Again</button>
-    </div>
-  `;
-}
-
-function displayEmptyDevices(container) {
-  container.innerHTML = `
-    <div class="empty-state" style="padding: 32px;">
-      <p style="margin: 0;">No devices registered yet. Devices are automatically registered when you use the extension.</p>
-    </div>
-  `;
-}
-
-function createDeviceItem(device, currentFingerprint) {
-  const isCurrentDevice = device.fingerprint === currentFingerprint;
-  const lastActive = device.last_active ? formatRelativeTime(device.last_active) : 'Unknown';
-  const deviceIcon = getDeviceIcon(device.user_agent);
-  const isActive = isRecentlyActive(device.last_active);
-  
-  return `
-    <div class="device-item ${isCurrentDevice ? 'current-device' : ''}" data-device-id="${device.device_id}">
-      <div class="device-info">
-        <div class="device-icon">${deviceIcon}</div>
-        <div class="device-details">
-          <div class="device-name">
-            ${escapeHtml(device.name || 'Unknown Device')}
-            ${isCurrentDevice ? '<span class="device-current-badge">Current</span>' : ''}
-          </div>
-          <div class="device-meta">
-            ${escapeHtml(device.browser || getBrowserName(device.user_agent))} • Last active ${lastActive}
-          </div>
-        </div>
-      </div>
-      <div class="device-actions">
-        <div class="device-status">
-          <span class="device-status-dot ${isActive ? 'active' : 'inactive'}"></span>
-          ${isActive ? 'Active' : 'Inactive'}
-        </div>
-        ${!isCurrentDevice ? `<button class="btn btn-secondary member-btn remove-device-btn" data-device-id="${device.device_id}" data-device-name="${escapeHtml(device.name || 'this device')}">Remove</button>` : ''}
-      </div>
-    </div>
-  `;
-}
-
-function attachDeviceActionListeners() {
-  document.querySelectorAll('.remove-device-btn').forEach(btn => {
-    btn.addEventListener('click', function() {
-      const deviceId = this.dataset.deviceId;
-      const deviceName = this.dataset.deviceName;
-      showConfirmModal(
-        'Remove Device',
-        `Are you sure you want to remove ${deviceName}? It will need to be re-registered to use the extension.`,
-        async () => {
-          try {
-            await removeDevice(deviceId);
-            await loadDevices();
-          } catch (error) {
-            alert('Failed to remove device: ' + error.message);
-          }
-        }
-      );
-    });
-  });
-}
-
-function isRecentlyActive(lastActive) {
-  if (!lastActive) return false;
-  const lastActiveDate = new Date(lastActive);
-  const hourAgo = new Date(Date.now() - 60 * 60 * 1000);
-  return lastActiveDate > hourAgo;
-}
-
-// ========================================
 // Subscription Functions
 // ========================================
 
@@ -999,66 +877,4 @@ function formatRelativeTime(dateStr) {
   }
 }
 
-// ========================================
-// Device Helper Functions
-// ========================================
-
-function generateDeviceFingerprint() {
-  // Generate a simple fingerprint based on browser characteristics
-  const components = [
-    navigator.userAgent,
-    navigator.language,
-    screen.width + 'x' + screen.height,
-    new Date().getTimezoneOffset()
-  ];
-  
-  // Simple hash function
-  let hash = 0;
-  const str = components.join('|');
-  for (let i = 0; i < str.length; i++) {
-    const char = str.charCodeAt(i);
-    hash = ((hash << 5) - hash) + char;
-    hash = hash & hash;
-  }
-  return 'fp-' + Math.abs(hash).toString(16);
-}
-
-function getDeviceType(userAgent) {
-  if (!userAgent) return 'Unknown';
-  
-  if (/iPad|iPhone|iPod/.test(userAgent)) return 'iOS';
-  if (/Android/.test(userAgent)) return 'Android';
-  if (/Windows/.test(userAgent)) return 'Windows';
-  if (/Mac OS/.test(userAgent)) return 'macOS';
-  if (/Linux/.test(userAgent)) return 'Linux';
-  if (/CrOS/.test(userAgent)) return 'Chrome OS';
-  
-  return 'Unknown';
-}
-
-function getBrowserName(userAgent) {
-  if (!userAgent) return 'Unknown Browser';
-  
-  if (/Edg\//.test(userAgent)) return 'Microsoft Edge';
-  if (/Chrome\//.test(userAgent)) return 'Google Chrome';
-  if (/Firefox\//.test(userAgent)) return 'Mozilla Firefox';
-  if (/Safari\//.test(userAgent) && !/Chrome\//.test(userAgent)) return 'Safari';
-  if (/Opera|OPR\//.test(userAgent)) return 'Opera';
-  
-  return 'Unknown Browser';
-}
-
-function getDeviceIcon(userAgent) {
-  if (!userAgent) return '💻';
-  
-  if (/iPad/.test(userAgent)) return '📱';
-  if (/iPhone|iPod/.test(userAgent)) return '📱';
-  if (/Android/.test(userAgent) && /Mobile/.test(userAgent)) return '📱';
-  if (/Android/.test(userAgent)) return '📱';
-  if (/Windows/.test(userAgent)) return '💻';
-  if (/Mac OS/.test(userAgent)) return '💻';
-  if (/Linux/.test(userAgent)) return '🖥️';
-  
-  return '💻';
-}
 

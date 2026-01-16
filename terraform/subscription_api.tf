@@ -8,8 +8,7 @@
 #
 # SUBSCRIPTION MODEL:
 # - A subscription can be owned by a user OR an organisation
-# - Device limits are per subscription (not per user)
-# - Organisation members share the org's subscription device pool
+# - User limits are per subscription
 # - Individual users without org use their personal subscription
 #####################################################################
 
@@ -104,19 +103,13 @@ resource "aws_lambda_layer_version" "stripe" {
 # LAMBDA FUNCTIONS
 #####################################################################
 
-data "archive_file" "subscription_lambda" {
-  type        = "zip"
-  source_dir  = "${path.module}/../src/api"
-  output_path = "${path.module}/lambda_subscription.zip"
-}
-
 # GET /subscription
 resource "aws_lambda_function" "get_subscription" {
-  filename         = data.archive_file.subscription_lambda.output_path
+  filename         = data.archive_file.api_lambda.output_path
   function_name    = "printerapp-get-subscription-${var.environment}"
   role             = aws_iam_role.lambda_execution.arn
   handler          = "subscriptions/get_subscription.lambda_handler"
-  source_code_hash = data.archive_file.subscription_lambda.output_base64sha256
+  source_code_hash = data.archive_file.api_lambda.output_base64sha256
   runtime          = "python3.12"
   timeout          = 10
 
@@ -125,18 +118,17 @@ resource "aws_lambda_function" "get_subscription" {
       SUBSCRIPTIONS_TABLE_NAME   = aws_dynamodb_table.subscriptions.name
       ORG_MEMBERS_TABLE_NAME     = aws_dynamodb_table.org_members.name
       ORGANISATIONS_TABLE_NAME   = aws_dynamodb_table.organisations.name
-      DEVICES_TABLE_NAME         = aws_dynamodb_table.devices.name
     }
   }
 }
 
 # POST /subscription (create checkout session)
 resource "aws_lambda_function" "create_checkout" {
-  filename         = data.archive_file.subscription_lambda.output_path
+  filename         = data.archive_file.api_lambda.output_path
   function_name    = "printerapp-create-checkout-${var.environment}"
   role             = aws_iam_role.lambda_execution.arn
   handler          = "subscriptions/create_checkout.lambda_handler"
-  source_code_hash = data.archive_file.subscription_lambda.output_base64sha256
+  source_code_hash = data.archive_file.api_lambda.output_base64sha256
   runtime          = "python3.12"
   timeout          = 10
   layers           = [aws_lambda_layer_version.stripe.arn]
@@ -154,11 +146,11 @@ resource "aws_lambda_function" "create_checkout" {
 
 # POST /subscription/webhook (Stripe webhook handler)
 resource "aws_lambda_function" "stripe_webhook" {
-  filename         = data.archive_file.subscription_lambda.output_path
+  filename         = data.archive_file.api_lambda.output_path
   function_name    = "printerapp-stripe-webhook-${var.environment}"
   role             = aws_iam_role.lambda_execution.arn
   handler          = "subscriptions/stripe_webhook.lambda_handler"
-  source_code_hash = data.archive_file.subscription_lambda.output_base64sha256
+  source_code_hash = data.archive_file.api_lambda.output_base64sha256
   runtime          = "python3.12"
   timeout          = 30
   layers           = [aws_lambda_layer_version.stripe.arn]
@@ -174,11 +166,11 @@ resource "aws_lambda_function" "stripe_webhook" {
 
 # POST /subscription/portal (create customer portal session)
 resource "aws_lambda_function" "create_portal" {
-  filename         = data.archive_file.subscription_lambda.output_path
+  filename         = data.archive_file.api_lambda.output_path
   function_name    = "printerapp-create-portal-${var.environment}"
   role             = aws_iam_role.lambda_execution.arn
   handler          = "subscriptions/create_portal.lambda_handler"
-  source_code_hash = data.archive_file.subscription_lambda.output_base64sha256
+  source_code_hash = data.archive_file.api_lambda.output_base64sha256
   runtime          = "python3.12"
   timeout          = 10
   layers           = [aws_lambda_layer_version.stripe.arn]

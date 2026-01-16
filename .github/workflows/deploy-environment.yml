@@ -49,8 +49,9 @@ jobs:
 
       - name: Build Lambda Layer for Stripe
         run: |
+          rm -rf ./terraform/stripe_layer/python
           mkdir -p ./terraform/stripe_layer/python
-          pip install -r ./src/api/requirements.txt -t ./terraform/stripe_layer/python --quiet
+          pip install -r ./terraform/stripe_layer/requirements.txt -t ./terraform/stripe_layer/python --quiet
 
       - name: Terraform Plan
         run: terraform plan -out=tfplan

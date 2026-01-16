@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Profile - LabelLight</title>
-  <meta name="description" content="Manage your LabelLight profile, organisation, and devices.">
+  <meta name="description" content="Manage your LabelLight profile, organisation, and subscription.">
   <link rel="icon" type="image/png" href="images/favicon.png">
   <link rel="stylesheet" href="css/styles.css">
 </head>
@@ -41,10 +41,6 @@
             <button class="profile-nav-item" data-tab="organisation">
               <span class="nav-icon">🏢</span>
               <span class="nav-text">Organisation</span>
-            </button>
-            <button class="profile-nav-item" data-tab="devices">
-              <span class="nav-icon">💻</span>
-              <span class="nav-text">Devices</span>
             </button>
             <button class="profile-nav-item" data-tab="subscription">
               <span class="nav-icon">💳</span>
@@ -226,32 +222,6 @@
           </div>
         </div>
 
-        <!-- Devices Tab -->
-        <div class="tab-panel" id="tab-devices">
-          <div class="profile-section">
-            <div class="section-header">
-              <h2>Registered Devices</h2>
-              <div class="device-limit" id="device-limit-info">
-                <span class="device-count">0</span> / <span class="device-max">3</span> devices
-              </div>
-            </div>
-            
-            <p class="section-description">Manage devices that have access to your LabelLight extension. Your subscription plan allows a limited number of active devices.</p>
-            
-            <div class="devices-list" id="devices-list">
-              <div class="loading-state">Loading devices...</div>
-            </div>
-            
-            <div class="device-info-callout">
-              <div class="callout-icon">💡</div>
-              <div class="callout-content">
-                <strong>Need more devices?</strong>
-                <p>Upgrade your plan to add more devices, or remove unused devices to free up slots.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <!-- Subscription Tab -->
         <div class="tab-panel" id="tab-subscription">
           <!-- Subscription Status Section -->
@@ -393,7 +363,6 @@
   <script src="js/api-client.js"></script>
   <script src="js/profile-api.js"></script>
   <script src="js/organisation-api.js"></script>
-  <script src="js/device-api.js"></script>
   <script src="js/navbar.js"></script>
   <script src="js/profile.js"></script>
   <script src="js/footer.js"></script>

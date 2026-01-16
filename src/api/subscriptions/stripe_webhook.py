@@ -15,7 +15,7 @@ import uuid
 import stripe
 from utils.response_builder import success_response, error_response
 from utils.helpers import get_table, get_current_timestamp
-from subscriptions.plans import get_plan_from_stripe_price, get_device_limit, get_user_limit
+from subscriptions.plans import get_plan_from_stripe_price, get_user_limit
 
 stripe.api_key = os.environ.get('STRIPE_SECRET_KEY')
 webhook_secret = os.environ.get('STRIPE_WEBHOOK_SECRET')
@@ -77,7 +77,6 @@ def handle_checkout_completed(session):
         'current_period_end': stripe_sub['current_period_end'],
         'cancel_at_period_end': stripe_sub.get('cancel_at_period_end', False),
         'trial_end': stripe_sub.get('trial_end'),
-        'device_limit': get_device_limit(plan_key),
         'user_limit': get_user_limit(plan_key),
         'created_at': get_current_timestamp(),
         'updated_at': get_current_timestamp(),
@@ -128,10 +127,9 @@ def handle_subscription_updated(stripe_sub):
     
     # Update plan if changed
     if plan_key:
-        update_expr += ", #plan = :plan, billing_period = :billing, device_limit = :dev_limit, user_limit = :user_limit"
+        update_expr += ", #plan = :plan, billing_period = :billing, user_limit = :user_limit"
         expr_values[':plan'] = plan_key
         expr_values[':billing'] = billing_period
-        expr_values[':dev_limit'] = get_device_limit(plan_key)
         expr_values[':user_limit'] = get_user_limit(plan_key)
     
     subscriptions_table.update_item(

@@ -75,30 +75,12 @@ resource "aws_iam_role_policy_attachment" "lambda_logs" {
 # LAMBDA FUNCTIONS
 #####################################################################
 
-data "archive_file" "get_profile_lambda" {
-  type        = "zip"
-  source_dir  = "${path.module}/../src/api"
-  output_path = "${path.module}/lambda_get_profile.zip"
-}
-
-data "archive_file" "create_profile_lambda" {
-  type        = "zip"
-  source_dir  = "${path.module}/../src/api"
-  output_path = "${path.module}/lambda_create_profile.zip"
-}
-
-data "archive_file" "update_profile_lambda" {
-  type        = "zip"
-  source_dir  = "${path.module}/../src/api"
-  output_path = "${path.module}/lambda_update_profile.zip"
-}
-
 resource "aws_lambda_function" "get_profile" {
-  filename         = data.archive_file.get_profile_lambda.output_path
+  filename         = data.archive_file.api_lambda.output_path
   function_name    = "printerapp-get-profile-${var.environment}"
   role            = aws_iam_role.lambda_execution.arn
   handler         = "profiles/get_profile.lambda_handler"
-  source_code_hash = data.archive_file.get_profile_lambda.output_base64sha256
+  source_code_hash = data.archive_file.api_lambda.output_base64sha256
   runtime         = "python3.12"
   timeout         = 10
 
@@ -110,11 +92,11 @@ resource "aws_lambda_function" "get_profile" {
 }
 
 resource "aws_lambda_function" "create_profile" {
-  filename         = data.archive_file.create_profile_lambda.output_path
+  filename         = data.archive_file.api_lambda.output_path
   function_name    = "printerapp-create-profile-${var.environment}"
   role            = aws_iam_role.lambda_execution.arn
   handler         = "profiles/create_profile.lambda_handler"
-  source_code_hash = data.archive_file.create_profile_lambda.output_base64sha256
+  source_code_hash = data.archive_file.api_lambda.output_base64sha256
   runtime         = "python3.12"
   timeout         = 10
 
@@ -126,11 +108,11 @@ resource "aws_lambda_function" "create_profile" {
 }
 
 resource "aws_lambda_function" "update_profile" {
-  filename         = data.archive_file.update_profile_lambda.output_path
+  filename         = data.archive_file.api_lambda.output_path
   function_name    = "printerapp-update-profile-${var.environment}"
   role            = aws_iam_role.lambda_execution.arn
   handler         = "profiles/update_profile.lambda_handler"
-  source_code_hash = data.archive_file.update_profile_lambda.output_base64sha256
+  source_code_hash = data.archive_file.api_lambda.output_base64sha256
   runtime         = "python3.12"
   timeout         = 10
 
@@ -286,27 +268,6 @@ resource "aws_api_gateway_deployment" "main" {
       aws_api_gateway_integration.update_profile.id,
       aws_api_gateway_integration.profile_options.id,
       aws_api_gateway_integration_response.profile_options.id,
-      # Device API
-      aws_api_gateway_resource.devices.id,
-      aws_api_gateway_method.get_devices.id,
-      aws_api_gateway_method.register_device.id,
-      aws_api_gateway_method.devices_options.id,
-      aws_api_gateway_integration.get_devices.id,
-      aws_api_gateway_integration.register_device.id,
-      aws_api_gateway_integration.devices_options.id,
-      aws_api_gateway_integration_response.devices_options.id,
-      aws_api_gateway_resource.device.id,
-      aws_api_gateway_method.remove_device.id,
-      aws_api_gateway_method.device_options.id,
-      aws_api_gateway_integration.remove_device.id,
-      aws_api_gateway_integration.device_options.id,
-      aws_api_gateway_integration_response.device_options.id,
-      aws_api_gateway_resource.device_heartbeat.id,
-      aws_api_gateway_method.device_heartbeat.id,
-      aws_api_gateway_method.device_heartbeat_options.id,
-      aws_api_gateway_integration.device_heartbeat.id,
-      aws_api_gateway_integration.device_heartbeat_options.id,
-      aws_api_gateway_integration_response.device_heartbeat_options.id,
       # Organisation API
       aws_api_gateway_resource.organisation.id,
       aws_api_gateway_method.get_organisation.id,
@@ -364,14 +325,6 @@ resource "aws_api_gateway_deployment" "main" {
     aws_api_gateway_integration.create_profile,
     aws_api_gateway_integration.update_profile,
     aws_api_gateway_integration.profile_options,
-    # Device API
-    aws_api_gateway_integration.get_devices,
-    aws_api_gateway_integration.register_device,
-    aws_api_gateway_integration.devices_options,
-    aws_api_gateway_integration.remove_device,
-    aws_api_gateway_integration.device_options,
-    aws_api_gateway_integration.device_heartbeat,
-    aws_api_gateway_integration.device_heartbeat_options,
     # Organisation API
     aws_api_gateway_integration.get_organisation,
     aws_api_gateway_integration.create_organisation,
