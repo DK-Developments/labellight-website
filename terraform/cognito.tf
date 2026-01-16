@@ -5,6 +5,18 @@
 
 resource "aws_cognito_user_pool" "main" {
   name = "printerapp-user-pool-${var.environment}"
+
+  # Enable email/password sign-up
+  password_policy {
+    minimum_length    = 8
+    require_lowercase = true
+    require_numbers   = true
+    require_symbols   = false
+    require_uppercase = true
+  }
+
+  # Auto-verify email
+  auto_verified_attributes = ["email"]
 }
 
 resource "aws_cognito_user_pool_domain" "main" {
@@ -60,6 +72,7 @@ resource "aws_cognito_user_pool_client" "main" {
   )
 
   supported_identity_providers = compact([
+    "COGNITO",
     var.google_client_id != "" && var.google_client_secret != "" ? "Google" : ""
   ])
 
@@ -94,6 +107,7 @@ resource "aws_cognito_user_pool_client" "extension" {
   ]
 
   supported_identity_providers = compact([
+    "COGNITO",
     var.google_client_id != "" && var.google_client_secret != "" ? "Google" : ""
   ])
 

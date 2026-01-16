@@ -90,11 +90,6 @@ const auth = {
     window.location.href = this.getLoginUrl(provider);
   },
 
-  // Login with Google
-  loginWithGoogle() {
-    this.login('Google');
-  },
-
   // Check profile and redirect appropriately after login
   async handlePostLoginRedirect() {
     try {
