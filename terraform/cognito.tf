@@ -6,6 +6,9 @@
 resource "aws_cognito_user_pool" "main" {
   name = "printerapp-user-pool-${var.environment}"
 
+  # Use email as the username for sign-in
+  username_attributes = ["email"]
+
   # Enable email/password sign-up
   password_policy {
     minimum_length    = 8
