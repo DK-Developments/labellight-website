@@ -119,19 +119,13 @@ resource "aws_iam_role_policy" "lambda_organisation_dynamodb_policy" {
 # LAMBDA FUNCTIONS
 #####################################################################
 
-data "archive_file" "organisation_lambda" {
-  type        = "zip"
-  source_dir  = "${path.module}/../src/api"
-  output_path = "${path.module}/lambda_organisation.zip"
-}
-
 # GET /organisation
 resource "aws_lambda_function" "get_organisation" {
-  filename         = data.archive_file.organisation_lambda.output_path
+  filename         = data.archive_file.api_lambda.output_path
   function_name    = "printerapp-get-organisation-${var.environment}"
   role             = aws_iam_role.lambda_execution.arn
   handler          = "organisations/get_organisation.lambda_handler"
-  source_code_hash = data.archive_file.organisation_lambda.output_base64sha256
+  source_code_hash = data.archive_file.api_lambda.output_base64sha256
   runtime          = "python3.12"
   timeout          = 10
 
@@ -147,11 +141,11 @@ resource "aws_lambda_function" "get_organisation" {
 
 # POST /organisation
 resource "aws_lambda_function" "create_organisation" {
-  filename         = data.archive_file.organisation_lambda.output_path
+  filename         = data.archive_file.api_lambda.output_path
   function_name    = "printerapp-create-organisation-${var.environment}"
   role             = aws_iam_role.lambda_execution.arn
   handler          = "organisations/create_organisation.lambda_handler"
-  source_code_hash = data.archive_file.organisation_lambda.output_base64sha256
+  source_code_hash = data.archive_file.api_lambda.output_base64sha256
   runtime          = "python3.12"
   timeout          = 10
 
@@ -166,11 +160,11 @@ resource "aws_lambda_function" "create_organisation" {
 
 # PUT /organisation
 resource "aws_lambda_function" "update_organisation" {
-  filename         = data.archive_file.organisation_lambda.output_path
+  filename         = data.archive_file.api_lambda.output_path
   function_name    = "printerapp-update-organisation-${var.environment}"
   role             = aws_iam_role.lambda_execution.arn
   handler          = "organisations/update_organisation.lambda_handler"
-  source_code_hash = data.archive_file.organisation_lambda.output_base64sha256
+  source_code_hash = data.archive_file.api_lambda.output_base64sha256
   runtime          = "python3.12"
   timeout          = 10
 
@@ -184,11 +178,11 @@ resource "aws_lambda_function" "update_organisation" {
 
 # DELETE /organisation
 resource "aws_lambda_function" "delete_organisation" {
-  filename         = data.archive_file.organisation_lambda.output_path
+  filename         = data.archive_file.api_lambda.output_path
   function_name    = "printerapp-delete-organisation-${var.environment}"
   role             = aws_iam_role.lambda_execution.arn
   handler          = "organisations/delete_organisation.lambda_handler"
-  source_code_hash = data.archive_file.organisation_lambda.output_base64sha256
+  source_code_hash = data.archive_file.api_lambda.output_base64sha256
   runtime          = "python3.12"
   timeout          = 10
 
@@ -203,11 +197,11 @@ resource "aws_lambda_function" "delete_organisation" {
 
 # GET /organisation/members
 resource "aws_lambda_function" "get_members" {
-  filename         = data.archive_file.organisation_lambda.output_path
+  filename         = data.archive_file.api_lambda.output_path
   function_name    = "printerapp-get-members-${var.environment}"
   role             = aws_iam_role.lambda_execution.arn
   handler          = "organisations/get_members.lambda_handler"
-  source_code_hash = data.archive_file.organisation_lambda.output_base64sha256
+  source_code_hash = data.archive_file.api_lambda.output_base64sha256
   runtime          = "python3.12"
   timeout          = 10
 
@@ -221,11 +215,11 @@ resource "aws_lambda_function" "get_members" {
 
 # POST /organisation/members/invite
 resource "aws_lambda_function" "invite_member" {
-  filename         = data.archive_file.organisation_lambda.output_path
+  filename         = data.archive_file.api_lambda.output_path
   function_name    = "printerapp-invite-member-${var.environment}"
   role             = aws_iam_role.lambda_execution.arn
   handler          = "organisations/invite_member.lambda_handler"
-  source_code_hash = data.archive_file.organisation_lambda.output_base64sha256
+  source_code_hash = data.archive_file.api_lambda.output_base64sha256
   runtime          = "python3.12"
   timeout          = 10
 
@@ -240,11 +234,11 @@ resource "aws_lambda_function" "invite_member" {
 
 # PUT /organisation/members/{member_id}
 resource "aws_lambda_function" "update_member" {
-  filename         = data.archive_file.organisation_lambda.output_path
+  filename         = data.archive_file.api_lambda.output_path
   function_name    = "printerapp-update-member-${var.environment}"
   role             = aws_iam_role.lambda_execution.arn
   handler          = "organisations/update_member.lambda_handler"
-  source_code_hash = data.archive_file.organisation_lambda.output_base64sha256
+  source_code_hash = data.archive_file.api_lambda.output_base64sha256
   runtime          = "python3.12"
   timeout          = 10
 
@@ -257,11 +251,11 @@ resource "aws_lambda_function" "update_member" {
 
 # DELETE /organisation/members/{member_id}
 resource "aws_lambda_function" "remove_member" {
-  filename         = data.archive_file.organisation_lambda.output_path
+  filename         = data.archive_file.api_lambda.output_path
   function_name    = "printerapp-remove-member-${var.environment}"
   role             = aws_iam_role.lambda_execution.arn
   handler          = "organisations/remove_member.lambda_handler"
-  source_code_hash = data.archive_file.organisation_lambda.output_base64sha256
+  source_code_hash = data.archive_file.api_lambda.output_base64sha256
   runtime          = "python3.12"
   timeout          = 10
 
@@ -274,11 +268,11 @@ resource "aws_lambda_function" "remove_member" {
 
 # POST /organisation/leave
 resource "aws_lambda_function" "leave_organisation" {
-  filename         = data.archive_file.organisation_lambda.output_path
+  filename         = data.archive_file.api_lambda.output_path
   function_name    = "printerapp-leave-organisation-${var.environment}"
   role             = aws_iam_role.lambda_execution.arn
   handler          = "organisations/leave_organisation.lambda_handler"
-  source_code_hash = data.archive_file.organisation_lambda.output_base64sha256
+  source_code_hash = data.archive_file.api_lambda.output_base64sha256
   runtime          = "python3.12"
   timeout          = 10
 

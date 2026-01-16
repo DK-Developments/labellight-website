@@ -9,7 +9,7 @@
 
 # Lambda deployment packages
 *.zip
-terraform/stripe_layer/
+terraform/stripe_layer/python/
 
 # OS files
 .DS_Store

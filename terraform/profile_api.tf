@@ -75,30 +75,12 @@ resource "aws_iam_role_policy_attachment" "lambda_logs" {
 # LAMBDA FUNCTIONS
 #####################################################################
 
-data "archive_file" "get_profile_lambda" {
-  type        = "zip"
-  source_dir  = "${path.module}/../src/api"
-  output_path = "${path.module}/lambda_get_profile.zip"
-}
-
-data "archive_file" "create_profile_lambda" {
-  type        = "zip"
-  source_dir  = "${path.module}/../src/api"
-  output_path = "${path.module}/lambda_create_profile.zip"
-}
-
-data "archive_file" "update_profile_lambda" {
-  type        = "zip"
-  source_dir  = "${path.module}/../src/api"
-  output_path = "${path.module}/lambda_update_profile.zip"
-}
-
 resource "aws_lambda_function" "get_profile" {
-  filename         = data.archive_file.get_profile_lambda.output_path
+  filename         = data.archive_file.api_lambda.output_path
   function_name    = "printerapp-get-profile-${var.environment}"
   role            = aws_iam_role.lambda_execution.arn
   handler         = "profiles/get_profile.lambda_handler"
-  source_code_hash = data.archive_file.get_profile_lambda.output_base64sha256
+  source_code_hash = data.archive_file.api_lambda.output_base64sha256
   runtime         = "python3.12"
   timeout         = 10
 
@@ -110,11 +92,11 @@ resource "aws_lambda_function" "get_profile" {
 }
 
 resource "aws_lambda_function" "create_profile" {
-  filename         = data.archive_file.create_profile_lambda.output_path
+  filename         = data.archive_file.api_lambda.output_path
   function_name    = "printerapp-create-profile-${var.environment}"
   role            = aws_iam_role.lambda_execution.arn
   handler         = "profiles/create_profile.lambda_handler"
-  source_code_hash = data.archive_file.create_profile_lambda.output_base64sha256
+  source_code_hash = data.archive_file.api_lambda.output_base64sha256
   runtime         = "python3.12"
   timeout         = 10
 
@@ -126,11 +108,11 @@ resource "aws_lambda_function" "create_profile" {
 }
 
 resource "aws_lambda_function" "update_profile" {
-  filename         = data.archive_file.update_profile_lambda.output_path
+  filename         = data.archive_file.api_lambda.output_path
   function_name    = "printerapp-update-profile-${var.environment}"
   role            = aws_iam_role.lambda_execution.arn
   handler         = "profiles/update_profile.lambda_handler"
-  source_code_hash = data.archive_file.update_profile_lambda.output_base64sha256
+  source_code_hash = data.archive_file.api_lambda.output_base64sha256
   runtime         = "python3.12"
   timeout         = 10
 
