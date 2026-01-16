@@ -444,7 +444,6 @@ terraform/
 - `aws_cognito_user_pool_client.main` - Website client
 - `aws_cognito_user_pool_client.extension` - Chrome extension client
 - `aws_cognito_identity_provider.google` - Google OAuth
-- `aws_cognito_identity_provider.microsoft` - Microsoft OAuth
 
 #### `profile_api.tf`
 - `aws_dynamodb_table.user_profiles` - User profiles

@@ -95,11 +95,6 @@ const auth = {
     this.login('Google');
   },
 
-  // Login with Microsoft
-  loginWithMicrosoft() {
-    this.login('Microsoft');
-  },
-
   // Check profile and redirect appropriately after login
   async handlePostLoginRedirect() {
     try {

@@ -32,28 +32,6 @@ resource "aws_cognito_identity_provider" "google" {
   }
 }
 
-# Microsoft Identity Provider
-resource "aws_cognito_identity_provider" "microsoft" {
-  count         = var.microsoft_client_id != "" && var.microsoft_client_secret != "" ? 1 : 0
-  user_pool_id  = aws_cognito_user_pool.main.id
-  provider_name = "Microsoft"
-  provider_type = "OIDC"
-
-  provider_details = {
-    authorize_scopes          = "email openid profile"
-    client_id                 = var.microsoft_client_id
-    client_secret             = var.microsoft_client_secret
-    oidc_issuer               = "https://login.microsoftonline.com/common/v2.0"
-    attributes_request_method = "GET"
-  }
-
-  attribute_mapping = {
-    email    = "email"
-    username = "sub"
-    name     = "name"
-  }
-}
-
 # Create app client for printerapp website
 resource "aws_cognito_user_pool_client" "main" {
   name         = "printerapp-web-client-${var.environment}"
@@ -82,15 +60,13 @@ resource "aws_cognito_user_pool_client" "main" {
   )
 
   supported_identity_providers = compact([
-    var.google_client_id != "" && var.google_client_secret != "" ? "Google" : "",
-    var.microsoft_client_id != "" && var.microsoft_client_secret != "" ? "Microsoft" : ""
+    var.google_client_id != "" && var.google_client_secret != "" ? "Google" : ""
   ])
 
   generate_secret = false
 
   depends_on = [
-    aws_cognito_identity_provider.google,
-    aws_cognito_identity_provider.microsoft
+    aws_cognito_identity_provider.google
   ]
 }
 
@@ -118,8 +94,7 @@ resource "aws_cognito_user_pool_client" "extension" {
   ]
 
   supported_identity_providers = compact([
-    var.google_client_id != "" && var.google_client_secret != "" ? "Google" : "",
-    var.microsoft_client_id != "" && var.microsoft_client_secret != "" ? "Microsoft" : ""
+    var.google_client_id != "" && var.google_client_secret != "" ? "Google" : ""
   ])
 
   generate_secret = false
@@ -136,8 +111,7 @@ resource "aws_cognito_user_pool_client" "extension" {
   }
 
   depends_on = [
-    aws_cognito_identity_provider.google,
-    aws_cognito_identity_provider.microsoft
+    aws_cognito_identity_provider.google
   ]
 }
 
