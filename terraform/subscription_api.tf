@@ -8,8 +8,7 @@
 #
 # SUBSCRIPTION MODEL:
 # - A subscription can be owned by a user OR an organisation
-# - Device limits are per subscription (not per user)
-# - Organisation members share the org's subscription device pool
+# - User limits are per subscription
 # - Individual users without org use their personal subscription
 #####################################################################
 
@@ -125,7 +124,6 @@ resource "aws_lambda_function" "get_subscription" {
       SUBSCRIPTIONS_TABLE_NAME   = aws_dynamodb_table.subscriptions.name
       ORG_MEMBERS_TABLE_NAME     = aws_dynamodb_table.org_members.name
       ORGANISATIONS_TABLE_NAME   = aws_dynamodb_table.organisations.name
-      DEVICES_TABLE_NAME         = aws_dynamodb_table.devices.name
     }
   }
 }

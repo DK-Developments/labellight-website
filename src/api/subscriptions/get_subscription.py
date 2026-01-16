@@ -6,17 +6,16 @@ LOGIC:
 1. Check if user belongs to an organisation
 2. If yes, check if org has an active subscription
 3. If no org or no org subscription, check user's personal subscription
-4. Return subscription details with device limits and usage
+4. Return subscription details with user limits and usage
 """
 import os
 from utils.response_builder import success_response, error_handler
 from utils.helpers import get_user_id_from_event, get_table
-from subscriptions.plans import get_device_limit, get_user_limit, PLANS
+from subscriptions.plans import get_user_limit, PLANS
 
 subscriptions_table = get_table('SUBSCRIPTIONS_TABLE_NAME')
 org_members_table = get_table('ORG_MEMBERS_TABLE_NAME')
 organisations_table = get_table('ORGANISATIONS_TABLE_NAME')
-devices_table = get_table('DEVICES_TABLE_NAME')
 
 
 def get_user_organisation(user_id):
@@ -68,42 +67,6 @@ def get_subscription_by_owner(owner_id):
     return items[0]
 
 
-def count_devices_for_owner(owner_id, is_organisation=False):
-    """
-    Count devices for a subscription owner.
-    
-    For individual users: count their devices
-    For organisations: count all devices across all members
-    """
-    if not is_organisation:
-        # Count user's devices
-        response = devices_table.query(
-            KeyConditionExpression='user_id = :uid',
-            ExpressionAttributeValues={':uid': owner_id},
-            Select='COUNT'
-        )
-        return response.get('Count', 0)
-    
-    # For organisations, count all member devices
-    # First get all members
-    members_response = org_members_table.query(
-        KeyConditionExpression='organisation_id = :oid',
-        ExpressionAttributeValues={':oid': owner_id}
-    )
-    
-    total_devices = 0
-    for member in members_response.get('Items', []):
-        member_user_id = member.get('user_id')
-        device_response = devices_table.query(
-            KeyConditionExpression='user_id = :uid',
-            ExpressionAttributeValues={':uid': member_user_id},
-            Select='COUNT'
-        )
-        total_devices += device_response.get('Count', 0)
-    
-    return total_devices
-
-
 def count_org_members(org_id):
     """Count members in an organisation."""
     response = org_members_table.query(
@@ -121,8 +84,8 @@ def lambda_handler(event, context):
     
     Returns:
     - subscription: The active subscription (personal or org)
-    - limits: Device and user limits
-    - usage: Current device and user counts
+    - limits: User limits
+    - usage: Current user counts
     - organisation: Organisation details if subscription is shared
     """
     user_id = get_user_id_from_event(event)
@@ -149,11 +112,9 @@ def lambda_handler(event, context):
         return success_response({
             'subscription': None,
             'limits': {
-                'devices': 0,
                 'users': 1
             },
             'usage': {
-                'devices': count_devices_for_owner(user_id, False),
                 'users': 1
             },
             'organisation': organisation,
@@ -165,16 +126,13 @@ def lambda_handler(event, context):
     plan_config = PLANS.get(plan_key, {})
     
     # Calculate limits (may be custom for enterprise)
-    device_limit = subscription.get('custom_device_limit') or get_device_limit(plan_key)
     user_limit = subscription.get('custom_user_limit') or get_user_limit(plan_key)
     
     # Calculate usage
     if is_org_subscription:
         owner_id = organisation.get('organisation_id')
-        device_count = count_devices_for_owner(owner_id, True)
         user_count = count_org_members(owner_id)
     else:
-        device_count = count_devices_for_owner(user_id, False)
         user_count = 1
     
     # Determine if user has active access
@@ -195,11 +153,9 @@ def lambda_handler(event, context):
             'owner_id': subscription.get('owner_id'),
         },
         'limits': {
-            'devices': device_limit,
             'users': user_limit
         },
         'usage': {
-            'devices': device_count,
             'users': user_count
         },
         'organisation': organisation if is_org_subscription else None,

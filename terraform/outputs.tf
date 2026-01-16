@@ -68,15 +68,6 @@ output "org_invitations_table_name" {
 }
 
 #####################################################################
-# DEVICE TABLE
-#####################################################################
-
-output "devices_table_name" {
-  description = "DynamoDB table name for devices"
-  value       = aws_dynamodb_table.devices.name
-}
-
-#####################################################################
 # SUBSCRIPTION TABLE
 #####################################################################
 

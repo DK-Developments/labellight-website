@@ -1,24 +1,19 @@
 """
 Subscription Plans Configuration
-Defines plan tiers, pricing, and device limits
+Defines plan tiers, pricing, and user limits
 
 PRICING MODEL:
 - Trial: 7-day free trial (credit card required)
-- Single: 1 user, limited devices
-- Team: Up to 3 users (via organisation), shared device pool
-- Business: Up to 10 users (via organisation), shared device pool
+- Single: 1 user
+- Team: Up to 3 users (via organisation)
+- Business: Up to 10 users (via organisation)
 - Enterprise: 10+ users, custom pricing
-
-DEVICE SHARING:
-- Individual users: devices count against their personal subscription
-- Organisation members: devices count against the org's shared pool
 """
 
-# Plan configurations with device limits
+# Plan configurations with user limits
 PLANS = {
     'trial': {
         'name': 'Trial',
-        'device_limit': 1,
         'user_limit': 1,
         'duration_days': 7,
         'price_monthly': 0,
@@ -26,28 +21,24 @@ PLANS = {
     },
     'single': {
         'name': '1 User',
-        'device_limit': 3,
         'user_limit': 1,
         'price_monthly': 9.99,
         'price_yearly': 99.99,
     },
     'team': {
         'name': 'Up To 3 Users',
-        'device_limit': 6,
         'user_limit': 3,
         'price_monthly': 24.99,
         'price_yearly': 249.00,
     },
     'business': {
         'name': 'Up To 10 Users',
-        'device_limit': 20,
         'user_limit': 10,
         'price_monthly': 79.99,
         'price_yearly': 799.99,
     },
     'enterprise': {
         'name': 'Enterprise',
-        'device_limit': None,  # Unlimited or custom
         'user_limit': None,    # Unlimited or custom
         'price_per_user': 7.49,
         'min_users': 10,
@@ -78,25 +69,12 @@ PLAN_TO_STRIPE_PRICE = {
 }
 
 # Default limits for users without subscription
-DEFAULT_DEVICE_LIMIT = 0
 DEFAULT_USER_LIMIT = 1
 
 
 def get_plan_config(plan_key):
     """Get configuration for a plan by key."""
     return PLANS.get(plan_key)
-
-
-def get_device_limit(plan_key, custom_limit=None):
-    """Get device limit for a plan."""
-    if custom_limit is not None:
-        return custom_limit
-    
-    plan = PLANS.get(plan_key)
-    if not plan:
-        return DEFAULT_DEVICE_LIMIT
-    
-    return plan.get('device_limit', DEFAULT_DEVICE_LIMIT)
 
 
 def get_user_limit(plan_key, custom_limit=None):
