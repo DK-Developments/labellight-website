@@ -1054,7 +1054,7 @@ section h2 {
   text-align: center;
 }
 
-.pricing-subtitle {
+.pricing-teaser-section .pricing-subtitle {
   font-size: 20px;
   color: #666;
   margin-bottom: 56px;
@@ -1459,7 +1459,7 @@ section h2 {
   letter-spacing: -0.5px;
 }
 
-.pricing-subtitle {
+.pricing-hero-section .pricing-subtitle {
   font-size: 20px;
   color: #666;
   margin-bottom: 0;
