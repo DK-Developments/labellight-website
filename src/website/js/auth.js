@@ -20,6 +20,15 @@ const auth = {
     return url;
   },
 
+  // Build Cognito sign up URL
+  getSignUpUrl() {
+    return `https://${CONFIG.COGNITO_DOMAIN}/signup?` +
+      `client_id=${CONFIG.CLIENT_ID}&` +
+      `response_type=token&` +
+      `scope=email+openid+profile&` +
+      `redirect_uri=${encodeURIComponent(REDIRECT_URI)}`;
+  },
+
   // Build Cognito logout URL
   getLogoutUrl() {
     return `https://${CONFIG.COGNITO_DOMAIN}/logout?` +
@@ -88,6 +97,11 @@ const auth = {
   // Redirect to sign in
   signIn(provider = null) {
     window.location.href = this.getSignInUrl(provider);
+  },
+
+  // Redirect to sign up
+  signUp() {
+    window.location.href = this.getSignUpUrl();
   },
 
   // Check profile and redirect appropriately after sign in
