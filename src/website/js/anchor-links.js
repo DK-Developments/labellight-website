@@ -4,7 +4,7 @@
  * Automatically adds link icons to all h2, h3, and h4 elements with IDs,
  * allowing users to easily copy direct links to sections.
  * 
- * @author Eprouvez
+ * @author Kahn Wynyard
  * @version 1.0.0
  * 
  * USAGE EXAMPLE:
