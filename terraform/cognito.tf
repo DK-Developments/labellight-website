@@ -72,6 +72,9 @@ resource "aws_cognito_user_pool_client" "main" {
     [
       "https://${aws_cloudfront_distribution.website.domain_name}/callback.html"
     ],
+    var.environment == "prod" ? [
+      "https://${var.domain_name}/callback.html"
+    ] : [],
     var.environment == "dev" ? [
       "http://localhost:8000/callback.html"
     ] : []
@@ -81,6 +84,9 @@ resource "aws_cognito_user_pool_client" "main" {
     [
       "https://${aws_cloudfront_distribution.website.domain_name}/index.html"
     ],
+    var.environment == "prod" ? [
+      "https://${var.domain_name}/index.html"
+    ] : [],
     var.environment == "dev" ? [
       "http://localhost:8000/index.html"
     ] : []
