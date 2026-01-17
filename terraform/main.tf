@@ -84,7 +84,10 @@ resource "aws_s3_bucket_policy" "website" {
         Resource = "${aws_s3_bucket.website.arn}/*"
         Condition = {
           StringEquals = {
-            "AWS:SourceArn" = aws_cloudfront_distribution.website.arn
+            "AWS:SourceArn" = concat(
+              [aws_cloudfront_distribution.website.arn],
+              var.additional_cloudfront_distribution_arns
+            )
           }
         }
       }
