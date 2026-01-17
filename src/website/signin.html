@@ -8,34 +8,39 @@
   <link rel="icon" type="image/png" href="images/favicon.png">
   <link rel="stylesheet" href="css/styles.css">
 </head>
-<body class="login-page">
+<body class="signin-page">
   <!-- Navigation -->
   <div id="navbar-container"></div>
 
-  <!-- Login Section -->
-  <section class="login-container">
-    <div class="login-card">
-      <div class="login-logo">
-        <img src="images/transparent-logo.png" alt="LabelLight Logo" class="login-logo-img">
+  <!-- Sign In Section -->
+  <section class="signin-container">
+    <div class="signin-card">
+      <div class="signin-logo">
+        <img src="images/transparent-logo.png" alt="LabelLight Logo" class="signin-logo-img">
       </div>
-      <h1 class="login-title">Welcome Back</h1>
-      <p class="login-subtitle">Sign in to your LabelLight account</p>
+      <h1 class="signin-title">Welcome Back</h1>
+      <p class="signin-subtitle">Sign in to your LabelLight account</p>
       
-      <div class="login-buttons">
-        <button onclick="auth.login()" class="social-login-btn">
+      <div class="signin-buttons">
+        <button onclick="auth.signIn()" class="social-signin-btn">
           <span>Sign In</span>
         </button>
       </div>
       
-      <div class="login-divider">
+      <div class="signin-divider">
         <span>Secure authentication</span>
       </div>
       
-      <p class="login-terms">
+      <p class="signin-terms">
         By signing in, you agree to our 
         <a href="docs/terms.html">Terms of Service</a> and 
         <a href="docs/privacy.html">Privacy Policy</a>
       </p>
+      
+      <div class="signin-signup-link">
+        <span>Don't have an account?</span>
+        <a href="signup.html">Sign Up</a>
+      </div>
     </div>
   </section>
 

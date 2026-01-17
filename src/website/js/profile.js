@@ -7,7 +7,7 @@
  * 
  * USAGE:
  * This script runs automatically when loaded on the profile page.
- * It requires authentication and will redirect to login if not authenticated.
+ * It requires authentication and will redirect to sign in if not authenticated.
  */
 
 // Check if user is authenticated

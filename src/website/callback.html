@@ -50,10 +50,10 @@
     // Handle OAuth callback immediately
     if (auth.parseTokensFromUrl()) {
       // Tokens found - redirect based on profile status
-      auth.handlePostLoginRedirect();
+      auth.handlePostSignInRedirect();
     } else {
-      // No tokens in URL - redirect to login page
-      window.location.href = 'login.html';
+      // No tokens in URL - redirect to sign in page
+      window.location.href = 'signin.html';
     }
   </script>
 </body>

@@ -74,17 +74,17 @@ async function updateNavbarAuth() {
     console.error('Error checking auth state:', error);
   }
   
-  const loginBtn = document.getElementById('login-btn');
+  const signInBtn = document.getElementById('signin-btn');
   const profileDropdown = document.getElementById('profile-dropdown');
 
   if (isLoggedIn) {
-    if (loginBtn) loginBtn.style.display = 'none';
+    if (signInBtn) signInBtn.style.display = 'none';
     if (profileDropdown) {
       profileDropdown.style.display = 'block';
       await loadNavbarUserInfo();
     }
   } else {
-    if (loginBtn) loginBtn.style.display = 'block';
+    if (signInBtn) signInBtn.style.display = 'block';
     if (profileDropdown) profileDropdown.style.display = 'none';
   }
 }

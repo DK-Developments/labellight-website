@@ -23,9 +23,9 @@ function isTokenValid(token) {
   return Date.now() < expirationTime;
 }
 
-function requireAuth(loginPage = 'index.html') {
+function requireAuth(signInPage = 'index.html') {
   if (!auth.isAuthenticated()) {
-    window.location.href = loginPage;
+    window.location.href = signInPage;
   }
 }
 
