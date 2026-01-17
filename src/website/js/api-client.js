@@ -49,7 +49,7 @@ async function apiRequest(endpoint, options = {}) {
     // Add authorization header if authenticated
     if (requireAuth) {
       const token = auth.getTokens().accessToken;
-      config.headers['Authorization'] = token;
+      config.headers['Authorization'] = token ? `Bearer ${token}` : '';
     }
 
     // Add body if present
