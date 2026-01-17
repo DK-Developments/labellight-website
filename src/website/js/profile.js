@@ -2,7 +2,7 @@
  * Profile Page Controller
  * Handles user profile, organisation, and subscription management
  * 
- * @author Eprouvez
+ * @author Kahn Wynyard
  * @version 2.0.0
  * 
  * USAGE:

@@ -2,7 +2,7 @@
  * Profile API Client
  * Provides functions for managing user profiles
  * 
- * @author Eprouvez
+ * @author Kahn Wynyard
  * @version 1.1.0
  * 
  * USAGE EXAMPLE:

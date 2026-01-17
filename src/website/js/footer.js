@@ -2,7 +2,7 @@
  * Footer Component Loader
  * Dynamically loads the footer HTML into pages for consistent footer across the application.
  * 
- * @author Eprouvez
+ * @author Kahn Wynyard
  * @version 1.0.0
  * 
  * USAGE EXAMPLE:

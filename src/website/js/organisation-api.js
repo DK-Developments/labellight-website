@@ -2,7 +2,7 @@
  * Organisation API Client
  * Provides functions for managing organisations, members, and invitations
  * 
- * @author Eprouvez
+ * @author Kahn Wynyard
  * @version 1.0.0
  * 
  * USAGE EXAMPLE:
