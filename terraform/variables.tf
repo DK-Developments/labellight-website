@@ -69,3 +69,9 @@ variable "domain_name" {
   type        = string
   default     = "labellight.com"
 }
+
+variable "additional_cloudfront_distribution_arns" {
+  description = "Extra CloudFront distribution ARNs allowed to read website bucket"
+  type        = list(string)
+  default     = []
+}
