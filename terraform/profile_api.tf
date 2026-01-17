@@ -251,6 +251,50 @@ resource "aws_api_gateway_integration_response" "profile_options" {
   depends_on = [aws_api_gateway_integration.profile_options]
 }
 
+#####################################################################
+# GATEWAY RESPONSES (CORS headers for error responses)
+#####################################################################
+
+resource "aws_api_gateway_gateway_response" "unauthorized" {
+  rest_api_id   = aws_api_gateway_rest_api.main.id
+  response_type = "UNAUTHORIZED"
+
+  response_parameters = {
+    "gatewayresponse.header.Access-Control-Allow-Origin"  = "'*'"
+    "gatewayresponse.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+  }
+}
+
+resource "aws_api_gateway_gateway_response" "access_denied" {
+  rest_api_id   = aws_api_gateway_rest_api.main.id
+  response_type = "ACCESS_DENIED"
+
+  response_parameters = {
+    "gatewayresponse.header.Access-Control-Allow-Origin"  = "'*'"
+    "gatewayresponse.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+  }
+}
+
+resource "aws_api_gateway_gateway_response" "default_4xx" {
+  rest_api_id   = aws_api_gateway_rest_api.main.id
+  response_type = "DEFAULT_4XX"
+
+  response_parameters = {
+    "gatewayresponse.header.Access-Control-Allow-Origin"  = "'*'"
+    "gatewayresponse.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+  }
+}
+
+resource "aws_api_gateway_gateway_response" "default_5xx" {
+  rest_api_id   = aws_api_gateway_rest_api.main.id
+  response_type = "DEFAULT_5XX"
+
+  response_parameters = {
+    "gatewayresponse.header.Access-Control-Allow-Origin"  = "'*'"
+    "gatewayresponse.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+  }
+}
+
 # API Gateway Deployment
 resource "aws_api_gateway_deployment" "main" {
   rest_api_id = aws_api_gateway_rest_api.main.id
@@ -268,6 +312,11 @@ resource "aws_api_gateway_deployment" "main" {
       aws_api_gateway_integration.update_profile.id,
       aws_api_gateway_integration.profile_options.id,
       aws_api_gateway_integration_response.profile_options.id,
+      # Gateway responses
+      aws_api_gateway_gateway_response.unauthorized.id,
+      aws_api_gateway_gateway_response.access_denied.id,
+      aws_api_gateway_gateway_response.default_4xx.id,
+      aws_api_gateway_gateway_response.default_5xx.id,
       # Organisation API
       aws_api_gateway_resource.organisation.id,
       aws_api_gateway_method.get_organisation.id,
