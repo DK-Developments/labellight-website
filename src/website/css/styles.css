@@ -794,6 +794,20 @@ small {
   display: block;
 }
 
+/* Mobile hero image - hidden on desktop */
+.hero-screenshot-mobile {
+  display: none;
+}
+
+.hero-screenshot-mobile-img {
+  max-width: 280px;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  margin: 0 auto;
+  display: block;
+}
+
 .image-placeholder {
   background-color: rgba(255, 255, 255, 0.1);
   border: 2px dashed rgba(255, 255, 255, 0.3);
@@ -1392,6 +1406,16 @@ section h2 {
 
   .hero-cta .btn {
     width: 100%;
+    text-align: center;
+  }
+
+  /* Swap hero images on mobile */
+  .hero-screenshot-desktop {
+    display: none;
+  }
+
+  .hero-screenshot-mobile {
+    display: block;
     text-align: center;
   }
 
