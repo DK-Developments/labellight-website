@@ -126,9 +126,9 @@ function handleSubscribe(plan) {
   
   // Check if user is authenticated
   if (!auth.isAuthenticated()) {
-    // User not logged in - redirect to login
-    if (confirm('You need to be logged in to subscribe. Would you like to log in now?')) {
-      auth.login();
+    // User not signed in - redirect to sign in
+    if (confirm('You need to be signed in to subscribe. Would you like to sign in now?')) {
+      auth.signIn();
     }
     return;
   }

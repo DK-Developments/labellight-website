@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In - LabelLight</title>
+  <meta name="description" content="Sign in to your LabelLight account to manage your labels and settings.">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="signin-page">
+  <!-- Navigation -->
+  <div id="navbar-container"></div>
+
+  <!-- Sign In Section -->
+  <section class="signin-container">
+    <div class="signin-card">
+      <div class="signin-logo">
+        <img src="images/transparent-logo.png" alt="LabelLight Logo" class="signin-logo-img">
+      </div>
+      <h1 class="signin-title">Welcome Back</h1>
+      <p class="signin-subtitle">Sign in to your LabelLight account</p>
+      
+      <div class="signin-buttons">
+        <button onclick="auth.signIn()" class="social-signin-btn">
+          <span>Sign In</span>
+        </button>
+      </div>
+      
+      <div class="signin-divider">
+        <span>Secure authentication</span>
+      </div>
+      
+      <p class="signin-terms">
+        By signing in, you agree to our 
+        <a href="docs/terms.html">Terms of Service</a> and 
+        <a href="docs/privacy.html">Privacy Policy</a>
+      </p>
+      
+      <div class="signin-signup-link">
+        <span>Don't have an account?</span>
+        <a href="#" onclick="auth.signUp(); return false;">Sign Up</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <div id="footer-container"></div>
+
+  <!-- Scripts -->
+  <script src="js/config.js"></script>
+  <script src="js/jwt-utils.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/navbar.js"></script>
+  <script>
+    // Redirect if already authenticated
+    document.addEventListener('DOMContentLoaded', function() {
+      if (auth.isAuthenticated()) {
+        window.location.href = 'profile.html';
+      }
+    });
+  </script>
+</body>
+</html>

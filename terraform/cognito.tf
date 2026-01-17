@@ -5,6 +5,21 @@
 
 resource "aws_cognito_user_pool" "main" {
   name = "printerapp-user-pool-${var.environment}"
+
+  # Use email as the username for sign-in
+  username_attributes = ["email"]
+
+  # Enable email/password sign-up
+  password_policy {
+    minimum_length    = 8
+    require_lowercase = true
+    require_numbers   = true
+    require_symbols   = false
+    require_uppercase = true
+  }
+
+  # Auto-verify email
+  auto_verified_attributes = ["email"]
 }
 
 resource "aws_cognito_user_pool_domain" "main" {
@@ -23,28 +38,6 @@ resource "aws_cognito_identity_provider" "google" {
     authorize_scopes = "email openid profile"
     client_id        = var.google_client_id
     client_secret    = var.google_client_secret
-  }
-
-  attribute_mapping = {
-    email    = "email"
-    username = "sub"
-    name     = "name"
-  }
-}
-
-# Microsoft Identity Provider
-resource "aws_cognito_identity_provider" "microsoft" {
-  count         = var.microsoft_client_id != "" && var.microsoft_client_secret != "" ? 1 : 0
-  user_pool_id  = aws_cognito_user_pool.main.id
-  provider_name = "Microsoft"
-  provider_type = "OIDC"
-
-  provider_details = {
-    authorize_scopes          = "email openid profile"
-    client_id                 = var.microsoft_client_id
-    client_secret             = var.microsoft_client_secret
-    oidc_issuer               = "https://login.microsoftonline.com/common/v2.0"
-    attributes_request_method = "GET"
   }
 
   attribute_mapping = {
@@ -82,15 +75,14 @@ resource "aws_cognito_user_pool_client" "main" {
   )
 
   supported_identity_providers = compact([
-    var.google_client_id != "" && var.google_client_secret != "" ? "Google" : "",
-    var.microsoft_client_id != "" && var.microsoft_client_secret != "" ? "Microsoft" : ""
+    "COGNITO",
+    var.google_client_id != "" && var.google_client_secret != "" ? "Google" : ""
   ])
 
   generate_secret = false
 
   depends_on = [
-    aws_cognito_identity_provider.google,
-    aws_cognito_identity_provider.microsoft
+    aws_cognito_identity_provider.google
   ]
 }
 
@@ -118,8 +110,8 @@ resource "aws_cognito_user_pool_client" "extension" {
   ]
 
   supported_identity_providers = compact([
-    var.google_client_id != "" && var.google_client_secret != "" ? "Google" : "",
-    var.microsoft_client_id != "" && var.microsoft_client_secret != "" ? "Microsoft" : ""
+    "COGNITO",
+    var.google_client_id != "" && var.google_client_secret != "" ? "Google" : ""
   ])
 
   generate_secret = false
@@ -136,8 +128,20 @@ resource "aws_cognito_user_pool_client" "extension" {
   }
 
   depends_on = [
-    aws_cognito_identity_provider.google,
-    aws_cognito_identity_provider.microsoft
+    aws_cognito_identity_provider.google
   ]
 }
 
+#####################################################################
+# COGNITO HOSTED UI CUSTOMIZATION
+#####################################################################
+
+resource "aws_cognito_user_pool_ui_customization" "main" {
+  user_pool_id = aws_cognito_user_pool.main.id
+  client_id    = "ALL"
+
+  # Custom CSS from website css folder
+  css = file("${path.module}/../src/website/css/cognito-ui.css")
+
+  depends_on = [aws_cognito_user_pool_domain.main]
+}

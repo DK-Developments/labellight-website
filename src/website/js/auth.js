@@ -4,8 +4,8 @@ const LOGOUT_REDIRECT_URI = window.location.origin + '/index.html';
 
 // Auth helper functions
 const auth = {
-  // Build Cognito login URL with optional identity provider
-  getLoginUrl(provider = null) {
+  // Build Cognito sign in URL with optional identity provider
+  getSignInUrl(provider = null) {
     let url = `https://${CONFIG.COGNITO_DOMAIN}/oauth2/authorize?` +
       `client_id=${CONFIG.CLIENT_ID}&` +
       `response_type=token&` +
@@ -18,6 +18,15 @@ const auth = {
     }
     
     return url;
+  },
+
+  // Build Cognito sign up URL
+  getSignUpUrl() {
+    return `https://${CONFIG.COGNITO_DOMAIN}/signup?` +
+      `client_id=${CONFIG.CLIENT_ID}&` +
+      `response_type=token&` +
+      `scope=email+openid+profile&` +
+      `redirect_uri=${encodeURIComponent(REDIRECT_URI)}`;
   },
 
   // Build Cognito logout URL
@@ -85,23 +94,18 @@ const auth = {
     window.location.href = this.getLogoutUrl();
   },
 
-  // Redirect to login
-  login(provider = null) {
-    window.location.href = this.getLoginUrl(provider);
+  // Redirect to sign in
+  signIn(provider = null) {
+    window.location.href = this.getSignInUrl(provider);
   },
 
-  // Login with Google
-  loginWithGoogle() {
-    this.login('Google');
+  // Redirect to sign up
+  signUp() {
+    window.location.href = this.getSignUpUrl();
   },
 
-  // Login with Microsoft
-  loginWithMicrosoft() {
-    this.login('Microsoft');
-  },
-
-  // Check profile and redirect appropriately after login
-  async handlePostLoginRedirect() {
+  // Check profile and redirect appropriately after sign in
+  async handlePostSignInRedirect() {
     try {
       // Check if profile-api.js is loaded
       if (typeof getProfile === 'undefined') {
