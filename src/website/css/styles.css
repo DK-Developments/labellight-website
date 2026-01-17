@@ -922,6 +922,12 @@ section h2 {
 .value-item {
   text-align: center;
   padding: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.value-item .value-image {
+  margin-top: auto;
 }
 
 .value-image {
@@ -1388,20 +1394,32 @@ section h2 {
 
   .hero-container {
     flex-direction: column;
-    gap: 40px;
+    gap: 24px;
+  }
+
+  /* Flatten hero-content so we can reorder its children */
+  .hero-content {
+    display: contents;
   }
 
   .hero-section h1 {
     font-size: 36px;
     letter-spacing: -0.5px;
+    order: 1;
   }
 
   .hero-subheadline {
     font-size: 18px;
+    order: 2;
+  }
+
+  .hero-image {
+    order: 3;
   }
 
   .hero-cta {
     flex-direction: column;
+    order: 4;
   }
 
   .hero-cta .btn {
