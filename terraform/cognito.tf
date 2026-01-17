@@ -132,3 +132,19 @@ resource "aws_cognito_user_pool_client" "extension" {
   ]
 }
 
+#####################################################################
+# COGNITO HOSTED UI CUSTOMIZATION
+#####################################################################
+
+resource "aws_cognito_user_pool_ui_customization" "main" {
+  user_pool_id = aws_cognito_user_pool.main.id
+  client_id    = "ALL"
+
+  # Logo from website assets (must be under 100KB)
+  image_file = filebase64("${path.module}/../src/website/images/transparent-logo.png")
+
+  # Custom CSS from website css folder
+  css = file("${path.module}/../src/website/css/cognito-ui.css")
+
+  depends_on = [aws_cognito_user_pool_domain.main]
+}

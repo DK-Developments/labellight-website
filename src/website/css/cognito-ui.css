@@ -1,0 +1,145 @@
+/**
+ * LabelLight Cognito Hosted UI Customization
+ * 
+ * Design tokens extracted from styles.css to ensure
+ * consistency with the main website styling.
+ * 
+ * Colors:
+ *   Primary:       #1a73e8
+ *   Primary Hover: #1557b0
+ *   Text Dark:     #333
+ *   Text Medium:   #666
+ *   Text Light:    #999
+ *   Border:        #e0e0e0
+ *   Background:    #f5f5f5
+ *   Input BG:      #fafafa
+ *   Error BG:      #f8d7da
+ *   Error Text:    #721c24
+ *   Error Border:  #f5c6cb
+ */
+
+/* Page Background - matches .signin-page */
+.background-customizable {
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+}
+
+/* Logo/Banner Container */
+.banner-customizable {
+  padding: 24px 0;
+  background-color: transparent;
+}
+
+/* Main Card Container - matches .signin-card */
+.modal-content {
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* Form Labels - matches label styles */
+.label-customizable {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  color: #333;
+}
+
+/* Input Fields - matches .form-input */
+.inputField-customizable {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 14px 16px;
+  font-size: 16px;
+  background-color: #fafafa;
+  color: #333;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.inputField-customizable:focus {
+  border-color: #1a73e8;
+  box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.15);
+  background-color: white;
+  outline: none;
+}
+
+/* Primary Button - matches button styles */
+.submitButton-customizable {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  background-color: #1a73e8;
+  border: none;
+  border-radius: 8px;
+  padding: 14px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+
+.submitButton-customizable:hover {
+  background-color: #1557b0;
+  box-shadow: 0 4px 12px rgba(26, 115, 232, 0.25);
+}
+
+/* Links - matches anchor styles */
+.redirect-customizable {
+  color: #1a73e8;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.redirect-customizable:hover {
+  color: #1557b0;
+  text-decoration: underline;
+}
+
+/* Text Descriptions */
+.textDescription-customizable {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  color: #666;
+  font-size: 14px;
+}
+
+/* Error Messages - matches .error-message */
+.errorMessage-customizable {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #f5c6cb;
+  font-size: 14px;
+}
+
+/* Social/IDP Buttons - matches .google-btn */
+.idpButton-customizable {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  background-color: white;
+  color: #333;
+  border: 2px solid #dadce0;
+  border-radius: 8px;
+  padding: 14px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.idpButton-customizable:hover {
+  background-color: #f8f9fa;
+  border-color: #dadce0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Secondary/Alternate Buttons */
+.btn-customizable {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+/* Legal/Footer text */
+.legalText-customizable {
+  color: #999;
+  font-size: 13px;
+}
