@@ -3866,6 +3866,31 @@ select.form-input {
   min-width: 110px;
 }
 
+/* Override button colors for cookie consent (white background context) */
+.cookie-consent-banner .btn-secondary {
+  background-color: transparent;
+  color: #333;
+  border: 2px solid #333;
+}
+
+.cookie-consent-banner .btn-secondary:hover {
+  background-color: #f5f5f5;
+  color: #1a73e8;
+  border-color: #1a73e8;
+}
+
+.cookie-consent-banner .btn-primary {
+  background-color: #1a73e8;
+  color: #fff;
+  border: 2px solid #1a73e8;
+}
+
+.cookie-consent-banner .btn-primary:hover {
+  background-color: #1557b0;
+  color: #fff;
+  border-color: #1557b0;
+}
+
 /* Customize/Details Section */
 .cookie-consent-details {
   border-top: 1px solid #e0e0e0;
