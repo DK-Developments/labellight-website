@@ -22,9 +22,21 @@ resource "aws_cognito_user_pool" "main" {
   auto_verified_attributes = ["email"]
 }
 
+# Default Cognito domain for dev environment
 resource "aws_cognito_user_pool_domain" "main" {
+  count        = var.environment == "dev" ? 1 : 0
   domain       = "${var.cognito_domain_prefix}-${var.environment}"
   user_pool_id = aws_cognito_user_pool.main.id
+}
+
+# Custom domain for production
+resource "aws_cognito_user_pool_domain" "custom" {
+  count           = var.environment == "prod" ? 1 : 0
+  domain          = "auth.${var.domain_name}"
+  user_pool_id    = aws_cognito_user_pool.main.id
+  certificate_arn = aws_acm_certificate_validation.cognito[0].certificate_arn
+
+  depends_on = [aws_acm_certificate_validation.cognito]
 }
 
 # Google Identity Provider
@@ -143,5 +155,8 @@ resource "aws_cognito_user_pool_ui_customization" "main" {
   # Custom CSS from website css folder
   css = file("${path.module}/../src/website/css/cognito-ui.css")
 
-  depends_on = [aws_cognito_user_pool_domain.main]
+  depends_on = [
+    aws_cognito_user_pool_domain.main,
+    aws_cognito_user_pool_domain.custom
+  ]
 }
