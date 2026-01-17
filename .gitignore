@@ -1,7 +1,6 @@
 # Terraform
 .terraform/
 *.tfplan
-*.tfvars
 
 # Keep terraform.tfstate in repo
 # terraform.tfstate
