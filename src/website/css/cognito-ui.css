@@ -4,6 +4,8 @@
  * Design tokens extracted from styles.css to ensure
  * consistency with the main website styling.
  * 
+ * Note: Cognito does not support pseudo-selectors (:hover, :focus, etc.)
+ * 
  * Colors:
  *   Primary:       #1a73e8
  *   Primary Hover: #1557b0
@@ -46,14 +48,6 @@
   font-size: 16px;
   background-color: #fafafa;
   color: #333;
-  transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-.inputField-customizable:focus {
-  border-color: #1a73e8;
-  box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.15);
-  background-color: white;
-  outline: none;
 }
 
 /* Primary Button - matches button styles */
@@ -67,12 +61,6 @@
   font-weight: 600;
   color: white;
   cursor: pointer;
-  transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
-}
-
-.submitButton-customizable:hover {
-  background-color: #1557b0;
-  box-shadow: 0 4px 12px rgba(26, 115, 232, 0.25);
 }
 
 /* Links - matches anchor styles */
@@ -80,11 +68,6 @@
   color: #1a73e8;
   font-weight: 600;
   text-decoration: none;
-}
-
-.redirect-customizable:hover {
-  color: #1557b0;
-  text-decoration: underline;
 }
 
 /* Text Descriptions */
@@ -116,13 +99,6 @@
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.idpButton-customizable:hover {
-  background-color: #f8f9fa;
-  border-color: #dadce0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Secondary/Alternate Buttons */
