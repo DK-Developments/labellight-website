@@ -25,7 +25,7 @@ async function apiRequest(endpoint, options = {}) {
   try {
     // Check authentication if required
     if (requireAuth) {
-      const token = auth.getTokens().accessToken;
+      const token = auth.getTokens().idToken;
       if (!token) {
         throw new Error('Not authenticated');
       }
@@ -48,7 +48,7 @@ async function apiRequest(endpoint, options = {}) {
 
     // Add authorization header if authenticated
     if (requireAuth) {
-      const token = auth.getTokens().accessToken;
+      const token = auth.getTokens().idToken;
       config.headers['Authorization'] = token ? `Bearer ${token}` : '';
     }
 
