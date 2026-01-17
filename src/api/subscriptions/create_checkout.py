@@ -10,7 +10,7 @@ import os
 import stripe
 from utils.response_builder import success_response, error_response, error_handler
 from utils.helpers import get_user_id_from_event, get_table, parse_request_body
-from subscriptions.plans import PLAN_TO_STRIPE_PRICE, PLANS
+from subscriptions.plans import PLANS, get_plan_from_stripe_price, get_stripe_price_for_plan
 
 stripe.api_key = os.environ.get('STRIPE_SECRET_KEY')
 website_url = os.environ.get('WEBSITE_URL', 'http://localhost:8000')
@@ -61,7 +61,13 @@ def lambda_handler(event, context):
     """
     POST /subscription - Create Stripe Checkout session
     
-    Body:
+    Body (Option 1 - Direct price ID from PricingConfig):
+    {
+        "price_id": "price_xxx",
+        "owner_type": "user|organisation"  // optional, defaults to 'user'
+    }
+    
+    Body (Option 2 - Legacy plan/billing_period):
     {
         "plan": "single|team|business",
         "billing_period": "monthly|yearly",
@@ -76,14 +82,32 @@ def lambda_handler(event, context):
     user_id = get_user_id_from_event(event)
     body = parse_request_body(event)
     
-    plan = body.get('plan', 'single')
-    billing_period = body.get('billing_period', 'monthly')
     owner_type = body.get('owner_type', 'user')
     
-    # Validate request
-    is_valid, error_msg = validate_checkout_request(plan, billing_period, owner_type, user_id)
-    if not is_valid:
-        return error_response(error_msg, 400)
+    # Check if price_id is provided directly (from PricingConfig)
+    price_id = body.get('price_id')
+    
+    if price_id:
+        # Direct price ID mode - get plan info from Stripe price
+        plan, billing_period = get_plan_from_stripe_price(price_id)
+        if not plan:
+            # Price ID not in our mapping, but still valid - use defaults
+            plan = 'single'
+            billing_period = 'monthly'
+    else:
+        # Legacy mode - use plan and billing_period
+        plan = body.get('plan', 'single')
+        billing_period = body.get('billing_period', 'monthly')
+        
+        # Validate request
+        is_valid, error_msg = validate_checkout_request(plan, billing_period, owner_type, user_id)
+        if not is_valid:
+            return error_response(error_msg, 400)
+        
+        # Get Stripe Price ID dynamically from Stripe API
+        price_id = get_stripe_price_for_plan(plan, billing_period)
+        if not price_id:
+            return error_response(f"No price configured for {plan} {billing_period}", 400)
     
     # Determine owner ID
     if owner_type == 'organisation':
@@ -98,11 +122,6 @@ def lambda_handler(event, context):
         owner_id = org_id
     else:
         owner_id = user_id
-    
-    # Get Stripe Price ID
-    price_id = PLAN_TO_STRIPE_PRICE.get((plan, billing_period))
-    if not price_id:
-        return error_response(f"No price configured for {plan} {billing_period}", 400)
     
     # Create Stripe checkout session
     try:

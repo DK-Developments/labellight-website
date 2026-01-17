@@ -102,6 +102,73 @@ jobs:
           };
           EOF
 
+      - name: Fetch Stripe prices and generate stripe-pricing.js
+        env:
+          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+        run: |
+          PRICES=$(curl -s -u "$STRIPE_SECRET_KEY:" \
+            "https://api.stripe.com/v1/prices?active=true&expand[]=data.product&limit=100")
+          
+          export PRICES
+          
+          python3 << 'PYTHON_SCRIPT'
+          import json
+          import os
+
+          prices_json = os.environ.get('PRICES', '{}')
+          prices_data = json.loads(prices_json)
+
+          plans = {}
+          for price in prices_data.get('data', []):
+            product = price.get('product', {})
+            metadata = price.get('metadata', {})
+            product_metadata = product.get('metadata', {}) if isinstance(product, dict) else {}
+            
+            plan_key = metadata.get('plan_key') or product_metadata.get('plan_key')
+            if not plan_key:
+              continue
+            
+            interval = price.get('recurring', {}).get('interval', 'month')
+            unit_amount = price.get('unit_amount', 0) / 100
+            
+            plans[f"{plan_key}_{interval}"] = {
+              'priceId': price.get('id'),
+              'productId': product.get('id') if isinstance(product, dict) else product,
+              'name': product.get('name', '') if isinstance(product, dict) else '',
+              'price': unit_amount,
+              'interval': interval,
+              'currency': price.get('currency', 'usd').upper()
+            }
+
+          config = {
+            'currency': {'symbol': '$', 'code': 'USD'},
+            'trial': {'days': 7, 'requiresCard': True},
+            'guarantee': {'days': 30},
+            'plans': plans
+          }
+
+          js_content = f'''/**
+           * Stripe Pricing Configuration
+           * Auto-generated during deployment - DO NOT EDIT MANUALLY
+           * 
+           * @author Eprouvez
+           * @version 1.0.0
+           */
+          var PricingConfig = {json.dumps(config, indent=2)};
+
+          PricingConfig.formatPrice = function(price) {{
+            return this.currency.symbol + price.toFixed(2);
+          }};
+
+          window.PricingConfig = PricingConfig;
+          '''
+
+          with open('./src/website/js/stripe-pricing.js', 'w') as f:
+            f.write(js_content)
+
+          print(f"Generated stripe-pricing.js with {len(plans)} plans")
+          PYTHON_SCRIPT
+
       - name: Generate jwt-utils.js
         run: |
           cat > ./src/website/js/jwt-utils.js << 'EOF'
