@@ -54,7 +54,12 @@ jobs:
           pip install -r ./terraform/stripe_layer/requirements.txt -t ./terraform/stripe_layer/python --quiet
 
       - name: Terraform Plan
-        run: terraform plan -out=tfplan
+        run: |
+          VAR_FILE=""
+          if [ "${{ inputs.environment }}" = "prod" ]; then
+            VAR_FILE="-var-file=prod.tfvars"
+          fi
+          terraform plan $VAR_FILE -out=tfplan
         working-directory: ./terraform
         env:
           TF_VAR_google_client_id: ${{ secrets.TF_VAR_GOOGLE_CLIENT_ID }}
@@ -62,6 +67,10 @@ jobs:
           TF_VAR_stripe_secret_key: ${{ secrets.STRIPE_SECRET_KEY }}
           TF_VAR_stripe_webhook_secret: ${{ secrets.STRIPE_WEBHOOK_SECRET }}
           TF_VAR_environment: ${{ inputs.environment }}
+
+      - name: Show bucket policy diff
+        run: terraform show -no-color tfplan | sed -n '/aws_s3_bucket_policy.website/,/}/p'
+        working-directory: ./terraform
 
       - name: Terraform Apply
         run: terraform apply -auto-approve tfplan
