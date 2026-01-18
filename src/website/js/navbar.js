@@ -12,8 +12,82 @@ fetch(navbarBasePath + 'navbar.html')
     document.getElementById('navbar-container').innerHTML = adjustedHtml;
     updateNavbarAuth();
     initializeProfileDropdown();
+    initializeHamburgerMenu();
   })
   .catch(error => console.error('Error loading navbar:', error));
+
+// Initialize hamburger menu functionality
+function initializeHamburgerMenu() {
+  const hamburgerBtn = document.getElementById('hamburger-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+  const mobileMenuClose = document.getElementById('mobile-menu-close');
+  const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+  
+  if (!hamburgerBtn || !mobileMenu || !mobileMenuOverlay) {
+    return;
+  }
+  
+  function openMenu() {
+    hamburgerBtn.setAttribute('aria-expanded', 'true');
+    mobileMenu.classList.add('active');
+    mobileMenuOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  
+  function closeMenu() {
+    hamburgerBtn.setAttribute('aria-expanded', 'false');
+    mobileMenu.classList.remove('active');
+    mobileMenuOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  
+  hamburgerBtn.addEventListener('click', function() {
+    if (mobileMenu.classList.contains('active')) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
+  });
+  
+  if (mobileMenuClose) {
+    mobileMenuClose.addEventListener('click', closeMenu);
+  }
+  
+  mobileMenuOverlay.addEventListener('click', closeMenu);
+  
+  // Close menu when clicking nav links
+  mobileNavLinks.forEach(function(link) {
+    link.addEventListener('click', closeMenu);
+  });
+  
+  // Close menu on escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+      closeMenu();
+    }
+  });
+  
+  // Update mobile menu sign-in button visibility based on auth
+  updateMobileMenuAuth();
+}
+
+// Update mobile menu based on auth state
+function updateMobileMenuAuth() {
+  const mobileSignInBtn = document.getElementById('mobile-signin-btn');
+  const mobileMenuFooter = document.querySelector('.mobile-menu-footer');
+  
+  let isLoggedIn = false;
+  try {
+    isLoggedIn = auth.isAuthenticated();
+  } catch (error) {
+    console.debug('Auth not available for mobile menu');
+  }
+  
+  if (mobileMenuFooter) {
+    mobileMenuFooter.style.display = isLoggedIn ? 'none' : 'flex';
+  }
+}
 
 // Initialize profile dropdown functionality
 function initializeProfileDropdown() {
