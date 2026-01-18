@@ -84,3 +84,17 @@ output "stripe_webhook_url" {
   description = "Stripe webhook endpoint URL"
   value       = "${aws_api_gateway_stage.main.invoke_url}/subscription/webhook"
 }
+
+#####################################################################
+# SES EMAIL
+#####################################################################
+
+output "ses_domain_identity_arn" {
+  description = "ARN of the SES domain identity (prod only)"
+  value       = var.environment == "prod" ? aws_ses_domain_identity.main[0].arn : null
+}
+
+output "ses_verification_status" {
+  description = "SES domain verification status (prod only)"
+  value       = var.environment == "prod" ? "Check AWS Console: SES > Verified identities > ${var.domain_name}" : "SES not configured in dev"
+}

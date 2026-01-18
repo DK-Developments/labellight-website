@@ -20,6 +20,81 @@ resource "aws_cognito_user_pool" "main" {
 
   # Auto-verify email
   auto_verified_attributes = ["email"]
+
+  # Use SES for email delivery in production
+  dynamic "email_configuration" {
+    for_each = var.environment == "prod" ? [1] : []
+    content {
+      email_sending_account  = "DEVELOPER"
+      from_email_address     = "LabelLight <noreply@${var.domain_name}>"
+      source_arn             = aws_ses_domain_identity.main[0].arn
+      reply_to_email_address = "support@${var.domain_name}"
+    }
+  }
+
+  # Branded verification email template
+  verification_message_template {
+    default_email_option = "CONFIRM_WITH_CODE"
+    email_subject        = "Verify your LabelLight account"
+    email_message        = <<-EOT
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; background-color: #f5f5f5;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color: #f5f5f5; padding: 40px 20px;">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="600" cellspacing="0" cellpadding="0" style="background-color: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); overflow: hidden;">
+          <!-- Header with logo -->
+          <tr>
+            <td align="center" style="padding: 40px 40px 30px 40px; background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);">
+              <img src="https://${var.domain_name}/images/transparent-logo.png" alt="LabelLight" style="height: 50px; width: auto;">
+            </td>
+          </tr>
+          <!-- Main content -->
+          <tr>
+            <td style="padding: 40px;">
+              <h1 style="margin: 0 0 20px 0; font-size: 24px; font-weight: 600; color: #333;">Verify Your Email</h1>
+              <p style="margin: 0 0 30px 0; font-size: 16px; line-height: 1.6; color: #333;">
+                Thanks for signing up for LabelLight! Use the verification code below to complete your registration:
+              </p>
+              <!-- Verification code box -->
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td align="center" style="background-color: #f5f5f5; padding: 25px; border-radius: 8px;">
+                    <span style="font-size: 36px; font-weight: bold; color: #1a73e8; letter-spacing: 6px; font-family: monospace;">{####}</span>
+                  </td>
+                </tr>
+              </table>
+              <p style="margin: 30px 0 0 0; font-size: 14px; line-height: 1.6; color: #666;">
+                This code expires in 24 hours. If you didn't create an account with LabelLight, you can safely ignore this email.
+              </p>
+            </td>
+          </tr>
+          <!-- Footer -->
+          <tr>
+            <td style="padding: 30px 40px; background-color: #f9fafb; border-top: 1px solid #e0e0e0;">
+              <p style="margin: 0; font-size: 13px; color: #999; text-align: center;">
+                LabelLight - Print Custom Labels Directly From Lightspeed Retail
+              </p>
+              <p style="margin: 10px 0 0 0; font-size: 12px; color: #999; text-align: center;">
+                <a href="https://${var.domain_name}/privacy-policy.html" style="color: #1a73e8; text-decoration: none;">Privacy Policy</a>
+                &nbsp;&bull;&nbsp;
+                <a href="https://${var.domain_name}/terms-of-service.html" style="color: #1a73e8; text-decoration: none;">Terms of Service</a>
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+EOT
+  }
 }
 
 # Default Cognito domain for dev environment
