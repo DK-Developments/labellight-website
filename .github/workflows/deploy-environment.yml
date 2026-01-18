@@ -106,19 +106,52 @@ jobs:
         env:
           STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
         run: |
-          PRICES=$(curl -s -u "$STRIPE_SECRET_KEY:" \
+          # Debug: Check if STRIPE_SECRET_KEY is set (show first 10 chars only for security)
+          if [ -z "$STRIPE_SECRET_KEY" ]; then
+            echo "❌ ERROR: STRIPE_SECRET_KEY is empty or not set!"
+            echo "Please ensure the secret is configured in GitHub Environment: ${{ inputs.environment }}"
+            exit 1
+          else
+            echo "✅ STRIPE_SECRET_KEY is set (starts with: ${STRIPE_SECRET_KEY:0:10}...)"
+          fi
+          
+          # Fetch prices from Stripe with error handling
+          HTTP_RESPONSE=$(curl -s -w "\n%{http_code}" -u "$STRIPE_SECRET_KEY:" \
             "https://api.stripe.com/v1/prices?active=true&expand[]=data.product&limit=100")
+          
+          HTTP_CODE=$(echo "$HTTP_RESPONSE" | tail -n1)
+          PRICES=$(echo "$HTTP_RESPONSE" | sed '$d')
+          
+          echo "Stripe API HTTP Status: $HTTP_CODE"
+          
+          if [ "$HTTP_CODE" != "200" ]; then
+            echo "❌ ERROR: Stripe API returned status $HTTP_CODE"
+            echo "Response: $PRICES"
+            exit 1
+          fi
+          
+          # Check if we got valid JSON with data
+          PRICE_COUNT=$(echo "$PRICES" | python3 -c "import sys,json; d=json.load(sys.stdin); print(len(d.get('data',[])))" 2>/dev/null || echo "0")
+          echo "Found $PRICE_COUNT prices from Stripe API"
           
           export PRICES
           
           python3 << 'PYTHON_SCRIPT'
           import json
           import os
+          import sys
 
           prices_json = os.environ.get('PRICES', '{}')
-          prices_data = json.loads(prices_json)
+          try:
+            prices_data = json.loads(prices_json)
+          except json.JSONDecodeError as e:
+            print(f"❌ ERROR: Failed to parse Stripe response as JSON: {e}")
+            sys.exit(1)
+          
+          print(f"Processing {len(prices_data.get('data', []))} prices from Stripe...")
 
           plans = {}
+          skipped_no_plan_key = 0
           for price in prices_data.get('data', []):
             product = price.get('product', {})
             metadata = price.get('metadata', {})
@@ -126,12 +159,18 @@ jobs:
             
             plan_key = metadata.get('plan_key') or product_metadata.get('plan_key')
             if not plan_key:
+              product_name = product.get('name', 'Unknown') if isinstance(product, dict) else 'Unknown'
+              print(f"  ⚠️  Skipping price {price.get('id')} (product: {product_name}) - no plan_key metadata")
+              skipped_no_plan_key += 1
               continue
             
             interval = price.get('recurring', {}).get('interval', 'month')
             unit_amount = price.get('unit_amount', 0) / 100
             
-            plans[f"{plan_key}_{interval}"] = {
+            plan_name = f"{plan_key}_{interval}"
+            print(f"  ✅ Found plan: {plan_name} (price: ${unit_amount})")
+            
+            plans[plan_name] = {
               'priceId': price.get('id'),
               'productId': product.get('id') if isinstance(product, dict) else product,
               'name': product.get('name', '') if isinstance(product, dict) else '',
@@ -166,7 +205,17 @@ jobs:
           with open('./src/website/js/stripe-pricing.js', 'w') as f:
             f.write(js_content)
 
-          print(f"Generated stripe-pricing.js with {len(plans)} plans")
+          print(f"\n📊 Summary:")
+          print(f"   Total prices from Stripe: {len(prices_data.get('data', []))}")
+          print(f"   Skipped (no plan_key): {skipped_no_plan_key}")
+          print(f"   Plans configured: {len(plans)}")
+          
+          if len(plans) == 0:
+            print("\n⚠️  WARNING: No plans were generated!")
+            print("   Make sure your Stripe products have 'plan_key' in their metadata.")
+            print("   Expected values: 'single', 'team', 'business'")
+          
+          print(f"\n✅ Generated stripe-pricing.js with {len(plans)} plans")
           PYTHON_SCRIPT
 
       - name: Generate jwt-utils.js
