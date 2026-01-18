@@ -107,6 +107,10 @@ a:focus {
   justify-content: flex-end;
 }
 
+.navbar-spacer {
+  display: none;
+}
+
 .user-name {
   color: #333;
   font-size: 15px;
@@ -1525,10 +1529,13 @@ section h2 {
   }
 
   .navbar-container {
-    flex-wrap: nowrap;
-    gap: 8px;
-    justify-content: space-between;
+    position: relative;
+    justify-content: flex-end;
     align-items: center;
+  }
+
+  .navbar-spacer {
+    display: none;
   }
 
   .navbar-left {
@@ -1536,9 +1543,10 @@ section h2 {
   }
 
   .navbar-center {
-    order: 0;
-    flex: 1;
-    text-align: center;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     padding: 0;
     margin: 0;
   }
@@ -1550,13 +1558,18 @@ section h2 {
   }
 
   .navbar-right {
-    order: 1;
-    flex: 0 0 auto;
+    display: flex;
     justify-content: flex-end;
+    flex-shrink: 0;
   }
 
   /* Hide sign-in button in navbar on mobile (shown in mobile menu) */
   .navbar-right .signin-btn {
+    display: none !important;
+  }
+
+  /* Hide profile dropdown on mobile (shown in mobile menu) */
+  .navbar-right .profile-dropdown {
     display: none !important;
   }
   
