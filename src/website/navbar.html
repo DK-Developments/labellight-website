@@ -45,6 +45,34 @@
       </div>
       <!-- Sign In Button (shown when logged out) -->
       <a href="signin.html" class="signin-btn" id="signin-btn" style="display: none;">Sign In</a>
+      
+      <!-- Hamburger Menu Button (mobile/tablet) -->
+      <button class="hamburger-btn" id="hamburger-btn" aria-label="Toggle menu" aria-expanded="false">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+    </div>
+  </div>
+  
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
+  <div class="mobile-menu" id="mobile-menu">
+    <div class="mobile-menu-header">
+      <img src="images/transparent-logo.png" alt="LabelLight Logo" class="mobile-menu-logo">
+      <button class="mobile-menu-close" id="mobile-menu-close" aria-label="Close menu">
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div class="mobile-menu-links">
+      <a href="../index.html" class="mobile-nav-link">Home</a>
+      <a href="../pricing.html" class="mobile-nav-link">Pricing</a>
+      <a href="docs/index.html" class="mobile-nav-link">Documentation</a>
+    </div>
+    <div class="mobile-menu-footer" id="mobile-menu-footer">
+      <a href="pricing.html" class="btn btn-primary mobile-menu-btn" id="mobile-subscribe-btn">Get Started</a>
+      <a href="signin.html" class="btn btn-secondary mobile-menu-btn" id="mobile-signin-btn">Sign In</a>
     </div>
   </div>
 </nav>
